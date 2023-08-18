@@ -1,0 +1,9 @@
+name: build-release
+on:
+  push:
+    tags:
+      - '**'
+jobs:
+  java:
+    uses: onecx/ci-java-lib/.github/workflows/build-release.yml@v1
+    secrets: inherit

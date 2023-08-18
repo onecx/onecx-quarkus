@@ -1,0 +1,32 @@
+name: build
+on:
+  push:
+    branches:
+      - 'main'
+      - 'fix/[0-9]+.[0-9]+.x'
+    paths-ignore:
+      - '.gitignore'
+      - 'CODEOWNERS'
+      - 'LICENSE'
+      - '*.md'
+      - '*.adoc'
+      - '*.txt'
+      - '.all-contributorsrc'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - 'main'
+      - 'fix/[0-9]+.[0-9]+.x'
+    paths-ignore:
+      - '.gitignore'
+      - 'CODEOWNERS'
+      - 'LICENSE'
+      - '*.md'
+      - '*.adoc'
+      - '*.txt'
+      - '.all-contributorsrc'
+
+jobs:
+  java:
+    uses: onecx/ci-java-lib/.github/workflows/build.yml@v1
+    secrets: inherit

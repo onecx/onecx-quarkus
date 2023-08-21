@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.onecx</groupId>
+    <groupId>io.github.onecx.quarkus</groupId>
     <artifactId>onecx-quarkus</artifactId>
     <version>999-SNAPSHOT</version>
     <name>onecx-quarkus</name>
@@ -81,6 +81,11 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <assertj.version>3.24.2</assertj.version>
     </properties>    
+
+    <modules>
+        <module>bom</module>
+        <module>extensions</module>
+    </modules>
 
      <dependencyManagement>
         <dependencies>
@@ -186,8 +191,6 @@
                     <execution>
                         <goals>
                             <goal>build</goal>
-                            <goal>generate-code</goal>
-                            <goal>generate-code-tests</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.onecx</groupId>
+        <groupId>io.github.onecx.quarkus</groupId>
         <artifactId>onecx-quarkus</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>parameter</module>
     </modules>
 
 </project>

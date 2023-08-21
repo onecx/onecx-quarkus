@@ -4,17 +4,17 @@
 
     <parent>
         <groupId>io.github.onecx.quarkus</groupId>
-        <artifactId>onecx-quarkus</artifactId>
+        <artifactId>onecx-quarkus-extensions-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-quarkus-bom</artifactId>
-    <name>onecx-quarkus-bom</name>
+    <artifactId>onecx-parameter-parent</artifactId>
     <packaging>pom</packaging>
 
-    <dependencies>
-
-    </dependencies>
+    <modules>
+        <module>deployment</module>
+        <module>runtime</module>
+    </modules>
 
 </project>

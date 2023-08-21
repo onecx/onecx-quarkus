@@ -3,7 +3,7 @@
 ```
 <dependency>
     <groupId>io.github.onecx.quarkus</groupId>
-    <artifactId>onecx-parameter</artifactId>
+    <artifactId>onecx-parameters</artifactId>
 </dependency>
 ```
 

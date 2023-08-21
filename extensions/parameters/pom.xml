@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-parameter-parent</artifactId>
+    <artifactId>onecx-parameters-parent</artifactId>
     <packaging>pom</packaging>
 
     <modules>

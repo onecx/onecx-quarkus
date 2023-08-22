@@ -16,7 +16,7 @@ Include the following bom artifact into your pom or parent pom and then pick the
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.github.onecx</groupId>
+            <groupId>io.github.onecx.quarkus</groupId>
             <artifactId>onecx-quarkus-bom</artifactId>
             <version>${onecx.quarkus.version}</version>
             <type>pom</type>
@@ -32,4 +32,7 @@ Include the component in your project by including the corresponding dependency.
 
 :information_source: Some component come with additional documentation and configuration - check the 'Documentation' link for particular section.
 
+| Name      | ArtifactId      | Description                        | Documentation               |
+|-----------|-----------------|------------------------------------|-----------------------------|
+| Parameter | onecx-parameter | OneCX Parameter Service Extension  | [Doc](extensions/paramater) |
 

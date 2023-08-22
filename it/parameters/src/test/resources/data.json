@@ -1,0 +1,24 @@
+{
+  "app1" : {
+    "PARAM_TEXT": {
+      "description": "PARAM_TEXT",
+      "name": "PARAM_TEXT",
+      "value": "Text Information"
+    },
+    "PARAM_TEXT_2": {
+      "description": "PARAM_TEXT_2",
+      "name": "PARAM_TEXT_2",
+      "value": "4321"
+    },
+    "PARAM_NUMBER": {
+      "description": "PARAM_NUMBER",
+      "name": "PARAM_NUMBER",
+      "value": "123"
+    },
+    "PARAM_BOOL": {
+      "description": "PARAM_BOOL",
+      "name": "PARAM_BOOL",
+      "value": "true"
+    }
+  }
+}

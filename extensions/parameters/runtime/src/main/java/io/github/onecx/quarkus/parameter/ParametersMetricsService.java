@@ -1,22 +1,22 @@
 package io.github.onecx.quarkus.parameter;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import java.net.URI;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.quarkus.restclient.runtime.QuarkusRestClientBuilder;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.core.Vertx;
 
-@ApplicationScoped
+@Singleton
 public class ParametersMetricsService {
 
     private static final Logger log = LoggerFactory.getLogger(ParametersMetricsService.class);
 
-    @Inject
-    @RestClient
     ParameterRestClient client;
 
     @Inject
@@ -32,6 +32,12 @@ public class ParametersMetricsService {
         // init rest client
         String applicationId = parametersConfig.applicationId.get();
         String instanceId = parametersConfig.instanceId.orElse(null);
+
+        var clientBuilder = new QuarkusRestClientBuilder();
+        client = clientBuilder
+                .baseUri(URI.create(parametersConfig.host))
+                .build(ParameterRestClient.class);
+
         // update
         vertx.setPeriodic(parametersConfig.metrics.metricsIntervalInMilliseconds, id -> {
             ParametersBucket tmp = this.bucket;

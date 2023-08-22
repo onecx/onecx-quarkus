@@ -1,5 +1,6 @@
 package io.github.onecx.quarkus.parameter;
 
+import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -12,12 +13,13 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.spi.ConfigBuilder;
 import org.eclipse.microprofile.config.spi.ConfigProviderResolver;
 import org.eclipse.microprofile.config.spi.ConfigSource;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.quarkus.restclient.runtime.QuarkusRestClientBuilder;
 import io.smallrye.config.SmallRyeConfig;
 import io.smallrye.config.common.AbstractConfigSource;
+import io.smallrye.mutiny.Uni;
 import io.vertx.core.Vertx;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
@@ -29,8 +31,6 @@ public class ParametersService {
 
     static ParametersConfigSource source = new ParametersConfigSource();
 
-    @Inject
-    @RestClient
     ParameterRestClient client;
 
     @Inject
@@ -55,6 +55,11 @@ public class ParametersService {
         // init rest client
         String applicationId = parametersConfig.applicationId.orElse("dummy-app");
 
+        var clientBuilder = new QuarkusRestClientBuilder();
+        client = clientBuilder
+                .baseUri(URI.create(parametersConfig.host))
+                .build(ParameterRestClient.class);
+
         // create custom config
         ConfigBuilder builder = ConfigProviderResolver.instance()
                 .getBuilder()
@@ -65,26 +70,25 @@ public class ParametersService {
 
         // update parameters at start
         if (parametersConfig.updateAtStart) {
-            update(applicationId);
+            update(applicationId)
+                    .subscribe().with(d -> log.info("Init parameters cache: {}", d));
         }
 
         // setup scheduler for update
-        vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds, id -> {
-            update(applicationId);
-        });
+        vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds,
+                id -> update(applicationId).subscribe().with(d -> log.info("Update parameters cache: {}", d)));
     }
 
     /**
      * Update the cache of the parameters
      */
-    void update(String applicationId) {
-        client.getParameters(applicationId)
+    Uni<Map<String, String>> update(String applicationId) {
+        return client.getParameters(applicationId)
                 .onFailure().recoverWithItem(ex -> {
-                    log.error("Error updating the configuration from parameters management. Error: " + ex.getMessage());
+                    log.error("Error updating the configuration from parameters management. Error: {}", ex.getMessage());
                     return null;
                 })
-                .onItem().ifNotNull().invoke(m -> data.putAll(m))
-                .subscribe().with(d -> log.info("Update parameters cache: " + d));
+                .onItem().ifNotNull().invoke(m -> data.putAll(m));
     }
 
     /**
@@ -93,7 +97,7 @@ public class ParametersService {
     public static class ParametersConfigSource extends AbstractConfigSource {
 
         public ParametersConfigSource() {
-            super("parameters-config-source", 999);
+            super("onecx-parameters-config-source", 999);
         }
 
         @Override

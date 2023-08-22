@@ -9,11 +9,55 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-quarkus-extensions-parent</artifactId>
+    <artifactId>onecx-quarkus-it-parent</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <module>parameters</module>
     </modules>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-docker</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>generate-code</goal>
+                            <goal>generate-code-tests</goal>
+                        </goals>
+                        <configuration>
+                            <properties>
+                                <quarkus.container-image.build>true</quarkus.container-image.build>
+                                <quarkus.container-image.group>localhost</quarkus.container-image.group>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -10,11 +10,19 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 @ConfigRoot(name = "parameters", phase = ConfigPhase.RUN_TIME, prefix = "onecx")
 public class ParametersConfig {
 
+    public static final String HOST = "onecx.parameters.host";
+
     /**
      * If set to true, the application will attempt to look up the configuration from Consul
      */
     @ConfigItem(defaultValue = "true")
     boolean enabled;
+
+    /**
+     * Parameters service host name.
+     */
+    @ConfigItem(defaultValue = "http://localhost:8080")
+    String host;
 
     /**
      * Scheduler configuration

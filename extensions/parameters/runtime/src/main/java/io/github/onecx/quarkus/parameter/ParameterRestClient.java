@@ -6,12 +6,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-
 import io.smallrye.mutiny.Uni;
 
 @Path("/v3")
-@RegisterRestClient(configKey = "quarkus-param-config-rest-client")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ParameterRestClient {

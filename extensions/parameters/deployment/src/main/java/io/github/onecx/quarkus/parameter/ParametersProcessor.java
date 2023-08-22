@@ -10,7 +10,7 @@ import io.quarkus.runtime.ApplicationConfig;
 
 public class ParametersProcessor {
 
-    private static final String FEATURE = "onecx-parameters";
+    public static final String FEATURE = "onecx-parameters";
 
     @BuildStep
     FeatureBuildItem feature() {

@@ -4,18 +4,18 @@
 
     <parent>
         <groupId>io.github.onecx.quarkus</groupId>
-        <artifactId>onecx-parameters-parent</artifactId>
+        <artifactId>onecx-apm-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-parameters</artifactId>
+    <artifactId>onecx-apm</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-vertx</artifactId>
+            <artifactId>quarkus-security</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

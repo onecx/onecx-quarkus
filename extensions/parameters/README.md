@@ -45,3 +45,11 @@ To use the extension you need to set the url to parameters management backend:
 | onecx.parameters.metrics.enabled                       | true           |
 | onecx.parameters.metrics.metricsIntervalInMilliseconds | 20000          |
 
+Rest client configuration property: `quarkus.rest-client.onecx-parameters`
+
+| Configuration property                   | Default | Description            |
+|------------------------------------------|---------|------------------------|
+| quarkus.rest-client.onecx-parameters.url |         | Parameters service url |
+
+
+

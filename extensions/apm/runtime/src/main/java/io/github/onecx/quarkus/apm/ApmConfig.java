@@ -40,4 +40,10 @@ public class ApmConfig {
      */
     @ConfigItem(defaultValue = "true")
     boolean log;
+
+    /**
+     * Parameters service action separator.
+     */
+    @ConfigItem(name = "header-apm-principal-token-name")
+    Optional<String> headerApmPrincipalTokenName;
 }

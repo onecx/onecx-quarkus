@@ -33,3 +33,10 @@ To use the extension you need to set the url to parameters management backend:
 | onecx.apm.action-separator   | #               | only for v3 version <resource>#<action>    |
 | onecx.apm.log                | false           | disable or enable debug log of permissions |
 
+Rest client configuration property: `quarkus.rest-client.onecx-apm`
+
+| Configuration property              | Default | Description     |
+|-------------------------------------|---------|-----------------|
+| quarkus.rest-client.onecx-apm.url   |         | Apm service url |
+
+

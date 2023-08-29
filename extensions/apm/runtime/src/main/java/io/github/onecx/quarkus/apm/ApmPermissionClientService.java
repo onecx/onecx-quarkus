@@ -19,9 +19,9 @@ import io.quarkus.arc.Unremovable;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.smallrye.mutiny.Uni;
 
-@ApplicationScoped
 @Default
 @Unremovable
+@ApplicationScoped
 public class ApmPermissionClientService implements PermissionClientService {
 
     private static final Logger log = LoggerFactory.getLogger(ApmPermissionClientService.class);
@@ -63,7 +63,7 @@ public class ApmPermissionClientService implements PermissionClientService {
     private Uni<List<String>> actionsV2() {
 
         return client
-                .getPermissionsForTokenV2(applicationId, null, null)
+                .getPermissionsForTokenV2(applicationId)
                 .map(r -> {
                     List<PermissionDTOV2> tmp = r.readEntity(new GenericType<>() {
                     });

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "2",
+    "httpRequest": {
+      "path": "/v3/applications/app-id/permissions"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "resource1": ["admin-write", "roleX"],
+          "resource2": ["admin-write","admin-read"]
+        },
+        "contentType": "application/json"
+      }
+    }
+  }
+]

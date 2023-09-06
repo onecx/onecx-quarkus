@@ -50,7 +50,7 @@
         <!-- Quarkus configuration -->
         <quarkus.version>3.3.1</quarkus.version>
         <quarkus.hibernate-orm.version>6.2.1.Final</quarkus.hibernate-orm.version>
-        <quarkus.smallrye-open-api.version>3.5.1</quarkus.smallrye-open-api.version>
+        <quarkus.smallrye-open-api.version>3.5.2</quarkus.smallrye-open-api.version>
         <quarkiverse.quarkus-openapi-generator.version>2.2.9</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.1.0</quarkiverse.mockserver.version>
 

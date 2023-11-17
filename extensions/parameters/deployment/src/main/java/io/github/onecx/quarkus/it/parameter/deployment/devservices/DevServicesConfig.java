@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.parameter.devservices;
+package io.github.onecx.quarkus.it.parameter.deployment.devservices;
 
 import java.util.Optional;
 import java.util.OptionalInt;

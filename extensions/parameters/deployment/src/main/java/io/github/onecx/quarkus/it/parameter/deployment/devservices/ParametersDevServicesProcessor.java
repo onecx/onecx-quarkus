@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.parameter.devservices;
+package io.github.onecx.quarkus.it.parameter.deployment.devservices;
 
 import static io.quarkus.runtime.LaunchMode.DEVELOPMENT;
 
@@ -18,9 +18,9 @@ import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
-import io.github.onecx.quarkus.it.parameter.ParametersBuildTimeConfig;
 import io.github.onecx.quarkus.it.parameter.ParametersConfig;
-import io.github.onecx.quarkus.it.parameter.ParametersProcessor;
+import io.github.onecx.quarkus.it.parameter.deployment.ParametersBuildTimeConfig;
+import io.github.onecx.quarkus.it.parameter.deployment.ParametersProcessor;
 import io.quarkus.deployment.IsNormal;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.*;

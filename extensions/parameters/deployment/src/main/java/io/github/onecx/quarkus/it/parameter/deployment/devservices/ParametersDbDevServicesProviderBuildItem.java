@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.parameter.devservices;
+package io.github.onecx.quarkus.it.parameter.deployment.devservices;
 
 import io.quarkus.builder.item.SimpleBuildItem;
 

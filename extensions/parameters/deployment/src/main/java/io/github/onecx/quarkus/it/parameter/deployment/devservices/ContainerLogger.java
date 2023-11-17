@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.parameter.devservices;
+package io.github.onecx.quarkus.it.parameter.deployment.devservices;
 
 import org.testcontainers.containers.output.BaseConsumer;
 import org.testcontainers.containers.output.OutputFrame;

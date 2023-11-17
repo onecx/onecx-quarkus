@@ -1,5 +1,7 @@
-package io.github.onecx.quarkus.apm;
+package io.github.onecx.quarkus.it.parameter.deployment;
 
+import io.github.onecx.quarkus.it.parameter.ParametersConfig;
+import io.github.onecx.quarkus.it.parameter.ParametersRecorder;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -8,9 +10,9 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.runtime.ApplicationConfig;
 
-public class ApmProcessor {
+public class ParametersProcessor {
 
-    public static final String FEATURE = "onecx-apm";
+    public static final String FEATURE = "onecx-parameters";
 
     @BuildStep
     FeatureBuildItem feature() {
@@ -19,9 +21,9 @@ public class ApmProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    public void configure(BeanContainerBuildItem beanContainer, ApmRecorder recorder, ApmConfig config,
+    public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config,
             ApplicationConfig appConfig) {
         BeanContainer container = beanContainer.getValue();
-        recorder.init(container, appConfig, config);
+        recorder.configSources(container, appConfig, config);
     }
 }

@@ -28,7 +28,7 @@ public class ApmRecorder {
         String applicationId = config.applicationId.orElseGet(() -> appConfig.name.orElse(UNKNOWN_SERVICE_NAME));
 
         // init APM service
-        PermissionClientService service = container.instance(PermissionClientService.class, Default.Literal.INSTANCE);
+        PermissionClientService service = container.beanInstance(PermissionClientService.class, Default.Literal.INSTANCE);
         service.init(config, applicationId);
     }
 }

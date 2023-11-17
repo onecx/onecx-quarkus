@@ -1,6 +1,6 @@
-package io.github.onecx.quarkus.it.parameter;
+package io.github.onecx.quarkus.it.parameter.deployment;
 
-import io.github.onecx.quarkus.it.parameter.devservices.DevServicesConfig;
+import io.github.onecx.quarkus.it.parameter.deployment.devservices.DevServicesConfig;
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigRoot;
 

@@ -4,20 +4,17 @@
 
     <parent>
         <groupId>io.github.onecx.quarkus</groupId>
-        <artifactId>onecx-quarkus</artifactId>
+        <artifactId>onecx-quarkus-extensions-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-quarkus-extensions-parent</artifactId>
+    <artifactId>onecx-tenant-oidc-parent</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>core</module>
-        <module>tenant-hibernate</module>
-        <module>tenant-oidc</module>
-        <module>parameters</module>
-        <module>apm</module>
+        <module>deployment</module>
+        <module>runtime</module>
     </modules>
 
 </project>

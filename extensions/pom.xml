@@ -14,8 +14,7 @@
 
     <modules>
         <module>core</module>
-        <module>tenant-hibernate</module>
-        <module>tenant-oidc</module>
+        <module>tenant</module>
         <module>parameters</module>
         <module>apm</module>
     </modules>

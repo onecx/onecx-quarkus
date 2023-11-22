@@ -28,13 +28,13 @@ public class ParametersRecorder {
         String applicationId = config.applicationId.orElseGet(() -> appConfig.name.orElse(UNKNOWN_SERVICE_NAME));
 
         // init parameter service
-        ParametersService service = container.instance(ParametersService.class, Default.Literal.INSTANCE);
+        ParametersService service = container.beanInstance(ParametersService.class, Default.Literal.INSTANCE);
         service.init(config, applicationId);
 
         // if metrics service enabled
         if (config.metrics.enabled) {
             // init metrics service
-            ParametersMetricsService metrics = container.instance(ParametersMetricsService.class, Default.Literal.INSTANCE);
+            ParametersMetricsService metrics = container.beanInstance(ParametersMetricsService.class, Default.Literal.INSTANCE);
             metrics.init(config, applicationId);
         }
     }

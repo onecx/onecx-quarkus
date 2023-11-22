@@ -25,18 +25,28 @@
 
 To use the extension you need to set the url to parameters management backend:
 
-| Configuration property       | Default         | Description                                |
-|------------------------------|-----------------|--------------------------------------------|
-| onecx.apm.enabled            | true            | disable or enable the extension            |
-| onecx.apm.application-id     | ${quarkus.name} | application ID for the APM service         |
-| onecx.apm.api-version        | v3              | only v2, v3 version are supported          |
-| onecx.apm.action-separator   | #               | only for v3 version <resource>#<action>    |
-| onecx.apm.log                | false           | disable or enable debug log of permissions |
+```properties
+# disable or enable the extension  
+onecx.apm.enabled=true
+# application ID for the APM service 
+onecx.apm.application-id=${quarkus.application.name}
+# APM principal header parameter.
+onecx.apm.token-header-param=apm-principal-token
+# Name of the permission module. @PermissionsAllowed(value = "apm:resource1#admin-write")
+onecx.apm.name=apm
+# disable or enable debug log of permissions
+onecx.apm.debug-log=false
+# APM client version. Only v2, v3 version are supported
+onecx.apm.client.version=v3
+# Separator for resource and action. <resource>#<action>
+onecx.apm.client.v3.context-action-separator=#
+```
 
-Rest client configuration property: `quarkus.rest-client.onecx-apm`
+Rest client configuration property: `quarkus.rest-client.onecx-apm-svc`
 
-| Configuration property              | Default | Description     |
-|-------------------------------------|---------|-----------------|
-| quarkus.rest-client.onecx-apm.url   |         | Apm service url |
+```properties
+quarkus.rest-client.onecx-apm.url=http://onecx-apm-svc:8080
+```
+
 
 

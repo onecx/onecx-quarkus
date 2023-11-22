@@ -5,6 +5,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import jakarta.ws.rs.core.Response;
 
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -20,6 +21,9 @@ class ApmTest {
     private static final String ADMIN = "alice";
 
     private static final String USER = "bob";
+
+    private static final String APM_PRINCIPAL_TOKEN_HEADER = ConfigProvider.getConfig()
+            .getValue("onecx.apm.token-header-param", String.class);
 
     @Test
     void openTest() {
@@ -39,7 +43,7 @@ class ApmTest {
         given()
                 .when()
                 .auth().oauth2(keycloakClient.getAccessToken(ADMIN))
-                .header("apm-principal-token", "XXXXX")
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
                 .contentType(APPLICATION_JSON)
                 .get("admin")
                 .then()
@@ -61,11 +65,19 @@ class ApmTest {
         given()
                 .when()
                 .auth().oauth2(keycloakClient.getAccessToken(USER))
-                .header("apm-principal-token", "XXXXX")
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
                 .contentType(APPLICATION_JSON)
                 .get("write")
                 .then()
-                .statusCode(Response.Status.OK.getStatusCode())
-                .contentType(APPLICATION_JSON);
+                .statusCode(Response.Status.OK.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(keycloakClient.getAccessToken(USER))
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-2")
+                .contentType(APPLICATION_JSON)
+                .get("write")
+                .then()
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 }

@@ -48,7 +48,7 @@
         <enforce-test-deps-scope.skip>${enforcer.skip}</enforce-test-deps-scope.skip>
 
         <!-- Quarkus configuration -->
-        <quarkus.version>3.5.2</quarkus.version>
+        <quarkus.version>3.5.3</quarkus.version>
         <quarkus.hibernate-orm.version>6.2.1.Final</quarkus.hibernate-orm.version>
         <quarkus.smallrye-open-api.version>3.7.0</quarkus.smallrye-open-api.version>
         <quarkiverse.quarkus-openapi-generator.version>2.2.14</quarkiverse.quarkus-openapi-generator.version>

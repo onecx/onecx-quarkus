@@ -9,12 +9,26 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-apm-parent</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>onecx-apm</artifactId>
+    <packaging>jar</packaging>
 
-    <modules>
-        <module>deployment</module>
-        <module>runtime</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-client-reactive</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

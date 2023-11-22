@@ -1,7 +1,26 @@
 [
   {
+    "id": "1",
+    "httpRequest": {
+      "headers": {
+        "!apm-principal-token": [ ".*" ]
+      },
+      "path": "/v3/applications/app-id/permissions"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {},
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
     "id": "2",
     "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-data-1" ]
+      },
       "path": "/v3/applications/app-id/permissions"
     },
     "httpResponse": {
@@ -9,6 +28,24 @@
         "type": "JSON",
         "json": {
           "resource1": ["admin-write", "roleX"],
+          "resource2": ["admin-write","admin-read"]
+        },
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "3",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-data-2" ]
+      },
+      "path": "/v3/applications/app-id/permissions"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
           "resource2": ["admin-write","admin-read"]
         },
         "contentType": "application/json"

@@ -24,6 +24,11 @@
             <artifactId>onecx-tenant</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.onecx.quarkus</groupId>
+            <artifactId>onecx-apm</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

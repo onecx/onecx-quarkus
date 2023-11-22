@@ -1,5 +1,8 @@
 package io.github.onecx.quarkus.apm.client;
 
+import java.util.HashMap;
+import java.util.List;
+
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -7,22 +10,23 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import io.github.onecx.quarkus.apm.ApmDefaultClientHeadersFactory;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.smallrye.mutiny.Uni;
 
 @Path("/")
-@RegisterRestClient(configKey = "onecx-apm")
+@RegisterRestClient(configKey = "onecx-apm-svc")
 @RegisterClientHeaders(ApmDefaultClientHeadersFactory.class)
 public interface ApmRestClient {
-    @GET
-    @Path("/v2/applications/{applicationNamespaceId}/permissions")
-    @Produces(MediaType.APPLICATION_JSON)
-    Uni<Response> getPermissionsForTokenV2(
-            @PathParam("applicationNamespaceId") String applicationNamespaceId);
 
     @GET
-    @Path("/v3/applications/{applicationNamespaceId}/permissions")
     @Produces(MediaType.APPLICATION_JSON)
-    Uni<Response> getPermissionsForTokenV3(
+    @Path("/{version}/applications/{applicationNamespaceId}/permissions")
+    Uni<Response> getPermissionsForToken(
+            @PathParam("version") String version,
             @PathParam("applicationNamespaceId") String applicationNamespaceId);
+
+    @RegisterForReflection
+    class PermissionDTOV3 extends HashMap<String, List<String>> {
+
+    }
 }

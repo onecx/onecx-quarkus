@@ -9,7 +9,5 @@ import io.smallrye.mutiny.Uni;
 @Unremovable
 public interface PermissionClientService {
 
-    void init(ApmConfig config, String applicationId);
-
-    Uni<List<String>> getPermissions(SecurityIdentity identity);
+    Uni<List<String>> getPermissions(SecurityIdentity identity) throws OnecxApmErrorException;
 }

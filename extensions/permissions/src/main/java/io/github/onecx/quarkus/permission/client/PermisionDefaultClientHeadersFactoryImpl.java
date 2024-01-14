@@ -5,9 +5,9 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.eclipse.microprofile.rest.client.ext.DefaultClientHeadersFactoryImpl;
-import org.tkit.quarkus.rs.context.RestContextHeaderContainer;
 
 import io.github.onecx.quarkus.permission.PermissionConfig;
+import io.github.onecx.quarkus.permission.RequestHeaderContainer;
 
 @ApplicationScoped
 public class PermisionDefaultClientHeadersFactoryImpl extends DefaultClientHeadersFactoryImpl {
@@ -16,7 +16,7 @@ public class PermisionDefaultClientHeadersFactoryImpl extends DefaultClientHeade
     PermissionConfig config;
 
     @Inject
-    RestContextHeaderContainer headerContainer;
+    RequestHeaderContainer headerContainer;
 
     @Override
     public MultivaluedMap<String, String> update(MultivaluedMap<String, String> incomingHeaders,

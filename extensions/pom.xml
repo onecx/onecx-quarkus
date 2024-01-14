@@ -16,7 +16,7 @@
         <module>core</module>
         <module>tenant</module>
         <module>parameters</module>
-        <module>apm</module>
+        <module>permissions</module>
     </modules>
 
 </project>

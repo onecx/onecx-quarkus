@@ -22,7 +22,7 @@ public class OnecxRestCustomTenantResolver implements RestCustomTenantResolver {
         var token = containerRequestContext.getHeaders().getFirst(config.tokenHeaderParam());
         if (token == null) {
             throw new OnecxTenantException(ErrorKeys.ERROR_MISSING_HEADER_APM_TOKEN,
-                    "APM token principal is mandatory. Header: " + config.tokenHeaderParam());
+                    "Tenant token principal is mandatory. Header: " + config.tokenHeaderParam());
         }
 
         return tenantService.getTenant(token);

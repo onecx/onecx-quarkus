@@ -14,7 +14,7 @@
 
     <modules>
         <module>parameters</module>
-        <module>apm</module>
+        <module>permissions</module>
     </modules>
 
     <properties>

@@ -27,22 +27,31 @@ To use the extension you need to set the url to parameters management backend:
 
 ```properties
 # disable or enable the extension  
-onecx.permission.enabled=true
+onecx.permissions.enabled=true
 # application ID for the APM service 
-onecx.permission.application-id=${quarkus.application.name}
+onecx.permissions.application-id=${quarkus.application.name}
 # APM principal header parameter.
-onecx.permission.token-header-param=apm-principal-token
+onecx.permissions.token-header-param=apm-principal-token
 # Name of the permission module. @PermissionsAllowed(value = "onecx:resource1#admin-write")
-onecx.permission.name=onecx
+onecx.permissions.name=onecx
 # Separator for resource and action. <resource>#<action>
-onecx.permission.key-separator=#
+onecx.permissions.key-separator=#
 # disable or enable mock data for permission
-onecx.permission.mock.enabled=false
+onecx.permissions.mock.enabled=false
 # list of permissions for principal role
 # for example: 
 #  onecx.permission.mock.data.role1.resources.resource1=admin-write,read
 #  onecx.permission.mock.data.role2.resources.resource2=read 
-onecx.permission.mock.data.<role>.resources.<action>=<list-of-permissions>
+onecx.permissions.mock.data.<role>.resources.<action>=<list-of-permissions>
+```
+
+Build time properties
+
+```properties
+# enable or disable mapping of the @PermissionAllowed from interface to implementation class
+onecx.permissions.mapping-annotation.enabled=true
+# mapping only the classes from packages
+onecx.permissions.mapping-annotation.packages=io.github.onecx,gen.io.github.onecx
 ```
 
 Rest client configuration property: `quarkus.rest-client.onecx-permission`

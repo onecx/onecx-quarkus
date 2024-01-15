@@ -32,7 +32,7 @@ class RoleRestControllerTest {
                 .contentType(APPLICATION_JSON)
                 .get("2")
                 .then()
-                .statusCode(Response.Status.OK.getStatusCode());
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
 
         given()
                 .when()

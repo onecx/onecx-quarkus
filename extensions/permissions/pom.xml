@@ -9,25 +9,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-permissions</artifactId>
+    <artifactId>onecx-permissions-parent</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-reactive</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>deployment</module>
+        <module>runtime</module>
+    </modules>
 
 </project>

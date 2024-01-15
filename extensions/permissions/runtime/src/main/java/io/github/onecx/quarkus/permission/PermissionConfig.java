@@ -9,7 +9,7 @@ import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
 import io.smallrye.config.WithName;
 
-@ConfigMapping(prefix = "onecx.permission")
+@ConfigMapping(prefix = "onecx.permissions")
 public interface PermissionConfig {
 
     @WithName(value = "application-id")

@@ -22,6 +22,6 @@ public class TestImplTest {
                 .contentType(APPLICATION_JSON)
                 .get("1")
                 .then()
-                .statusCode(Response.Status.OK.getStatusCode());
+                .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 }

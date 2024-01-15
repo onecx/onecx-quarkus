@@ -57,6 +57,8 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
                     StringPermission possessedPermission = new StringPermission(config.name(), actions.toArray(new String[0]));
                     return QuarkusSecurityIdentity.builder(identity)
                             .addPermissionChecker(requiredPermission -> {
+                                System.out.println("#CHECK# PERMISSION " + requiredPermission.getName() + "-"
+                                        + requiredPermission.getActions());
                                 boolean accessGranted = possessedPermission.implies(requiredPermission);
                                 return Uni.createFrom().item(accessGranted);
                             })

@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>io.github.onecx.quarkus</groupId>
+            <artifactId>onecx-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.onecx.quarkus</groupId>
             <artifactId>onecx-permissions</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -51,6 +56,14 @@
             <artifactId>quarkus-mockserver</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
 
         <!-- TEST -->
         <dependency>
@@ -65,6 +78,62 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.2.0</version>
+                <configuration>
+                    <generatorName>jaxrs-spec</generatorName>
+                    <modelNameSuffix>DTO</modelNameSuffix>
+                    <generateApiTests>false</generateApiTests>
+                    <generateApiDocumentation>false</generateApiDocumentation>
+                    <generateModelTests>false</generateModelTests>
+                    <generateModelDocumentation>false</generateModelDocumentation>
+                    <generateSupportingFiles>false</generateSupportingFiles>
+                    <addCompileSourceRoot>true</addCompileSourceRoot>
+                    <library>quarkus</library>
+                    <configOptions>
+                        <sourceFolder>/</sourceFolder>
+                        <openApiNullable>false</openApiNullable>
+                        <returnResponse>true</returnResponse>
+                        <useTags>true</useTags>
+                        <interfaceOnly>true</interfaceOnly>
+                        <serializableModel>true</serializableModel>
+                        <singleContentTypes>true</singleContentTypes>
+                        <dateLibrary>java8</dateLibrary>
+                        <useMicroProfileOpenAPIAnnotations>true</useMicroProfileOpenAPIAnnotations>
+                        <useJakartaEe>true</useJakartaEe>
+                        <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                        <java17>true</java17>
+                    </configOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>internal</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>src/main/openapi/example-openapi.yaml</inputSpec>
+                            <apiPackage>gen.io.github.onecx.quarkus.permission.example</apiPackage>
+                            <modelPackage>gen.io.github.onecx.quarkus.permission.example.model</modelPackage>
+                            <modelNameSuffix>DTO</modelNameSuffix>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.onecx.quarkus</groupId>
+                        <artifactId>onecx-core</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

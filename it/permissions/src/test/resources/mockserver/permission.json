@@ -52,7 +52,28 @@
           "appId": "app-id",
           "permissions": {
             "resource2": ["admin-write","admin-read"]
-          },
+          }
+        },
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "4",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-data-x-1" ]
+      },
+      "path": "/v1/permissions/user/application/app-id"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "appId": "app-id",
+          "permissions": {
+            "role": ["read"]
+          }
         },
         "contentType": "application/json"
       }

@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.apm;
+package io.github.onecx.quarkus.it.permision;
 
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -14,7 +14,7 @@ import io.quarkus.test.keycloak.client.KeycloakTestClient;
 
 @QuarkusTest
 @TestHTTPEndpoint(TestRestController.class)
-class PermissionTest {
+class TestRestControllerTest {
 
     KeycloakTestClient keycloakClient = new KeycloakTestClient();
 

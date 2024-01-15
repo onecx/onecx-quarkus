@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.it.apm;
+package io.github.onecx.quarkus.it.permision;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;

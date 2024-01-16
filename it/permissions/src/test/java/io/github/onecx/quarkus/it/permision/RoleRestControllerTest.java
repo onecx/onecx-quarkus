@@ -21,10 +21,18 @@ class RoleRestControllerTest {
     private static final String USER = "bob";
 
     private static final String APM_PRINCIPAL_TOKEN_HEADER = ConfigProvider.getConfig()
-            .getValue("%test.onecx.permission.token-header-param", String.class);
+            .getValue("%test.onecx.permissions.token-header-param", String.class);
 
     @Test
     void getTest() {
+        given()
+                .when()
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
+                .contentType(APPLICATION_JSON)
+                .get("3")
+                .then()
+                .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+
         given()
                 .when()
                 .auth().oauth2(keycloakClient.getAccessToken(USER))

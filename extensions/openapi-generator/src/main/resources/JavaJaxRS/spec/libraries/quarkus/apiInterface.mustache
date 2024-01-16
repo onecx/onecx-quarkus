@@ -1,8 +1,8 @@
     {{#useGzipFeature}}
     @GZIP
     {{/useGzipFeature}}
-    {{#vendorExtensions.x-onecx}}{{#permissions.0}}
-    @io.quarkus.security.PermissionsAllowed({ {{#permissions}}"onecx:{{.}}"{{^-last}}, {{/-last}}{{/permissions}} }){{/permissions.0}}{{/vendorExtensions.x-onecx}}
+    {{#vendorExtensions.x-onecx.permissions}}
+    @io.quarkus.security.PermissionsAllowed({ {{#entrySet}}{{#value}}"onecx:{{key}}#{{.}}"{{^-last}}, {{/-last}}{{/value}}{{/entrySet}} }){{/vendorExtensions.x-onecx.permissions}}
     @{{httpMethod}}{{#subresourceOperation}}
     @Path("{{{path}}}"){{/subresourceOperation}}{{#hasConsumes}}
     @Consumes({ {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}} }){{/hasConsumes}}{{#hasProduces}}

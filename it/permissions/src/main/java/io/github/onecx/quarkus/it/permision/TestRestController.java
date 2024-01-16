@@ -7,12 +7,17 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.quarkus.security.PermissionsAllowed;
 
 @Path("test")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TestRestController {
+
+    private static final Logger log = LoggerFactory.getLogger(TestRestController.class);
 
     @Context
     HttpHeaders httpHeaders;
@@ -27,7 +32,7 @@ public class TestRestController {
     @Path("admin")
     @RolesAllowed("role-admin")
     public Response admin() {
-        System.out.println("##  " + httpHeaders.getRequestHeaders());
+        log.info("##  {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 
@@ -35,7 +40,7 @@ public class TestRestController {
     @Path("write")
     @PermissionsAllowed(value = "onecx:resource1#admin-write")
     public Response adminWrite() {
-        System.out.println("##  " + httpHeaders.getRequestHeaders());
+        log.info("##  {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 }

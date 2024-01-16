@@ -17,6 +17,7 @@
         <module>tenant</module>
         <module>parameters</module>
         <module>permissions</module>
+        <module>openapi-generator</module>
     </modules>
 
 </project>

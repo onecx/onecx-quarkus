@@ -32,9 +32,10 @@ Include the component in your project by including the corresponding dependency.
 
 :information_source: Some component come with additional documentation and configuration - check the 'Documentation' link for particular section.
 
-| Name      | ArtifactId      | Description                            | Documentation                |
-|-----------|-----------------|----------------------------------------|------------------------------|
-| Parameter | onecx-parameter | OneCX Parameter Service Extension      | [Doc](extensions/parameters) |
-| Apm       | onecx-apm       | OneCX APM Permission Service Extension | [Doc](extensions/apm)        |
-| Tenant    | onecx-tenant    | OneCX Tenant Service Extension         | [Doc](extensions/tenant)     |
+| Name              | ArtifactId              | Description                                    | Documentation                       |
+|-------------------|-------------------------|------------------------------------------------|-------------------------------------|
+| Parameters       | onecx-parameters        | OneCX Parameter Service Extension              | [Doc](extensions/parameters)        |
+| Tenant            | onecx-tenant            | OneCX Tenant Service Extension                 | [Doc](extensions/tenant)            |
+| Permissions       | onecx-permissions       | OneCX Permission Service Extension             | [Doc](extensions/permissions)       |
+| OpenApi Generator | onecx-openapi-generator | OpenApi Generator Template Extension | [Doc](extensions/openapi-generator) |
 

@@ -12,8 +12,10 @@ paths:
     post:
       x-onecx:
         permissions:
-          - role#read
-          - role#write
+          role:
+            - read
+            - write
+            - all
       tags:
         - roleInternal
       description: Create new role
@@ -47,7 +49,8 @@ paths:
     get:
       x-onecx:
         permissions:
-          - role#read
+          role:
+            - read
       tags:
         - roleInternal
       description: Return role by ID
@@ -70,7 +73,8 @@ paths:
     put:
       x-onecx:
         permissions:
-          - role#write
+          role:
+            - write
       tags:
         - roleInternal
       description: Update role by ID
@@ -105,7 +109,9 @@ paths:
     delete:
       x-onecx:
         permissions:
-          - role#delete
+          role:
+            - delete
+            - all
       tags:
         - roleInternal
       description: Delete role by ID

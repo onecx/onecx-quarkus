@@ -121,13 +121,16 @@
                             <apiPackage>gen.io.github.onecx.quarkus.permission.example</apiPackage>
                             <modelPackage>gen.io.github.onecx.quarkus.permission.example.model</modelPackage>
                             <modelNameSuffix>DTO</modelNameSuffix>
+                            <configOptions>
+                                <x1>123</x1>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
                 <dependencies>
                     <dependency>
                         <groupId>io.github.onecx.quarkus</groupId>
-                        <artifactId>onecx-permissions</artifactId>
+                        <artifactId>onecx-openapi-generator</artifactId>
                         <version>${project.version}</version>
                     </dependency>
                 </dependencies>

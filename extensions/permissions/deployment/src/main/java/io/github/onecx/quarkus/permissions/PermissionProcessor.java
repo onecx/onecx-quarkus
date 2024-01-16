@@ -151,9 +151,7 @@ public class PermissionProcessor {
 
     private static boolean isNotPackage(PermissionBuildTimeConfig config, DotName name) {
         var n = name.toString();
-
         Optional<String> add = config.mapping.packages.stream().filter(n::startsWith).findFirst();
-        System.out.println("CHECK " + n + " RESULT: " + add.isEmpty());
         return add.isEmpty();
     }
 

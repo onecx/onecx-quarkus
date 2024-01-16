@@ -7,10 +7,8 @@ import gen.io.github.onecx.quarkus.permission.example.RoleInternalApi;
 import gen.io.github.onecx.quarkus.permission.example.model.CreateRoleRequestDTO;
 import gen.io.github.onecx.quarkus.permission.example.model.RoleSearchCriteriaDTO;
 import gen.io.github.onecx.quarkus.permission.example.model.UpdateRoleRequestDTO;
-import io.quarkus.security.Authenticated;
 
 @ApplicationScoped
-@Authenticated
 public class RoleRestController implements RoleInternalApi {
 
     @Override

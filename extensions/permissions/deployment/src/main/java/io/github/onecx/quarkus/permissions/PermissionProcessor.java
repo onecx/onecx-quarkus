@@ -29,7 +29,8 @@ public class PermissionProcessor {
 
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
-    void buildImplPermissions(PermissionBuildTimeConfig config, BeanArchiveIndexBuildItem ci, SecurityCheckRecorder recorder,
+    void buildImplPermissions(PermissionBuildTimeConfig config, BeanArchiveIndexBuildItem ci,
+            SecurityCheckRecorder recorder,
             BuildProducer<AdditionalSecurityCheckBuildItem> additionalSecurityChecks) {
 
         if (!config.mapping.enabled) {

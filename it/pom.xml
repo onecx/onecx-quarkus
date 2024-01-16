@@ -15,6 +15,7 @@
     <modules>
         <module>parameters</module>
         <module>permissions</module>
+        <module>permissions-mock</module>
     </modules>
 
     <properties>

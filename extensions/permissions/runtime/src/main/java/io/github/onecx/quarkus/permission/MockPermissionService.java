@@ -15,7 +15,7 @@ import io.smallrye.mutiny.Uni;
 public class MockPermissionService {
 
     @Inject
-    PermissionConfig config;
+    PermissionRuntimeConfig config;
 
     public Uni<SecurityIdentity> getMockData(SecurityIdentity identity) {
         if (identity.getPrincipal() == null) {
@@ -29,13 +29,15 @@ public class MockPermissionService {
 
         List<String> mockData = new ArrayList<>();
         roles.forEach(role -> {
-            PermissionConfig.MockPermissionConfig data = config.mock().data().get(role);
-            data.resources().forEach((resource, actions) -> {
-                mockData.addAll(actions.stream().map(action -> resource + config.keySeparator() + action).toList());
-            });
+            var data = config.mock.roles.get(role);
+            if (data != null) {
+                data.forEach((resource, actions) -> {
+                    mockData.addAll(actions.stream().map(action -> resource + config.keySeparator + action).toList());
+                });
+            }
         });
 
-        StringPermission mockPermissions = new StringPermission(config.name(), mockData.toArray(new String[0]));
+        StringPermission mockPermissions = new StringPermission(config.name, mockData.toArray(new String[0]));
         return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
                 .addPermissionChecker(requiredPermission -> {
                     boolean accessGranted = mockPermissions.implies(requiredPermission);

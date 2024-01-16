@@ -14,7 +14,7 @@ public class PermissionBuildTimeConfig {
      * Mapping annotation configuration.
      */
     @ConfigItem(name = "mapping-annotation")
-    public MappingBuildTimeConfig mapping;
+    public MappingBuildTimeConfig mapping = new MappingBuildTimeConfig();
 
     /**
      * Mapping @PermissionsAllowed from interface to implementation class

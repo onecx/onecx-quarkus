@@ -8,7 +8,6 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 
-import gen.io.github.onecx.quarkus.permission.example.model.RoleSearchCriteriaDTO;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.keycloak.client.KeycloakTestClient;
@@ -36,7 +35,7 @@ class RoleRestControllerTest {
 
         given()
                 .when()
-                .auth().oauth2(keycloakClient.getAccessToken(USER))
+                .auth().oauth2(keycloakClient.getAccessToken("alice"))
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
                 .contentType(APPLICATION_JSON)
                 .get("2")
@@ -51,19 +50,6 @@ class RoleRestControllerTest {
                 .get("1")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    void getSearchTest() {
-        var dto = new RoleSearchCriteriaDTO();
-
-        given()
-                .when()
-                .contentType(APPLICATION_JSON)
-                .body(dto)
-                .post("search")
-                .then()
-                .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 
 }

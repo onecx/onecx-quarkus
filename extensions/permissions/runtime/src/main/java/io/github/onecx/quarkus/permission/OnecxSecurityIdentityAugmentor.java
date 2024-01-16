@@ -19,7 +19,7 @@ import io.vertx.ext.web.RoutingContext;
 public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor {
 
     @Inject
-    PermissionConfig config;
+    PermissionRuntimeConfig config;
 
     @Inject
     RequestHeaderContainer headerContainer;
@@ -34,13 +34,16 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
     @ActivateRequestContext
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
 
-        if (!config.enabled()) {
-            return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
-                    .addPermissionChecker(permission -> Uni.createFrom().item(true))
-                    .build());
+        if (!config.enabled) {
+            if (config.allowAll) {
+                return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
+                        .addPermissionChecker(permission -> Uni.createFrom().item(true))
+                        .build());
+            }
+            return Uni.createFrom().item(identity);
         }
 
-        if (config.mock().enabled()) {
+        if (config.mock.enabled) {
             return mockPermissionService.getMockData(identity);
         }
 
@@ -50,11 +53,11 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
         }
 
         headerContainer.setContainerRequestContext(routingContext.request());
-        var requestPermissionToken = routingContext.request().getHeader(config.permissionTokenHeaderParam());
+        var requestPermissionToken = routingContext.request().getHeader(config.requestTokenHeaderParam);
 
-        return service.getPermissions(config.applicationId(), requestPermissionToken)
+        return service.getPermissions(config.applicationId, requestPermissionToken)
                 .onItem().transform(actions -> {
-                    StringPermission possessedPermission = new StringPermission(config.name(), actions.toArray(new String[0]));
+                    StringPermission possessedPermission = new StringPermission(config.name, actions.toArray(new String[0]));
                     return QuarkusSecurityIdentity.builder(identity)
                             .addPermissionChecker(requiredPermission -> {
                                 boolean accessGranted = possessedPermission.implies(requiredPermission);

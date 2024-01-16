@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import io.github.onecx.quarkus.permission.PermissionConfig;
+import io.github.onecx.quarkus.permission.PermissionRuntimeConfig;
 import io.quarkus.arc.Unremovable;
 import io.quarkus.cache.CacheResult;
 import io.smallrye.mutiny.Uni;
@@ -22,7 +22,7 @@ public class PermissionClientService {
     OnecxPermissionRestClient client;
 
     @Inject
-    PermissionConfig config;
+    PermissionRuntimeConfig config;
 
     @CacheResult(cacheName = "onecx-permissions")
     public Uni<List<String>> getPermissions(String appName, String token) {
@@ -33,7 +33,7 @@ public class PermissionClientService {
                     List<String> result = new ArrayList<>();
                     response.permissions.forEach((resource, actions) -> {
                         if (actions != null && !actions.isEmpty()) {
-                            actions.forEach(action -> result.add(resource + config.keySeparator() + action));
+                            actions.forEach(action -> result.add(resource + config.keySeparator + action));
                         }
                     });
 

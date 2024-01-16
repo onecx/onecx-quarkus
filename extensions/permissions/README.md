@@ -40,9 +40,9 @@ onecx.permissions.key-separator=#
 onecx.permissions.mock.enabled=false
 # list of permissions for principal role
 # for example: 
-#  onecx.permission.mock.data.roles.role1.resources.resource1=admin-write,read
-#  onecx.permission.mock.data.roles.role2.resources.resource2=read 
-onecx.permissions.mock.data.roles.<role>.resources.<resource>=<list-of-actions>
+#  onecx.permission.mock.data.roles.role1.resource1=admin-write,read
+#  onecx.permission.mock.data.roles.role2.resource2=read 
+onecx.permissions.mock.data.roles.<role>.<resource>=<list-of-actions>
 ```
 
 Build time properties

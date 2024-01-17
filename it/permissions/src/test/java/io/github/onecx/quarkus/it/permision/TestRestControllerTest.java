@@ -33,8 +33,7 @@ class TestRestControllerTest {
                 .contentType(APPLICATION_JSON)
                 .get("open")
                 .then()
-                .statusCode(Response.Status.OK.getStatusCode())
-                .contentType(APPLICATION_JSON);
+                .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 
     @Test

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <!-- MODEL -->
+    <MODEL guid="default-1" optlock="0" data="data1" tenant_id="default" />
+    <MODEL guid="default-2" optlock="0" data="data2" tenant_id="default" />
+    <MODEL guid="default-3" optlock="0" data="data3" tenant_id="default" />
+
+    <MODEL guid="100-1" optlock="0" data="data1-100" tenant_id="100" />
+    <MODEL guid="100-2" optlock="0" data="data2-100" tenant_id="100" />
+
+    <MODEL guid="200-1" optlock="0" data="data1-200" tenant_id="200" />
+    <MODEL guid="200-2" optlock="0" data="data2-200" tenant_id="200" />
+    <MODEL guid="200-3" optlock="0" data="data3-200" tenant_id="200" />
+    <MODEL guid="200-4" optlock="0" data="data3-200" tenant_id="200" />
+</dataset>

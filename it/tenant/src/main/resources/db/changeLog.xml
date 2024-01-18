@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="dev (generated)" id="1699550634274-1">
+
+        <createTable tableName="model">
+            <column name="optlock" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="modificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="data" type="VARCHAR(255)"/>
+            <column name="guid" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="model_pkey"/>
+            </column>
+            <column name="creationuser" type="VARCHAR(255)"/>
+            <column name="modificationuser" type="VARCHAR(255)"/>
+            <column name="tenant_id" type="varchar(255 BYTE)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

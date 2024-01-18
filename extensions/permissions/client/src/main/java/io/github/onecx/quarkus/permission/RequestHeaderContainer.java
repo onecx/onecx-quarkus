@@ -14,8 +14,15 @@ public class RequestHeaderContainer {
     private static final MultivaluedHashMap<String, String> EMPTY_MAP = new MultivaluedHashMap<>();
     private HttpServerRequest requestContext;
 
-    void setContainerRequestContext(HttpServerRequest requestContext) {
+    private String tokenHeaderParam;
+
+    void setContainerRequestContext(HttpServerRequest requestContext, String tokenHeaderParam) {
         this.requestContext = requestContext;
+        this.tokenHeaderParam = tokenHeaderParam;
+    }
+
+    public String getTokenHeaderParam() {
+        return tokenHeaderParam;
     }
 
     public MultivaluedMap<String, String> getHeaders() {

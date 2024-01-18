@@ -6,14 +6,10 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.eclipse.microprofile.rest.client.ext.DefaultClientHeadersFactoryImpl;
 
-import io.github.onecx.quarkus.permission.PermissionRuntimeConfig;
 import io.github.onecx.quarkus.permission.RequestHeaderContainer;
 
 @ApplicationScoped
-public class PermisionDefaultClientHeadersFactoryImpl extends DefaultClientHeadersFactoryImpl {
-
-    @Inject
-    PermissionRuntimeConfig config;
+public class PermissionDefaultClientHeadersFactoryImpl extends DefaultClientHeadersFactoryImpl {
 
     @Inject
     RequestHeaderContainer headerContainer;
@@ -25,8 +21,9 @@ public class PermisionDefaultClientHeadersFactoryImpl extends DefaultClientHeade
         incomingHeaders = headerContainer.getHeaders();
         MultivaluedMap<String, String> propagatedHeaders = super.update(incomingHeaders, clientOutgoingHeaders);
 
-        var tokenHeaderParam = config.tokenHeaderParam;
-        if (!propagatedHeaders.containsKey(tokenHeaderParam) && incomingHeaders.containsKey(tokenHeaderParam)) {
+        var tokenHeaderParam = headerContainer.getTokenHeaderParam();
+        if (tokenHeaderParam != null && !propagatedHeaders.containsKey(tokenHeaderParam)
+                && incomingHeaders.containsKey(tokenHeaderParam)) {
             propagatedHeaders.put(tokenHeaderParam, incomingHeaders.get(tokenHeaderParam));
         }
 

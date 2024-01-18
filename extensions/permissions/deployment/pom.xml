@@ -17,6 +17,10 @@
             <artifactId>quarkus-arc-deployment</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkiverse.openapi.generator</groupId>
+            <artifactId>quarkus-openapi-generator-deployment</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.onecx.quarkus</groupId>
             <artifactId>onecx-permissions</artifactId>
             <version>${project.version}</version>

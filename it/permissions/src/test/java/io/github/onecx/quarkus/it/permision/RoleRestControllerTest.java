@@ -25,6 +25,55 @@ class RoleRestControllerTest {
             .getValue("%test.onecx.permissions.token-header-param", String.class);
 
     @Test
+    void errorTest() {
+        var token = keycloakClient.getAccessToken(USER);
+        given()
+                .when()
+                .auth().oauth2(token)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
+                .contentType(APPLICATION_JSON)
+                .get("1")
+                .then()
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(token)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
+                .contentType(APPLICATION_JSON)
+                .get("2")
+                .then()
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(token)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-1")
+                .contentType(APPLICATION_JSON)
+                .get("3")
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(token)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
+                .contentType(APPLICATION_JSON)
+                .get("4")
+                .then()
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(token)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-1")
+                .contentType(APPLICATION_JSON)
+                .get("5")
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
     void getTest() {
         given()
                 .when()

@@ -13,8 +13,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-cache</artifactId>
+            <groupId>io.github.onecx.quarkus</groupId>
+            <artifactId>onecx-permissions-client</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

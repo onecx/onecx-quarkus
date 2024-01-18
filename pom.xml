@@ -127,6 +127,11 @@
                 <version>${quarkiverse.quarkus-openapi-generator.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.quarkiverse.openapi.generator</groupId>
+                <artifactId>quarkus-openapi-generator-deployment</artifactId>
+                <version>${quarkiverse.quarkus-openapi-generator.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.quarkiverse.mockserver</groupId>
                 <artifactId>quarkus-mockserver</artifactId>
                 <version>${quarkiverse.mockserver.version}</version>

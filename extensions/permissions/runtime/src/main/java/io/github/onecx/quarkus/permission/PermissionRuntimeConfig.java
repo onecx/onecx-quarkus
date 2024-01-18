@@ -20,6 +20,12 @@ public class PermissionRuntimeConfig {
     public boolean enabled;
 
     /**
+     * Enable interface mapping
+     */
+    @ConfigItem(name = "cache-enabled", defaultValue = "true")
+    public boolean cacheEnabled;
+
+    /**
      * Allow all permissions
      */
     @ConfigItem(name = "allow-all", defaultValue = "false")

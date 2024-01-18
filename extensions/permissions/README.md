@@ -28,6 +28,8 @@ To use the extension you need to set the url to parameters management backend:
 ```properties
 # disable or enable the extension  
 onecx.permissions.enabled=true
+# disable or enable cache for permission
+onecx.permissions.cache-enabled=true
 # application ID for the APM service 
 onecx.permissions.application-id=${quarkus.application.name}
 # APM principal header parameter.

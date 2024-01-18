@@ -52,18 +52,25 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return Uni.createFrom().item(identity);
         }
 
-        headerContainer.setContainerRequestContext(routingContext.request());
+        headerContainer.setContainerRequestContext(routingContext.request(), config.tokenHeaderParam);
         var requestPermissionToken = routingContext.request().getHeader(config.requestTokenHeaderParam);
 
-        return service.getPermissions(config.applicationId, requestPermissionToken)
-                .onItem().transform(actions -> {
+        return service.getPermissions(config.applicationId, requestPermissionToken, config.keySeparator, config.cacheEnabled)
+                .onItem().transformToUni(response -> {
+                    if (response == null) {
+                        return Uni.createFrom().item(identity);
+                    }
+                    var actions = response.getActions();
+                    if (actions == null) {
+                        return Uni.createFrom().item(identity);
+                    }
                     StringPermission possessedPermission = new StringPermission(config.name, actions.toArray(new String[0]));
-                    return QuarkusSecurityIdentity.builder(identity)
+                    return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
                             .addPermissionChecker(requiredPermission -> {
                                 boolean accessGranted = possessedPermission.implies(requiredPermission);
                                 return Uni.createFrom().item(accessGranted);
                             })
-                            .build();
-                });
+                            .build());
+                }).onFailure().recoverWithItem(identity);
     }
 }

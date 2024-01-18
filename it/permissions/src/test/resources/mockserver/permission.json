@@ -78,5 +78,27 @@
         "contentType": "application/json"
       }
     }
+  },
+  {
+    "id": "5",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-data-x-2" ]
+      },
+      "path": "/v1/permissions/user/application/app-id"
+    },
+    "httpResponse": {
+      "statusCode": 404,
+      "body": {
+        "type": "JSON",
+        "json": {
+          "appId": "app-id",
+          "permissions": {
+            "role": ["read"]
+          }
+        },
+        "contentType": "application/json"
+      }
+    }
   }
 ]

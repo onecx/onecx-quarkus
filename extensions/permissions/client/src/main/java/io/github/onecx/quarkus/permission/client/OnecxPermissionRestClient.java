@@ -1,10 +1,13 @@
 package io.github.onecx.quarkus.permission.client;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
@@ -14,8 +17,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.smallrye.mutiny.Uni;
 
 @Path("/v1/permissions/user/application/{appId}")
-@RegisterRestClient(configKey = "onecx-permission")
-@RegisterClientHeaders(PermisionDefaultClientHeadersFactoryImpl.class)
+@RegisterRestClient(configKey = "onecx_permission")
+@RegisterClientHeaders(PermissionDefaultClientHeadersFactoryImpl.class)
 public interface OnecxPermissionRestClient {
 
     @POST
@@ -32,6 +35,6 @@ public interface OnecxPermissionRestClient {
 
         public String appId;
 
-        public Map<String, Set<String>> permissions = new HashMap<>();
+        public Map<String, List<String>> permissions = new HashMap<>();
     }
 }

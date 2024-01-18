@@ -11,6 +11,8 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import gen.io.github.onecx.permission.api.PermissionApi;
+import gen.io.github.onecx.permission.model.PermissionRequest;
 import io.quarkus.arc.Unremovable;
 import io.quarkus.cache.*;
 import io.smallrye.mutiny.Uni;
@@ -23,7 +25,7 @@ public class PermissionClientService {
 
     @Inject
     @RestClient
-    OnecxPermissionRestClient client;
+    PermissionApi client;
 
     @CacheName("onecx-permissions")
     Cache cache;
@@ -40,16 +42,16 @@ public class PermissionClientService {
 
     public Uni<PermissionResponse> getPermissionsLocal(String appName, String token, String keySeparator) {
 
-        var request = new OnecxPermissionRestClient.PermissionRequestDTOV1();
-        request.token = token;
-        return client.getPermissionsForToken(appName, request)
+        return client.getApplicationPermissions(appName, new PermissionRequest().token(token))
                 .map(response -> {
                     List<String> result = new ArrayList<>();
-                    response.permissions.forEach((resource, actions) -> {
-                        if (actions != null && !actions.isEmpty()) {
-                            actions.forEach(action -> result.add(resource + keySeparator + action));
-                        }
-                    });
+                    if (response.getPermissions() != null) {
+                        response.getPermissions().forEach((resource, actions) -> {
+                            if (actions != null && !actions.isEmpty()) {
+                                actions.forEach(action -> result.add(resource + keySeparator + action));
+                            }
+                        });
+                    }
                     return PermissionResponse.create(result);
                 })
                 .onFailure().invoke(t -> {

@@ -14,8 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.tkit.quarkus.lib</groupId>
-            <artifactId>tkit-quarkus-log-cdi-deployment</artifactId>
+        <groupId>org.tkit.quarkus.lib</groupId>
+        <artifactId>tkit-quarkus-log-cdi-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.onecx.quarkus</groupId>

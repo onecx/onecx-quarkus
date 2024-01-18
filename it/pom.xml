@@ -14,7 +14,9 @@
 
     <modules>
         <module>parameters</module>
-        <module>apm</module>
+        <module>permissions</module>
+        <module>permissions-mock</module>
+        <module>tenant</module>
     </modules>
 
     <properties>

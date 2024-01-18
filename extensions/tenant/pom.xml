@@ -21,6 +21,10 @@
             <artifactId>quarkus-cache</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkiverse.openapi.generator</groupId>
+            <artifactId>quarkus-openapi-generator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-jwt</artifactId>
         </dependency>
@@ -33,5 +37,44 @@
             <artifactId>quarkus-rest-client-reactive</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>generate-code</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>permissions</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>
+                                https://raw.githubusercontent.com/onecx/onecx-tenant-svc/main/src/main/openapi/tenant-svc-openapi-v1.yaml
+                            </url>
+                            <outputDirectory>target/tmp/openapi</outputDirectory>
+                            <outputFileName>tenant-svc-openapi-v1.yaml</outputFileName>
+                            <skipCache>true</skipCache>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

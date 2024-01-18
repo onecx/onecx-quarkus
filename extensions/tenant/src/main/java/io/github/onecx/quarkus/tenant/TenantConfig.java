@@ -13,4 +13,11 @@ public interface TenantConfig {
     @WithName(value = "token-header-param")
     @WithDefault(value = "apm-principal-token")
     String tokenHeaderParam();
+
+    /**
+     * Enable or disable cache for the token
+     */
+    @WithName(value = "cache-enabled")
+    @WithDefault(value = "true")
+    boolean cacheEnabled();
 }

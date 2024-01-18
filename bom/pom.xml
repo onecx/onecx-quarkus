@@ -27,7 +27,12 @@
             </dependency>
             <dependency>
                 <groupId>io.github.onecx.quarkus</groupId>
-                <artifactId>onecx-apm</artifactId>
+                <artifactId>onecx-permissions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.onecx.quarkus</groupId>
+                <artifactId>onecx-openapi-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -1,0 +1,140 @@
+[
+  {
+    "id": "1",
+    "httpRequest": {
+      "headers": {
+        "!apm-principal-token": [ ".*" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "httpResponse": {
+      "statusCode": 404,
+      "body": {
+        "type": "JSON",
+        "json": {},
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "2",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-100" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "tenantId": "100"
+        },
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "3",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-200" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "tenantId": "200"
+        },
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "4",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-empty" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {},
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "51",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-response-count" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "times" : {
+      "remainingTimes" : 1,
+      "unlimited" : false
+    },
+    "priority" : 10,
+    "httpResponse": {
+      "statusCode": 404,
+      "body": {
+        "type": "JSON",
+        "json": {},
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "52",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-response-count" ]
+      },
+      "path": "/v1/tenant"
+    },
+    "times" : {
+      "remainingTimes" : 1,
+      "unlimited" : false
+    },
+    "priority" : 9,
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "tenantId": "200"
+        },
+        "contentType": "application/json"
+      }
+    }
+  },
+  {
+    "id": "53",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [
+          "token-response-count"
+        ]
+      },
+      "path": "/v1/tenant"
+    },
+    "times": {
+      "remainingTimes": 1,
+      "unlimited": false
+    },
+    "priority": 8,
+    "httpResponse": {
+      "statusCode": 404,
+      "body": {
+        "type": "JSON",
+        "json": {},
+        "contentType": "application/json"
+      }
+    }
+  }
+]

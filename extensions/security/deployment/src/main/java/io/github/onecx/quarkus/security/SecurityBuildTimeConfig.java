@@ -7,7 +7,7 @@ import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 
-@ConfigRoot(prefix = "onecx", name = "permissions", phase = ConfigPhase.BUILD_TIME)
+@ConfigRoot(prefix = "onecx", name = "security", phase = ConfigPhase.BUILD_TIME)
 public class SecurityBuildTimeConfig {
 
     /**

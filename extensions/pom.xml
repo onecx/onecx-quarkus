@@ -18,6 +18,7 @@
         <module>parameters</module>
         <module>permissions</module>
         <module>openapi-generator</module>
+        <module>security</module>
     </modules>
 
 </project>

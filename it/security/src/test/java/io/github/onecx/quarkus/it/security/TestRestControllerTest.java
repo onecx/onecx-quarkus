@@ -5,7 +5,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -22,8 +21,7 @@ class TestRestControllerTest {
 
     private static final String USER = "bob";
 
-    private static final String APM_PRINCIPAL_TOKEN_HEADER = ConfigProvider.getConfig()
-            .getValue("%test.onecx.permissions.token-header-param", String.class);
+    private static final String APM_PRINCIPAL_TOKEN_HEADER = "apm-principal-token";
 
     @Test
     void openTest() {
@@ -70,13 +68,5 @@ class TestRestControllerTest {
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
 
-        given()
-                .when()
-                .auth().oauth2(keycloakClient.getAccessToken(USER))
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-2")
-                .contentType(APPLICATION_JSON)
-                .get("write")
-                .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 }

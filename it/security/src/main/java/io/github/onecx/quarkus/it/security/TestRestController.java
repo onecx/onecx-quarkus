@@ -38,7 +38,7 @@ public class TestRestController {
 
     @GET
     @Path("write")
-    @PermissionsAllowed(value = "onecx:resource1#admin-write")
+    @PermissionsAllowed(value = "microprofile-jwt")
     public Response adminWrite() {
         log.info("##  {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();

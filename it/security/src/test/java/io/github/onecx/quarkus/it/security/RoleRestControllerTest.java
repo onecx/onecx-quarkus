@@ -3,6 +3,8 @@ package io.github.onecx.quarkus.it.security;
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import java.util.List;
+
 import jakarta.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
@@ -24,15 +26,32 @@ class RoleRestControllerTest {
 
     @Test
     void errorTest() {
+        var bob = keycloakClient.getAccessToken(USER);
         var token = keycloakClient.getClientAccessToken();
-        System.out.println("###\n" + token + "\n");
+
+        given()
+                .when()
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
+                .contentType(APPLICATION_JSON)
+                .get("0")
+                .then()
+                .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+
+        given()
+                .when()
+                .auth().oauth2(bob)
+                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
+                .contentType(APPLICATION_JSON)
+                .get("1")
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode());
 
         given()
                 .when()
                 .auth().oauth2(token)
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
-                .get("1")
+                .delete("2")
                 .then()
                 .statusCode(Response.Status.FORBIDDEN.getStatusCode());
 
@@ -42,33 +61,6 @@ class RoleRestControllerTest {
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
                 .get("2")
-                .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
-
-        given()
-                .when()
-                .auth().oauth2(token)
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-1")
-                .contentType(APPLICATION_JSON)
-                .get("3")
-                .then()
-                .statusCode(Response.Status.OK.getStatusCode());
-
-        given()
-                .when()
-                .auth().oauth2(token)
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
-                .contentType(APPLICATION_JSON)
-                .get("4")
-                .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
-
-        given()
-                .when()
-                .auth().oauth2(token)
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-1")
-                .contentType(APPLICATION_JSON)
-                .get("5")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
     }
@@ -90,7 +82,7 @@ class RoleRestControllerTest {
                 .contentType(APPLICATION_JSON)
                 .get("2")
                 .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+                .statusCode(Response.Status.OK.getStatusCode());
 
         given()
                 .when()

@@ -30,8 +30,8 @@ public class SecurityProcessor {
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
     void buildImplPermissions(SecurityBuildTimeConfig config, BeanArchiveIndexBuildItem ci,
-                              SecurityCheckRecorder recorder,
-                              BuildProducer<AdditionalSecurityCheckBuildItem> additionalSecurityChecks) {
+            SecurityCheckRecorder recorder,
+            BuildProducer<AdditionalSecurityCheckBuildItem> additionalSecurityChecks) {
 
         if (!config.mapping.enabled) {
             return;
@@ -74,6 +74,10 @@ public class SecurityProcessor {
                         }
                         var method = clas.method(methodInfo.name(), methodInfo.parameterTypes().toArray(new Type[0]));
                         if (method != null) {
+
+                            if (method.hasAnnotation(DotNames.PERMISSIONS_ALLOWED)) {
+                                continue;
+                            }
                             additionalSecurityChecks.produce(new AdditionalSecurityCheckBuildItem(method, e.getValue()));
                         }
                     }

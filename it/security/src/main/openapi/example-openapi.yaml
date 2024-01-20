@@ -55,7 +55,7 @@ paths:
           role:
             - read
       security:
-        - oauth2: [read]
+        - oauth2: [read, microprofile-jwt]
       tags:
         - roleInternal
       description: Return role by ID
@@ -173,6 +173,7 @@ components:
         clientCredentials:
           tokenUrl: https://oauth.simple.api/token
           scopes:
+            microprofile-jwt: test scope
             read: Grants read access
             write: Grants write access
             admin: Grants access to admin operations

@@ -16,6 +16,7 @@ public class RoleRestController implements RoleInternalApi {
     }
 
     @Override
+    //    @PermissionsAllowed({ "delete" })
     public Response deleteRole(String id) {
         return Response.ok().build();
     }

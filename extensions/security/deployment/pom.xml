@@ -4,12 +4,12 @@
 
     <parent>
         <groupId>io.github.onecx.quarkus</groupId>
-        <artifactId>onecx-permissions-parent</artifactId>
+        <artifactId>onecx-security-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-permissions-deployment</artifactId>
+    <artifactId>onecx-security-deployment</artifactId>
 
     <dependencies>
         <dependency>
@@ -17,38 +17,13 @@
             <artifactId>quarkus-arc-deployment</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkiverse.openapi.generator</groupId>
-            <artifactId>quarkus-openapi-generator-deployment</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.github.onecx.quarkus</groupId>
-            <artifactId>onecx-permissions</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.onecx.quarkus</groupId>
-            <artifactId>onecx-security-deployment</artifactId>
+            <artifactId>onecx-security</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-security-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-cache-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-reactive-jackson-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-reactive-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-vertx-deployment</artifactId>
         </dependency>
     </dependencies>
 

@@ -47,14 +47,7 @@ onecx.permissions.mock.enabled=false
 onecx.permissions.mock.data.roles.<role>.<resource>=<list-of-actions>
 ```
 
-Build time properties
 
-```properties
-# enable or disable mapping of the @PermissionAllowed from interface to implementation class
-onecx.permissions.mapping-annotation.enabled=true
-# mapping only the classes from packages
-onecx.permissions.mapping-annotation.packages=io.github.onecx,gen.io.github.onecx
-```
 
 Rest client configuration property: `quarkus.rest-client.onecx-permission`
 

@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.permissions;
+package io.github.onecx.quarkus.security;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 
 @ConfigRoot(prefix = "onecx", name = "permissions", phase = ConfigPhase.BUILD_TIME)
-public class PermissionBuildTimeConfig {
+public class SecurityBuildTimeConfig {
 
     /**
      * Mapping annotation configuration.

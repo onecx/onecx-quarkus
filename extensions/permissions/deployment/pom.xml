@@ -22,12 +22,12 @@
         </dependency>
         <dependency>
             <groupId>io.github.onecx.quarkus</groupId>
-            <artifactId>onecx-permissions</artifactId>
+            <artifactId>onecx-security-deployment</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.onecx.quarkus</groupId>
-            <artifactId>onecx-security-deployment</artifactId>
+            <artifactId>onecx-permissions</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

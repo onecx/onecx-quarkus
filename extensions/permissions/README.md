@@ -32,8 +32,6 @@ onecx.permissions.enabled=true
 onecx.permissions.cache-enabled=true
 # application ID for the APM service 
 onecx.permissions.application-id=${quarkus.application.name}
-# APM principal header parameter.
-onecx.permissions.token-header-param=apm-principal-token
 # Name of the permission module. @PermissionsAllowed(value = "onecx:resource1#admin-write")
 onecx.permissions.name=onecx
 # Separator for resource and action. <resource>#<action>

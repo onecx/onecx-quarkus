@@ -5,15 +5,14 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.eclipse.microprofile.rest.client.ext.DefaultClientHeadersFactoryImpl;
+import org.tkit.quarkus.rs.context.RestContextConfig;
 import org.tkit.quarkus.rs.context.RestContextHeaderContainer;
-
-import io.github.onecx.quarkus.tenant.TenantConfig;
 
 @ApplicationScoped
 public class TenantDefaultClientHeadersFactoryImpl extends DefaultClientHeadersFactoryImpl {
 
     @Inject
-    TenantConfig config;
+    RestContextConfig config;
 
     @Inject
     RestContextHeaderContainer headerContainer;
@@ -25,7 +24,7 @@ public class TenantDefaultClientHeadersFactoryImpl extends DefaultClientHeadersF
         incomingHeaders = headerContainer.getHeaders();
         MultivaluedMap<String, String> propagatedHeaders = super.update(incomingHeaders, clientOutgoingHeaders);
 
-        var tokenHeaderParam = config.tokenHeaderParam();
+        var tokenHeaderParam = config.token().tokenHeaderParam();
         if (!propagatedHeaders.containsKey(tokenHeaderParam) && incomingHeaders.containsKey(tokenHeaderParam)) {
             propagatedHeaders.put(tokenHeaderParam, incomingHeaders.get(tokenHeaderParam));
         }

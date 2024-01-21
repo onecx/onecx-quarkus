@@ -56,12 +56,6 @@ public class PermissionRuntimeConfig {
     public String keySeparator;
 
     /**
-     * Permissions APM token header parameter
-     */
-    @ConfigItem(name = "token-header-param", defaultValue = "apm-principal-token")
-    public String tokenHeaderParam;
-
-    /**
      * Mock configuration
      */
     @ConfigItem(name = "mock")

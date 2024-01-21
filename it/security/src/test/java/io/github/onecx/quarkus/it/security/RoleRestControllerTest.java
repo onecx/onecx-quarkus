@@ -3,8 +3,6 @@ package io.github.onecx.quarkus.it.security;
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import java.util.List;
-
 import jakarta.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;

@@ -44,10 +44,16 @@ public class PermissionRuntimeConfig {
     public String name;
 
     /**
-     * Permissions token header parameter.
+     * Permissions access token header parameter.
      */
     @ConfigItem(name = "request-token-from-header-param", defaultValue = HttpHeaders.AUTHORIZATION)
     public String requestTokenHeaderParam;
+
+    /**
+     * Permissions principal token header parameter.
+     */
+    @ConfigItem(name = "token-header-param", defaultValue = "${tkit.rs.context.token.header-param:apm-principal-token}")
+    public String principalTokenHeaderParam;
 
     /**
      * Permissions resource action separator.

@@ -17,6 +17,11 @@
             <artifactId>quarkus-arc-deployment</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.github.onecx.quarkus</groupId>
+            <artifactId>onecx-permissions</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.quarkiverse.openapi.generator</groupId>
             <artifactId>quarkus-openapi-generator-deployment</artifactId>
         </dependency>
@@ -26,17 +31,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.onecx.quarkus</groupId>
-            <artifactId>onecx-permissions</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-cache-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

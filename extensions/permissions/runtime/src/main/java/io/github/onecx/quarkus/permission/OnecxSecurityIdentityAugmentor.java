@@ -4,8 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
-import org.tkit.quarkus.rs.context.RestContextConfig;
-
 import io.github.onecx.quarkus.permission.client.PermissionClientService;
 import io.quarkus.arc.Unremovable;
 import io.quarkus.security.StringPermission;
@@ -32,9 +30,6 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
     @Inject
     MockPermissionService mockPermissionService;
 
-    @Inject
-    RestContextConfig restContextConfig;
-
     @Override
     @ActivateRequestContext
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
@@ -57,7 +52,7 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return Uni.createFrom().item(identity);
         }
 
-        headerContainer.setContainerRequestContext(routingContext.request(), restContextConfig.token().tokenHeaderParam());
+        headerContainer.setContainerRequestContext(routingContext.request(), config.principalTokenHeaderParam);
         var requestPermissionToken = routingContext.request().getHeader(config.requestTokenHeaderParam);
 
         return service.getPermissions(config.applicationId, requestPermissionToken, config.keySeparator, config.cacheEnabled)

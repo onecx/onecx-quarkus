@@ -27,6 +27,10 @@
             <artifactId>quarkus-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.tkit.quarkus.lib</groupId>
             <artifactId>tkit-quarkus-rest-context</artifactId>
         </dependency>
@@ -53,6 +57,7 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-extension-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
                 <executions>
                     <execution>
                         <goals>

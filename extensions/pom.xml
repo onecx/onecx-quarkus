@@ -15,10 +15,10 @@
     <modules>
         <module>core</module>
         <module>tenant</module>
+        <module>security</module>
         <module>parameters</module>
         <module>permissions</module>
         <module>openapi-generator</module>
-        <module>security</module>
     </modules>
 
 </project>

@@ -32,8 +32,6 @@ onecx.permissions.enabled=true
 onecx.permissions.cache-enabled=true
 # application ID for the APM service 
 onecx.permissions.application-id=${quarkus.application.name}
-# APM principal header parameter.
-onecx.permissions.token-header-param=apm-principal-token
 # Name of the permission module. @PermissionsAllowed(value = "onecx:resource1#admin-write")
 onecx.permissions.name=onecx
 # Separator for resource and action. <resource>#<action>
@@ -47,14 +45,7 @@ onecx.permissions.mock.enabled=false
 onecx.permissions.mock.data.roles.<role>.<resource>=<list-of-actions>
 ```
 
-Build time properties
 
-```properties
-# enable or disable mapping of the @PermissionAllowed from interface to implementation class
-onecx.permissions.mapping-annotation.enabled=true
-# mapping only the classes from packages
-onecx.permissions.mapping-annotation.packages=io.github.onecx,gen.io.github.onecx
-```
 
 Rest client configuration property: `quarkus.rest-client.onecx-permission`
 

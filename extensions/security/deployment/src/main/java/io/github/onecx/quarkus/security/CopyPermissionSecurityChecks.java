@@ -1,26 +1,12 @@
 // Original file: https://github.com/quarkusio/quarkus/blob/main/extensions/security/deployment/src/main/java/io/quarkus/security/deployment/PermissionSecurityChecks.java
-package io.github.onecx.quarkus.permissions;
+package io.github.onecx.quarkus.security;
 
 import java.lang.reflect.Modifier;
 import java.security.Permission;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
-import org.jboss.jandex.AnnotationInstance;
-import org.jboss.jandex.AnnotationTarget;
-import org.jboss.jandex.ClassInfo;
-import org.jboss.jandex.DotName;
-import org.jboss.jandex.IndexView;
-import org.jboss.jandex.MethodInfo;
-import org.jboss.jandex.Type;
+import org.jboss.jandex.*;
 
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.runtime.RuntimeValue;
@@ -41,8 +27,8 @@ interface CopyPermissionSecurityChecks {
         private static final DotName STRING_PERMISSION = DotName.createSimple(StringPermission.class);
         private static final DotName PERMISSIONS_ALLOWED_INTERCEPTOR = DotName
                 .createSimple(PermissionsAllowedInterceptor.class);
-        private final Map<MethodInfo, List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>>> methodToPermissionKeys = new HashMap<>();
-        private final Map<MethodInfo, CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate> methodToPredicate = new HashMap<>();
+        private final Map<MethodInfo, List<List<PermissionKey>>> methodToPermissionKeys = new HashMap<>();
+        private final Map<MethodInfo, LogicalAndPermissionPredicate> methodToPredicate = new HashMap<>();
         private final Map<String, MethodInfo> classSignatureToConstructor = new HashMap<>();
         private final SecurityCheckRecorder recorder;
 
@@ -54,14 +40,14 @@ interface CopyPermissionSecurityChecks {
             return new CopyPermissionSecurityChecks() {
                 @Override
                 public Map<MethodInfo, SecurityCheck> get() {
-                    final Map<PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate, SecurityCheck> cache = new HashMap<>();
+                    final Map<LogicalAndPermissionPredicate, SecurityCheck> cache = new HashMap<>();
                     final Map<MethodInfo, SecurityCheck> methodToCheck = new HashMap<>();
                     for (var methodToPredicate : methodToPredicate.entrySet()) {
                         SecurityCheck check = cache.computeIfAbsent(methodToPredicate.getValue(),
-                                new Function<PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate, SecurityCheck>() {
+                                new Function<LogicalAndPermissionPredicate, SecurityCheck>() {
                                     @Override
                                     public SecurityCheck apply(
-                                            PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate predicate) {
+                                            LogicalAndPermissionPredicate predicate) {
                                         return createSecurityCheck(predicate);
                                     }
                                 });
@@ -96,15 +82,15 @@ interface CopyPermissionSecurityChecks {
          *
          * @return PermissionSecurityChecksBuilder
          */
-        CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder createPermissionPredicates() {
-            Map<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey, CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper> permissionCache = new HashMap<>();
-            for (Map.Entry<MethodInfo, List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>>> entry : methodToPermissionKeys
+        PermissionSecurityChecksBuilder createPermissionPredicates() {
+            Map<PermissionCacheKey, PermissionWrapper> permissionCache = new HashMap<>();
+            for (Map.Entry<MethodInfo, List<List<PermissionKey>>> entry : methodToPermissionKeys
                     .entrySet()) {
                 final MethodInfo securedMethod = entry.getKey();
-                final CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate predicate = new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate();
+                final LogicalAndPermissionPredicate predicate = new LogicalAndPermissionPredicate();
 
                 // 'AND' operands
-                for (List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> permissionKeys : entry
+                for (List<PermissionKey> permissionKeys : entry
                         .getValue()) {
 
                     final boolean inclusive = isInclusive(permissionKeys);
@@ -113,7 +99,7 @@ interface CopyPermissionSecurityChecks {
                     if (inclusive) {
                         // 'AND' operands
 
-                        for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey : permissionKeys) {
+                        for (PermissionKey permissionKey : permissionKeys) {
                             var permission = createPermission(permissionKey, securedMethod, permissionCache);
                             if (permission.isComputed()) {
                                 predicate.markAsComputed();
@@ -121,16 +107,16 @@ interface CopyPermissionSecurityChecks {
 
                             // OR predicate with single operand is identity function
                             predicate.and(
-                                    new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate()
+                                    new LogicalOrPermissionPredicate()
                                             .or(permission));
                         }
                     } else {
                         // 'OR' operands
 
-                        var orPredicate = new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate();
+                        var orPredicate = new LogicalOrPermissionPredicate();
                         predicate.and(orPredicate);
 
-                        for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey : permissionKeys) {
+                        for (PermissionKey permissionKey : permissionKeys) {
                             var permission = createPermission(permissionKey, securedMethod, permissionCache);
                             if (permission.isComputed()) {
                                 predicate.markAsComputed();
@@ -145,7 +131,7 @@ interface CopyPermissionSecurityChecks {
         }
 
         private boolean isInclusive(
-                List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> permissionKeys) {
+                List<PermissionKey> permissionKeys) {
             // decide whether relation between permission specified via one annotation instance is 'AND' or 'OR'
             // all PermissionKeys in the list 'permissionKeys' comes from same annotation, therefore we can
             // safely pick flag from the first one
@@ -156,11 +142,11 @@ interface CopyPermissionSecurityChecks {
             return permissionKeys.get(0).inclusive;
         }
 
-        CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder validatePermissionClasses(IndexView index) {
-            for (List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>> keyLists : methodToPermissionKeys
+        PermissionSecurityChecksBuilder validatePermissionClasses(IndexView index) {
+            for (List<List<PermissionKey>> keyLists : methodToPermissionKeys
                     .values()) {
-                for (List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> keyList : keyLists) {
-                    for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey key : keyList) {
+                for (List<PermissionKey> keyList : keyLists) {
+                    for (PermissionKey key : keyList) {
                         if (!classSignatureToConstructor.containsKey(key.classSignature())) {
 
                             // validate permission class
@@ -191,7 +177,7 @@ interface CopyPermissionSecurityChecks {
             return this;
         }
 
-        CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder gatherPermissionsAllowedAnnotations(
+        PermissionSecurityChecksBuilder gatherPermissionsAllowedAnnotations(
                 List<AnnotationInstance> instances,
                 Map<MethodInfo, AnnotationInstance> alreadyCheckedMethods,
                 Map<ClassInfo, AnnotationInstance> alreadyCheckedClasses) {
@@ -208,8 +194,8 @@ interface CopyPermissionSecurityChecks {
                 }
             });
 
-            List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> cache = new ArrayList<>();
-            Map<MethodInfo, List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>>> classMethodToPermissionKeys = new HashMap<>();
+            List<PermissionKey> cache = new ArrayList<>();
+            Map<MethodInfo, List<List<PermissionKey>>> classMethodToPermissionKeys = new HashMap<>();
             for (AnnotationInstance instance : instances) {
 
                 AnnotationTarget target = instance.target();
@@ -273,8 +259,8 @@ interface CopyPermissionSecurityChecks {
         }
 
         private static void gatherPermissionKeys(AnnotationInstance instance, MethodInfo methodInfo,
-                List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> cache,
-                Map<MethodInfo, List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>>> methodToPermissionKeys) {
+                List<PermissionKey> cache,
+                Map<MethodInfo, List<List<PermissionKey>>> methodToPermissionKeys) {
             // @PermissionsAllowed value is in format permission:action, permission2:action, permission:action2, permission3
             // here we transform it to permission -> actions
             final var permissionToActions = new HashMap<String, Set<String>>();
@@ -314,14 +300,14 @@ interface CopyPermissionSecurityChecks {
             }
 
             // permissions specified via @PermissionsAllowed has 'one of' relation, therefore we put them in one list
-            final List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey> orPermissions = new ArrayList<>();
+            final List<PermissionKey> orPermissions = new ArrayList<>();
             final String[] params = instance.value("params") == null ? new String[] { PermissionsAllowed.AUTODETECTED }
                     : instance.value("params").asStringArray();
             final Type classType = instance.value("permission") == null ? Type.create(STRING_PERMISSION, Type.Kind.CLASS)
                     : instance.value("permission").asClass();
             final boolean inclusive = instance.value("inclusive") != null && instance.value("inclusive").asBoolean();
             for (var permissionToAction : permissionToActions.entrySet()) {
-                final var key = new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey(
+                final var key = new PermissionKey(
                         permissionToAction.getKey(), permissionToAction.getValue(), params,
                         classType, inclusive);
                 final int i = cache.indexOf(key);
@@ -336,9 +322,9 @@ interface CopyPermissionSecurityChecks {
             // store annotation value as permission keys
             methodToPermissionKeys
                     .computeIfAbsent(methodInfo,
-                            new Function<MethodInfo, List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>>>() {
+                            new Function<MethodInfo, List<List<PermissionKey>>>() {
                                 @Override
-                                public List<List<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey>> apply(
+                                public List<List<PermissionKey>> apply(
                                         MethodInfo methodInfo) {
                                     return new ArrayList<>();
                                 }
@@ -347,18 +333,18 @@ interface CopyPermissionSecurityChecks {
         }
 
         private SecurityCheck createSecurityCheck(
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate andPredicate) {
+                LogicalAndPermissionPredicate andPredicate) {
             final SecurityCheck securityCheck;
             final boolean isSinglePermissionGroup = andPredicate.operands.size() == 1;
             if (isSinglePermissionGroup) {
 
-                final CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate orPredicate = andPredicate.operands
+                final LogicalOrPermissionPredicate orPredicate = andPredicate.operands
                         .iterator().next();
                 final boolean isSinglePermission = orPredicate.operands.size() == 1;
                 if (isSinglePermission) {
 
                     // single permission
-                    final CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper permissionWrapper = orPredicate.operands
+                    final PermissionWrapper permissionWrapper = orPredicate.operands
                             .iterator().next();
                     securityCheck = recorder.permissionsAllowed(permissionWrapper.computedPermission,
                             permissionWrapper.permission);
@@ -377,13 +363,13 @@ interface CopyPermissionSecurityChecks {
                 // permission group = (permission OR permission OR permission OR ...)
                 if (andPredicate.atLeastOnePermissionIsComputed) {
                     final List<List<Function<Object[], Permission>>> computedPermissionGroups = new ArrayList<>();
-                    for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate permissionGroup : andPredicate.operands) {
+                    for (LogicalOrPermissionPredicate permissionGroup : andPredicate.operands) {
                         computedPermissionGroups.add(permissionGroup.asComputedPermissions(recorder));
                     }
                     securityCheck = recorder.permissionsAllowedGroups(computedPermissionGroups, null);
                 } else {
                     final List<List<RuntimeValue<Permission>>> permissionGroups = new ArrayList<>();
-                    for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate permissionGroup : andPredicate.operands) {
+                    for (LogicalOrPermissionPredicate permissionGroup : andPredicate.operands) {
                         permissionGroups.add(permissionGroup.asPermissions());
                     }
                     securityCheck = recorder.permissionsAllowedGroups(null, permissionGroups);
@@ -393,20 +379,20 @@ interface CopyPermissionSecurityChecks {
             return securityCheck;
         }
 
-        private CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper createPermission(
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey,
+        private PermissionWrapper createPermission(
+                PermissionKey permissionKey,
                 MethodInfo securedMethod,
-                Map<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey, CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper> cache) {
+                Map<PermissionCacheKey, PermissionWrapper> cache) {
             var constructor = classSignatureToConstructor.get(permissionKey.classSignature());
             return cache.computeIfAbsent(
-                    new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey(permissionKey,
+                    new PermissionCacheKey(permissionKey,
                             securedMethod, constructor),
-                    new Function<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey, CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper>() {
+                    new Function<PermissionCacheKey, PermissionWrapper>() {
                         @Override
-                        public CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper apply(
-                                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey permissionCacheKey) {
+                        public PermissionWrapper apply(
+                                PermissionCacheKey permissionCacheKey) {
                             if (permissionCacheKey.computed) {
-                                return new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper(
+                                return new PermissionWrapper(
                                         createComputedPermission(permissionCacheKey), null);
                             } else {
                                 final RuntimeValue<Permission> permission;
@@ -415,7 +401,7 @@ interface CopyPermissionSecurityChecks {
                                 } else {
                                     permission = createCustomPermission(permissionCacheKey);
                                 }
-                                return new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper(null,
+                                return new PermissionWrapper(null,
                                         permission);
                             }
                         }
@@ -423,21 +409,21 @@ interface CopyPermissionSecurityChecks {
         }
 
         private Function<Object[], Permission> createComputedPermission(
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey permissionCacheKey) {
+                PermissionCacheKey permissionCacheKey) {
             return recorder.createComputedPermission(permissionCacheKey.permissionKey.name,
                     permissionCacheKey.permissionKey.classSignature(), permissionCacheKey.permissionKey.actions(),
                     permissionCacheKey.passActionsToConstructor, permissionCacheKey.methodParamIndexes());
         }
 
         private RuntimeValue<Permission> createCustomPermission(
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey permissionCacheKey) {
+                PermissionCacheKey permissionCacheKey) {
             return recorder.createPermission(permissionCacheKey.permissionKey.name,
                     permissionCacheKey.permissionKey.classSignature(), permissionCacheKey.permissionKey.actions(),
                     permissionCacheKey.passActionsToConstructor);
         }
 
         private RuntimeValue<Permission> createStringPermission(
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey) {
+                PermissionKey permissionKey) {
             if (permissionKey.notAutodetectParams()) {
                 // validate - no point to specify params as string permission only accept name and actions
                 throw new IllegalArgumentException(String.format("'%s' must have autodetected params", STRING_PERMISSION));
@@ -446,17 +432,17 @@ interface CopyPermissionSecurityChecks {
         }
 
         private static final class LogicalOrPermissionPredicate {
-            private final Set<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper> operands = new HashSet<>();
+            private final Set<PermissionWrapper> operands = new HashSet<>();
 
-            private CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate or(
-                    CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper permission) {
+            private LogicalOrPermissionPredicate or(
+                    PermissionWrapper permission) {
                 operands.add(permission);
                 return this;
             }
 
             private List<Function<Object[], Permission>> asComputedPermissions(SecurityCheckRecorder recorder) {
                 final List<Function<Object[], Permission>> computedPermissions = new ArrayList<>();
-                for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper wrapper : operands) {
+                for (PermissionWrapper wrapper : operands) {
                     if (wrapper.isComputed()) {
                         computedPermissions.add(wrapper.computedPermission);
                     } else {
@@ -469,7 +455,7 @@ interface CopyPermissionSecurityChecks {
 
             private List<RuntimeValue<Permission>> asPermissions() {
                 final List<RuntimeValue<Permission>> permissions = new ArrayList<>();
-                for (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionWrapper wrapper : operands) {
+                for (PermissionWrapper wrapper : operands) {
                     Objects.requireNonNull(wrapper.permission);
                     permissions.add(wrapper.permission);
                 }
@@ -482,7 +468,7 @@ interface CopyPermissionSecurityChecks {
                     return true;
                 if (o == null || getClass() != o.getClass())
                     return false;
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate that = (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate) o;
+                LogicalOrPermissionPredicate that = (LogicalOrPermissionPredicate) o;
                 return operands.equals(that.operands);
             }
 
@@ -493,11 +479,11 @@ interface CopyPermissionSecurityChecks {
         }
 
         private static final class LogicalAndPermissionPredicate {
-            private final Set<CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate> operands = new HashSet<>();
+            private final Set<LogicalOrPermissionPredicate> operands = new HashSet<>();
             private boolean atLeastOnePermissionIsComputed = false;
 
             private void and(
-                    CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalOrPermissionPredicate orPermissionPredicate) {
+                    LogicalOrPermissionPredicate orPermissionPredicate) {
                 operands.add(orPermissionPredicate);
             }
 
@@ -513,7 +499,7 @@ interface CopyPermissionSecurityChecks {
                     return true;
                 if (o == null || getClass() != o.getClass())
                     return false;
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate that = (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.LogicalAndPermissionPredicate) o;
+                LogicalAndPermissionPredicate that = (LogicalAndPermissionPredicate) o;
                 return operands.equals(that.operands);
             }
 
@@ -576,7 +562,7 @@ interface CopyPermissionSecurityChecks {
                     return true;
                 if (o == null || getClass() != o.getClass())
                     return false;
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey that = (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey) o;
+                PermissionKey that = (PermissionKey) o;
                 return name.equals(that.name) && Objects.equals(actions, that.actions) && Arrays.equals(params, that.params)
                         && clazz.equals(that.clazz) && inclusive == that.inclusive;
             }
@@ -591,11 +577,11 @@ interface CopyPermissionSecurityChecks {
 
         private static final class PermissionCacheKey {
             private final int[] methodParamIndexes;
-            private final CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey;
+            private final PermissionKey permissionKey;
             private final boolean computed;
             private final boolean passActionsToConstructor;
 
-            private PermissionCacheKey(CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey,
+            private PermissionCacheKey(PermissionKey permissionKey,
                     MethodInfo securedMethod, MethodInfo constructor) {
                 if (isComputed(permissionKey, constructor)) {
                     // computed permission
@@ -657,7 +643,7 @@ interface CopyPermissionSecurityChecks {
             }
 
             private static int[] autodetectConstructorParamIndexes(
-                    CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey,
+                    PermissionKey permissionKey,
                     MethodInfo securedMethod,
                     MethodInfo constructor, boolean isSecondParamStringArr) {
                 // first constructor param is always permission name, second (might be) actions
@@ -713,7 +699,7 @@ interface CopyPermissionSecurityChecks {
                     return true;
                 if (o == null || getClass() != o.getClass())
                     return false;
-                CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey that = (CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionCacheKey) o;
+                PermissionCacheKey that = (PermissionCacheKey) o;
                 return computed == that.computed && passActionsToConstructor == that.passActionsToConstructor
                         && Arrays.equals(methodParamIndexes, that.methodParamIndexes)
                         && permissionKey.equals(that.permissionKey);
@@ -735,7 +721,7 @@ interface CopyPermissionSecurityChecks {
             }
 
             private static boolean isComputed(
-                    CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey,
+                    PermissionKey permissionKey,
                     MethodInfo constructor) {
                 // requirements for permission constructor:
                 // - first parameter is always permission name (String)
@@ -756,7 +742,7 @@ interface CopyPermissionSecurityChecks {
             }
 
             private static boolean isStringPermission(
-                    CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder.PermissionKey permissionKey) {
+                    PermissionKey permissionKey) {
                 return STRING_PERMISSION.equals(permissionKey.clazz.name());
             }
 

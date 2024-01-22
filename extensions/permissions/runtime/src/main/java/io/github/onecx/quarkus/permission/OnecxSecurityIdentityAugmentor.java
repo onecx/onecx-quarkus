@@ -52,7 +52,7 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return Uni.createFrom().item(identity);
         }
 
-        headerContainer.setContainerRequestContext(routingContext.request(), config.tokenHeaderParam);
+        headerContainer.setContainerRequestContext(routingContext.request(), config.principalTokenHeaderParam);
         var requestPermissionToken = routingContext.request().getHeader(config.requestTokenHeaderParam);
 
         return service.getPermissions(config.applicationId, requestPermissionToken, config.keySeparator, config.cacheEnabled)

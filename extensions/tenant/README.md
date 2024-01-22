@@ -23,12 +23,12 @@ To activate multi-tenancy for hibernate, add the following maven dependency to y
 ### Configuration
 
 ```properties
-# APM principal header parameter.
-onecx.tenant.token-header-param=apm-principal-token
+# Enable or disable cache tenant id for token
+onecx.tenant.cache-enabled=true
 ```
 
 Rest client configuration property: `quarkus.rest-client.onecx-tenant-svc`
 
 ```properties
-quarkus.rest-client.onecx-apm.url=http://onecx-tenant-svc:8080
+quarkus.rest-client.onecx_tenant.url=http://onecx-tenant-svc:8080
 ```

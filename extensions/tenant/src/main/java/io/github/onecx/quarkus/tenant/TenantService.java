@@ -16,9 +16,9 @@ import io.quarkus.cache.CacheResult;
 
 @Unremovable
 @RequestScoped
-public class OnecxTenantService {
+public class TenantService {
 
-    private static final Logger log = LoggerFactory.getLogger(OnecxTenantService.class);
+    private static final Logger log = LoggerFactory.getLogger(TenantService.class);
 
     @Inject
     @RestClient
@@ -50,14 +50,14 @@ public class OnecxTenantService {
             var body = response.readEntity(String.class);
             log.debug("Wrong response to get tenant-id from service. Status: {}, Entity: {}", response.getStatus(), body);
 
-            throw new OnecxTenantException(ErrorKeys.ERROR_TENANT_SERVICE_WRONG_RESPONSE,
+            throw new TenantException(ErrorKeys.ERROR_TENANT_SERVICE_WRONG_RESPONSE,
                     "Wrong response to get tenant-id from service. Status: " + response.getStatus());
 
         } catch (WebApplicationException ex) {
             var body = ex.getResponse().readEntity(String.class);
             log.error("Error get tenant-id from service. Status: {}, Message: {}", ex.getResponse().getStatus(), body);
 
-            throw new OnecxTenantException(ErrorKeys.ERROR_TENANT_SERVICE_EXCEPTION_RESPONSE,
+            throw new TenantException(ErrorKeys.ERROR_TENANT_SERVICE_EXCEPTION_RESPONSE,
                     "Error get tenant-id from service. Status: " + ex.getResponse().getStatus());
         }
     }

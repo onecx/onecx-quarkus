@@ -17,6 +17,7 @@
         <module>permissions</module>
         <module>permissions-mock</module>
         <module>tenant</module>
+        <module>security</module>
     </modules>
 
     <properties>

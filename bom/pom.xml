@@ -35,6 +35,16 @@
                 <artifactId>onecx-openapi-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.onecx.quarkus</groupId>
+                <artifactId>onecx-parameters</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.onecx.quarkus</groupId>
+                <artifactId>onecx-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

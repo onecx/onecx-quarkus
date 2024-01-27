@@ -5,9 +5,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.tkit.quarkus.rs.context.RestContextConfig;
 import org.tkit.quarkus.rs.context.tenant.TenantCustomResolver;
+import org.tkit.quarkus.rs.context.token.TokenContextConfig;
 
+import io.quarkus.arc.Unremovable;
+
+@Unremovable
 @RequestScoped
 public class TenantResolver implements TenantCustomResolver {
 
@@ -15,7 +18,7 @@ public class TenantResolver implements TenantCustomResolver {
     TenantService tenantService;
 
     @Inject
-    RestContextConfig config;
+    TokenContextConfig config;
 
     @Override
     public String getTenantId(JsonWebToken principalToken, ContainerRequestContext containerRequestContext) {
@@ -29,7 +32,7 @@ public class TenantResolver implements TenantCustomResolver {
 
         // fallback to header parameter
         if (rawToken == null) {
-            rawToken = containerRequestContext.getHeaders().getFirst(config.token().tokenHeaderParam());
+            rawToken = containerRequestContext.getHeaders().getFirst(config.tokenHeaderParam());
         }
 
         // check raw token

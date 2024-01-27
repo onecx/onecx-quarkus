@@ -23,7 +23,7 @@ class TestRestControllerTest {
     private static final String USER = "bob";
 
     private static final String APM_PRINCIPAL_TOKEN_HEADER = ConfigProvider.getConfig()
-            .getValue("%test.onecx.permissions.token-header-param", String.class);
+            .getValue("onecx.permissions.token-header-param", String.class);
 
     @Test
     void openTest() {

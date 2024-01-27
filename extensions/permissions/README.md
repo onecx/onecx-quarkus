@@ -34,6 +34,8 @@ onecx.permissions.cache-enabled=true
 onecx.permissions.application-id=${quarkus.application.name}
 # Name of the permission module. @PermissionsAllowed(value = "onecx:resource1#admin-write")
 onecx.permissions.name=onecx
+# Header token for permissions. For example  Authorization or apm-principal-token header parameter
+onecx.permissions.request-token-from-header-param=Authorization
 # Separator for resource and action. <resource>#<action>
 onecx.permissions.key-separator=#
 # disable or enable mock data for permission

@@ -6,8 +6,6 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.eclipse.microprofile.rest.client.ext.DefaultClientHeadersFactoryImpl;
 
-import io.github.onecx.quarkus.permission.RequestHeaderContainer;
-
 @ApplicationScoped
 public class PermissionDefaultClientHeadersFactoryImpl extends DefaultClientHeadersFactoryImpl {
 

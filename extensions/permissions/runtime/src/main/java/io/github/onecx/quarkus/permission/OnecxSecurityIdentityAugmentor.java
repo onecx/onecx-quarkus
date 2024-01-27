@@ -5,6 +5,7 @@ import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
 import io.github.onecx.quarkus.permission.client.PermissionClientService;
+import io.github.onecx.quarkus.permission.client.RequestHeaderContainer;
 import io.quarkus.arc.Unremovable;
 import io.quarkus.security.StringPermission;
 import io.quarkus.security.identity.AuthenticationRequestContext;

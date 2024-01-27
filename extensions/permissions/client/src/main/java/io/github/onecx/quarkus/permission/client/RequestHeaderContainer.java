@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.permission;
+package io.github.onecx.quarkus.permission.client;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.core.MultivaluedHashMap;
@@ -16,7 +16,7 @@ public class RequestHeaderContainer {
 
     private String tokenHeaderParam;
 
-    void setContainerRequestContext(HttpServerRequest requestContext, String tokenHeaderParam) {
+    public void setContainerRequestContext(HttpServerRequest requestContext, String tokenHeaderParam) {
         this.requestContext = requestContext;
         this.tokenHeaderParam = tokenHeaderParam;
     }

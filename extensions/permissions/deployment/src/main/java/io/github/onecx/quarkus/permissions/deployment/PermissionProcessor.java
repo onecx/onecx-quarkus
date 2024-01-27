@@ -1,4 +1,4 @@
-package io.github.onecx.quarkus.permissions;
+package io.github.onecx.quarkus.permissions.deployment;
 
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;

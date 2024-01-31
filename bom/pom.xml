@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.onecx.quarkus</groupId>
+        <groupId>org.tkit.onecx.quarkus</groupId>
         <artifactId>onecx-quarkus</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -16,32 +16,32 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-tenant</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-permissions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-openapi-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-parameters</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.onecx.quarkus</groupId>
+                <groupId>org.tkit.onecx.quarkus</groupId>
                 <artifactId>onecx-security</artifactId>
                 <version>${project.version}</version>
             </dependency>

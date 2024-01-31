@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.onecx.quarkus</groupId>
+        <groupId>org.tkit.onecx.quarkus</groupId>
         <artifactId>onecx-quarkus-it-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -14,12 +14,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.onecx.quarkus</groupId>
+            <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.onecx.quarkus</groupId>
+            <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-permissions</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -109,8 +109,8 @@
                         </goals>
                         <configuration>
                             <inputSpec>${basedir}/src/main/openapi/example-openapi.yaml</inputSpec>
-                            <apiPackage>gen.io.github.onecx.quarkus.permission.example</apiPackage>
-                            <modelPackage>gen.io.github.onecx.quarkus.permission.example.model</modelPackage>
+                            <apiPackage>gen.org.tkit.onecx.quarkus.permission.example</apiPackage>
+                            <modelPackage>gen.org.tkit.onecx.quarkus.permission.example.model</modelPackage>
                             <modelNameSuffix>DTO</modelNameSuffix>
                             <configOptions>
                                 <x1>123</x1>
@@ -120,7 +120,7 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>io.github.onecx.quarkus</groupId>
+                        <groupId>org.tkit.onecx.quarkus</groupId>
                         <artifactId>onecx-openapi-generator</artifactId>
                         <version>${project.version}</version>
                     </dependency>

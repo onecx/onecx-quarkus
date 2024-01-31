@@ -2,7 +2,7 @@
 
 ```xml
 <dependency>
-    <groupId>io.github.onecx.quarkus</groupId>
+    <groupId>org.tkit.onecx.quarkus</groupId>
     <artifactId>onecx-tenant</artifactId>
 </dependency>
 ```

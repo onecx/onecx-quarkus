@@ -9,5 +9,5 @@ interface.
 # enable or disable mapping of the @PermissionAllowed from interface to implementation class
 onecx.security.mapping-annotation.enabled=true
 # mapping only the classes from packages
-onecx.security.mapping-annotation.packages=io.github.onecx,gen.io.github.onecx
+onecx.security.mapping-annotation.packages=org.tkit.onecx,gen.org.tkit.onecx
 ```

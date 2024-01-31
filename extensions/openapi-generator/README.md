@@ -4,7 +4,7 @@
 
 ```xml
 <dependency>
-    <groupId>io.github.onecx.quarkus</groupId>
+    <groupId>org.tkit.onecx.quarkus</groupId>
     <artifactId>onecx-openapi-generator</artifactId>
 </dependency>
 ```
@@ -20,7 +20,7 @@ Add this library in to the `openapi-generator-maven-plugin` class-path.
             <artifactId>openapi-generator-maven-plugin</artifactId>
                 <dependencies>
                     <dependency>
-                        <groupId>io.github.onecx.quarkus</groupId>
+                        <groupId>org.tkit.onecx.quarkus</groupId>
                         <artifactId>onecx-openapi-generator</artifactId>
                     </dependency>
                 </dependencies>

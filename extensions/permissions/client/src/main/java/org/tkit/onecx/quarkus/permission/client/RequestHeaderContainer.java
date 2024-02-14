@@ -4,6 +4,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
+
 import io.quarkus.arc.Unremovable;
 import io.vertx.core.http.HttpServerRequest;
 
@@ -30,8 +32,7 @@ public class RequestHeaderContainer {
             return EMPTY_MAP;
         } else {
 
-            MultivaluedMap<String, String> headers = new MultivaluedHashMap<>();
-
+            MultivaluedMap<String, String> headers = new CaseInsensitiveMap<>();
             requestContext.headers().names().forEach(name -> {
                 var value = requestContext.headers().getAll(name);
                 if (value != null && !value.isEmpty()) {

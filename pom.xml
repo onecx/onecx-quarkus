@@ -76,7 +76,7 @@
         <gpg-plugin.version>3.1.0</gpg-plugin.version>
 
         <!-- Other -->
-        <download-maven-plugin.version>1.8.0</download-maven-plugin.version>
+        <download-maven-plugin.version>1.8.1</download-maven-plugin.version>
         <projectlombok.version>1.18.30</projectlombok.version>
         <projectlombok.mapstruct-binding.version>0.2.0</projectlombok.mapstruct-binding.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>

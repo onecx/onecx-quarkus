@@ -224,7 +224,7 @@
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
-                            <groupId>org.hibernate</groupId>
+                            <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${quarkus.hibernate-orm.version}</version>
                         </annotationProcessorPath>

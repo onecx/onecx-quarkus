@@ -30,19 +30,20 @@ public class PermissionClientService {
     @CacheName("onecx-permissions")
     Cache cache;
 
-    public Uni<PermissionResponse> getPermissions(String appName, String token, String keySeparator, boolean cacheEnabled) {
+    public Uni<PermissionResponse> getPermissions(String productName, String appName, String token, String keySeparator,
+            boolean cacheEnabled) {
         if (!cacheEnabled) {
-            return getPermissionsLocal(appName, token, keySeparator);
+            return getPermissionsLocal(productName, appName, token, keySeparator);
         }
         var key = new CompositeCacheKey(appName, token);
         return cache.getAsync(key,
-                compositeCacheKey -> getPermissionsLocal(appName, token, keySeparator))
+                compositeCacheKey -> getPermissionsLocal(productName, appName, token, keySeparator))
                 .onFailure().recoverWithUni(t -> cache.invalidate(key).map(x -> null));
     }
 
-    public Uni<PermissionResponse> getPermissionsLocal(String appName, String token, String keySeparator) {
+    public Uni<PermissionResponse> getPermissionsLocal(String productName, String appName, String token, String keySeparator) {
 
-        return client.getApplicationPermissions(appName, new PermissionRequest().token(token))
+        return client.getApplicationPermissions(productName, appName, new PermissionRequest().token(token))
                 .map(response -> {
                     List<String> result = new ArrayList<>();
                     if (response.getPermissions() != null) {

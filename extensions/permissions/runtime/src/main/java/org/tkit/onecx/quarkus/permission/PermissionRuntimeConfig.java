@@ -32,6 +32,12 @@ public class PermissionRuntimeConfig {
     public boolean allowAll;
 
     /**
+     * Product name.
+     */
+    @ConfigItem(name = "product-name")
+    public String productName;
+
+    /**
      * Permissions application ID.
      */
     @ConfigItem(name = "application-id", defaultValue = "${quarkus.application.name}")

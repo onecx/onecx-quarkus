@@ -5,7 +5,7 @@
       "headers": {
         "!apm-principal-token": [ ".*" ]
       },
-      "path": "/v1/permissions/user/applications/app-id"
+      "path": "/v1/permissions/user/test1/app-id"
     },
     "httpResponse": {
       "body": {
@@ -21,7 +21,7 @@
       "headers": {
         "apm-principal-token": [ "token-data-1" ]
       },
-      "path": "/v1/permissions/user/applications/app-id"
+      "path": "/v1/permissions/user/test1/app-id"
     },
     "httpResponse": {
       "body": {
@@ -43,7 +43,7 @@
       "headers": {
         "apm-principal-token": [ "token-data-2" ]
       },
-      "path": "/v1/permissions/user/applications/app-id"
+      "path": "/v1/permissions/user/test1/app-id"
     },
     "httpResponse": {
       "body": {
@@ -64,7 +64,7 @@
       "headers": {
         "apm-principal-token": [ "token-data-x-1" ]
       },
-      "path": "/v1/permissions/user/applications/app-id"
+      "path": "/v1/permissions/user/test1/app-id"
     },
     "httpResponse": {
       "body": {
@@ -85,7 +85,7 @@
       "headers": {
         "apm-principal-token": [ "token-data-x-2" ]
       },
-      "path": "/v1/permissions/user/applications/app-id"
+      "path": "/v1/permissions/user/test1/app-id"
     },
     "httpResponse": {
       "statusCode": 404,

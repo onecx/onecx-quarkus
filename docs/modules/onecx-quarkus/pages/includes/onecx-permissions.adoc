@@ -10,6 +10,23 @@ h|[[onecx-permissions_configuration]]link:#onecx-permissions_configuration[Confi
 h|Type
 h|Default
 
+a| [[onecx-permissions_onecx-permissions-service-client-url]]`link:#onecx-permissions_onecx-permissions-service-client-url[onecx.permissions.service.client.url]`
+
+
+[.description]
+--
+Tenant client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`http://onecx-permission:8080`
+
+
 a| [[onecx-permissions_onecx-permissions-enabled]]`link:#onecx-permissions_onecx-permissions-enabled[onecx.permissions.enabled]`
 
 
@@ -178,23 +195,6 @@ Environment variable: `+++ONECX_PERMISSIONS_MOCK_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --|boolean 
 |`false`
-
-
-a| [[onecx-permissions_onecx-permissions-service-client-url]]`link:#onecx-permissions_onecx-permissions-service-client-url[onecx.permissions.service.client.url]`
-
-
-[.description]
---
-Tenant client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++`
-endif::add-copy-button-to-env-var[]
---|string 
-|`http://onecx-permission:8080`
 
 
 a| [[onecx-permissions_onecx-permissions-mock-roles-roles]]`link:#onecx-permissions_onecx-permissions-mock-roles-roles[onecx.permissions.mock.roles]`

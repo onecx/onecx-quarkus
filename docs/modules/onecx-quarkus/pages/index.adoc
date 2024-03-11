@@ -31,12 +31,8 @@ Include the component in your project by including the corresponding dependency.
 
 include::./includes/attributes.adoc[]
 
-include::onecx-permissions.adoc[leveloffset=+1, opts=optional]
-
-include::onecx-tenant.adoc[leveloffset=+1, opts=optional]
-
-include::onecx-security.adoc[leveloffset=+1, opts=optional]
-
-include::onecx-parameters.adoc[leveloffset=+1, opts=optional]
-
-include::onecx-openapi-generator.adoc[leveloffset=+1, opts=optional]
+* xref:onecx-core.adoc[Onecx Core]
+* xref:onecx-permissions.adoc[Onecx Permissions]
+* xref:onecx-tenant.adoc[Onecx Tenant]
+* xref:onecx-parameters.adoc[Onecx Parameters]
+* xref:onecx-openapi-generator.adoc[Onecx OpenApi Generator]

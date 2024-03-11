@@ -1,0 +1,21 @@
+== onecx-openapi-generator
+
+include::./includes/attributes.adoc[]
+
+=== Installation
+
+[source,xml,subs=attributes+]
+----
+<plugin>
+    <groupId>org.openapitools</groupId>
+    <artifactId>openapi-generator-maven-plugin</artifactId>
+    <version>${openapitools.openapi-generator-maven-plugin.version}</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.tkit.onecx.quarkus</groupId>
+            <artifactId>onecx-openapi-generator</artifactId>
+            <version>{project-version}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+----

@@ -1,0 +1,42 @@
+= One-CX Quarkus Extensions
+
+include::./includes/attributes.adoc[]
+
+
+== Installation
+
+Include the following bom artifact into your pom or parent pom and then pick the components you need.
+
+[source,xml,subs=attributes+]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.tkit.onecx.quarkus</groupId>
+            <artifactId>onecx-quarkus-bom</artifactId>
+            <version>{project-version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+----
+
+TIP: Some component come with additional documentation and configuration - check the 'Documentation' link for particular section.
+
+== Components
+
+Include the component in your project by including the corresponding dependency.
+
+
+include::./includes/attributes.adoc[]
+
+include::onecx-permissions.adoc[leveloffset=+1, opts=optional]
+
+include::onecx-tenant.adoc[leveloffset=+1, opts=optional]
+
+include::onecx-security.adoc[leveloffset=+1, opts=optional]
+
+include::onecx-parameters.adoc[leveloffset=+1, opts=optional]
+
+include::onecx-openapi-generator.adoc[leveloffset=+1, opts=optional]

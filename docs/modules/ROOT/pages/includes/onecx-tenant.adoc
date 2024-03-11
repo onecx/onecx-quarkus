@@ -1,0 +1,46 @@
+
+:summaryTableId: onecx-tenant
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[[onecx-tenant_configuration]]link:#onecx-tenant_configuration[Configuration property]
+
+h|Type
+h|Default
+
+a| [[onecx-tenant_onecx-tenant-cache-enabled]]`link:#onecx-tenant_onecx-tenant-cache-enabled[onecx.tenant.cache-enabled]`
+
+
+[.description]
+--
+Enable or disable cache for the token
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_TENANT_CACHE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_TENANT_CACHE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
+a| [[onecx-tenant_onecx-tenant-service-client-url]]`link:#onecx-tenant_onecx-tenant-service-client-url[onecx.tenant.service.client.url]`
+
+
+[.description]
+--
+Tenant client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_tenant.url`
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_TENANT_SERVICE_CLIENT_URL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_TENANT_SERVICE_CLIENT_URL+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`http://onecx-tenant:8080`
+
+|===

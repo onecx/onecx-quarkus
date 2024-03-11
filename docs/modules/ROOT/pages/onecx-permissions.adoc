@@ -1,0 +1,38 @@
+== onecx-permissions
+
+include::./includes/attributes.adoc[]
+
+=== Installation
+
+If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-permission` extension first to your build file.
+
+For instance, with Maven, add the following dependency to your POM file:
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+    <groupId>org.tkit.onecx.quarkus</groupId>
+    <artifactId>onecx-permission</artifactId>
+    <version>{project-version}</version>
+</dependency>
+----
+
+=== Usage
+
+1. First you need to add the maven dependency shown at the top
+2. Then you can use @PermissionsAllowed annotation
+
+[source,java]
+----
+    @GET
+    @Path("write")
+    @PermissionsAllowed(value = "onecx:resource#action")
+    public Response adminWrite() {
+        return Response.ok("OK").build();
+    }
+----
+
+=== Configuration
+
+include::includes/onecx-permissions.adoc[leveloffset=+1, opts=optional]
+

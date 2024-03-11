@@ -1,0 +1,216 @@
+
+:summaryTableId: onecx-permissions
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[[onecx-permissions_configuration]]link:#onecx-permissions_configuration[Configuration property]
+
+h|Type
+h|Default
+
+a| [[onecx-permissions_onecx-permissions-service-client-url]]`link:#onecx-permissions_onecx-permissions-service-client-url[onecx.permissions.service.client.url]`
+
+
+[.description]
+--
+Tenant client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`http://onecx-permission:8080`
+
+
+a| [[onecx-permissions_onecx-permissions-enabled]]`link:#onecx-permissions_onecx-permissions-enabled[onecx.permissions.enabled]`
+
+
+[.description]
+--
+Enable interface mapping
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
+a| [[onecx-permissions_onecx-permissions-cache-enabled]]`link:#onecx-permissions_onecx-permissions-cache-enabled[onecx.permissions.cache-enabled]`
+
+
+[.description]
+--
+Enable interface mapping
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_CACHE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_CACHE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
+a| [[onecx-permissions_onecx-permissions-allow-all]]`link:#onecx-permissions_onecx-permissions-allow-all[onecx.permissions.allow-all]`
+
+
+[.description]
+--
+Allow all permissions
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_ALLOW_ALL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_ALLOW_ALL+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`false`
+
+
+a| [[onecx-permissions_onecx-permissions-product-name]]`link:#onecx-permissions_onecx-permissions-product-name[onecx.permissions.product-name]`
+
+
+[.description]
+--
+Product name.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_PRODUCT_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_PRODUCT_NAME+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|required icon:exclamation-circle[title=Configuration property is required]
+
+
+a| [[onecx-permissions_onecx-permissions-application-id]]`link:#onecx-permissions_onecx-permissions-application-id[onecx.permissions.application-id]`
+
+
+[.description]
+--
+Permissions application ID.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_APPLICATION_ID+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_APPLICATION_ID+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`${quarkus.application.name}`
+
+
+a| [[onecx-permissions_onecx-permissions-name]]`link:#onecx-permissions_onecx-permissions-name[onecx.permissions.name]`
+
+
+[.description]
+--
+Permissions prefix name.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_NAME+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`onecx`
+
+
+a| [[onecx-permissions_onecx-permissions-request-token-from-header-param]]`link:#onecx-permissions_onecx-permissions-request-token-from-header-param[onecx.permissions.request-token-from-header-param]`
+
+
+[.description]
+--
+Permissions access token header parameter.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_REQUEST_TOKEN_FROM_HEADER_PARAM+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_REQUEST_TOKEN_FROM_HEADER_PARAM+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`Authorization`
+
+
+a| [[onecx-permissions_onecx-permissions-token-header-param]]`link:#onecx-permissions_onecx-permissions-token-header-param[onecx.permissions.token-header-param]`
+
+
+[.description]
+--
+Permissions principal token header parameter.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_TOKEN_HEADER_PARAM+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_TOKEN_HEADER_PARAM+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`${tkit.rs.context.token.header-param:apm-principal-token}`
+
+
+a| [[onecx-permissions_onecx-permissions-key-separator]]`link:#onecx-permissions_onecx-permissions-key-separator[onecx.permissions.key-separator]`
+
+
+[.description]
+--
+Permissions resource action separator.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_KEY_SEPARATOR+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_KEY_SEPARATOR+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|`#`
+
+
+a| [[onecx-permissions_onecx-permissions-mock-enabled]]`link:#onecx-permissions_onecx-permissions-mock-enabled[onecx.permissions.mock.enabled]`
+
+
+[.description]
+--
+Enable or disable mock service
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_MOCK_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_MOCK_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`false`
+
+
+a| [[onecx-permissions_onecx-permissions-mock-roles-roles]]`link:#onecx-permissions_onecx-permissions-mock-roles-roles[onecx.permissions.mock.roles]`
+
+
+[.description]
+--
+Mock data for role Map format : .
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_MOCK_ROLES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PERMISSIONS_MOCK_ROLES+++`
+endif::add-copy-button-to-env-var[]
+--|`Map<String,Map<String,List<String>>>` 
+|
+
+|===

@@ -1,0 +1,36 @@
+== onecx-tenant
+
+include::./includes/attributes.adoc[]
+
+
+Implementation of the [tkit-quarkus-rest-context](https://github.com/1000kit/tkit-quarkus/blob/main/extensions/rest-context/) tenant resolver service.
+
+=== Installation
+
+If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-tenant` extension first to your build file.
+
+For instance, with Maven, add the following dependency to your POM file:
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+    <groupId>org.tkit.onecx.quarkus</groupId>
+    <artifactId>onecx-tenant</artifactId>
+    <version>{project-version}</version>
+</dependency>
+----
+
+=== Usage
+
+To activate multi-tenancy also for hibernate, add the following maven dependency to your project [tkit-quarkus-jpa-tenant](https://github.com/1000kit/tkit-quarkus/tree/main/extensions/jpa-tenant).
+
+```xml
+<dependency>
+    <groupId>org.tkit.quarkus.lib</groupId>
+    <artifactId>tkit-quarkus-jpa-tenant</artifactId>
+</dependency>
+```
+
+=== Configuration
+
+include::includes/onecx-tenant.adoc[leveloffset=+1, opts=optional]

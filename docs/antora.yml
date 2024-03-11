@@ -1,0 +1,6 @@
+name: onecx-quarkus
+title: Onecx Quarkus
+version: latest
+start_page: onecx-quarkus:index.adoc
+nav:
+  - modules/onecx-quarkus/nav.adoc

@@ -1,0 +1,46 @@
+
+:summaryTableId: onecx-security
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[[onecx-security_configuration]]link:#onecx-security_configuration[Configuration property]
+
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-enabled]]`link:#onecx-security_onecx-security-mapping-annotation-enabled[onecx.security.mapping-annotation.enabled]`
+
+
+[.description]
+--
+Enable interface mapping
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_SECURITY_MAPPING_ANNOTATION_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_SECURITY_MAPPING_ANNOTATION_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
+a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-packages]]`link:#onecx-security_onecx-security-mapping-annotation-packages[onecx.security.mapping-annotation.packages]`
+
+
+[.description]
+--
+Mapping includes packages.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_SECURITY_MAPPING_ANNOTATION_PACKAGES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_SECURITY_MAPPING_ANNOTATION_PACKAGES+++`
+endif::add-copy-button-to-env-var[]
+--|list of string 
+|`org.tkit.onecx,gen.org.tkit.onecx`
+
+|===

@@ -82,7 +82,7 @@
 
         <!-- Other -->
         <download-maven-plugin.version>1.8.1</download-maven-plugin.version>
-        <projectlombok.version>1.18.30</projectlombok.version>
+        <projectlombok.version>1.18.32</projectlombok.version>
         <projectlombok.mapstruct-binding.version>0.2.0</projectlombok.mapstruct-binding.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <assertj.version>3.25.3</assertj.version>

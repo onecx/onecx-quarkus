@@ -54,7 +54,7 @@
         <quarkiverse.mockserver.version>1.5.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->
-        <tkit.quarkus.version>2.16.0</tkit.quarkus.version>
+        <tkit.quarkus.version>2.17.0</tkit.quarkus.version>
 
         <!-- Maven configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,7 +62,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler-plugin.version>3.12.1</maven.compiler-plugin.version>
+        <maven.compiler-plugin.version>3.13.0</maven.compiler-plugin.version>
         <maven.surefire-plugin.version>3.2.5</maven.surefire-plugin.version>
         <maven.formatter-plugin.version>2.23.0</maven.formatter-plugin.version>
         <maven.impsort-plugin.version>1.9.0</maven.impsort-plugin.version>
@@ -73,7 +73,7 @@
         <nexus.staging-plugin.version>1.6.13</nexus.staging-plugin.version>
         <source-plugin.version>3.3.0</source-plugin.version>
         <javadoc-plugin.version>3.6.3</javadoc-plugin.version>
-        <gpg-plugin.version>3.2.0</gpg-plugin.version>
+        <gpg-plugin.version>3.2.1</gpg-plugin.version>
 
         <!-- Documentation -->
         <asciidoctorj.version>2.5.12</asciidoctorj.version>

@@ -32,7 +32,7 @@ public class TenantResolver implements TenantCustomResolver {
 
         // fallback to header parameter
         if (rawToken == null) {
-            rawToken = containerRequestContext.getHeaders().getFirst(config.tokenHeaderParam());
+            rawToken = containerRequestContext.getHeaders().getFirst(config.token().tokenHeaderParam());
         }
 
         // check raw token

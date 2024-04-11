@@ -17,7 +17,7 @@ public class PermissionRuntimeConfig {
      * Tenant client URL configuration.
      * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
      */
-    @ConfigItem(name = "service.client.url", defaultValue = "http://onecx-permission:8080")
+    @ConfigItem(name = "service.client.url", defaultValue = "http://onecx-permission-svc:8080")
     String clientUrl;
 
     /**

@@ -24,7 +24,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++`
 endif::add-copy-button-to-env-var[]
 --|string 
-|`http://onecx-permission:8080`
+|`http://onecx-permission-svc:8080`
 
 
 a| [[onecx-permissions_onecx-permissions-enabled]]`link:#onecx-permissions_onecx-permissions-enabled[onecx.permissions.enabled]`

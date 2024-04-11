@@ -1,4 +1,4 @@
-package org.tkit.onecx.quarkus.permission.client;
+package org.tkit.onecx.quarkus.permission.service;
 
 import java.util.List;
 

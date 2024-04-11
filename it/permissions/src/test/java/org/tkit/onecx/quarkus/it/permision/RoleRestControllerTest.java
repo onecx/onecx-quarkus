@@ -5,7 +5,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 import org.tkit.onecx.quarkus.it.permission.RoleRestController;
 
@@ -22,8 +21,7 @@ class RoleRestControllerTest {
 
     private static final String USER = "bob";
 
-    private static final String APM_PRINCIPAL_TOKEN_HEADER = ConfigProvider.getConfig()
-            .getValue("onecx.permissions.token-header-param", String.class);
+    private static final String APM_PRINCIPAL_TOKEN_HEADER = "apm-principal-token";
 
     @Test
     void errorTest() {

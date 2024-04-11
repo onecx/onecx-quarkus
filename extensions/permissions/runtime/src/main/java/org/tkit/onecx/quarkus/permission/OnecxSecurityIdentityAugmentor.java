@@ -1,11 +1,9 @@
 package org.tkit.onecx.quarkus.permission;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
-import org.tkit.onecx.quarkus.permission.client.PermissionClientService;
-import org.tkit.onecx.quarkus.permission.client.RequestHeaderContainer;
+import org.tkit.onecx.quarkus.permission.service.PermissionClientService;
 
 import io.quarkus.arc.Unremovable;
 import io.quarkus.security.StringPermission;
@@ -24,17 +22,16 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
     PermissionRuntimeConfig config;
 
     @Inject
-    RequestHeaderContainer headerContainer;
-
-    @Inject
     PermissionClientService service;
 
     @Inject
     MockPermissionService mockPermissionService;
 
     @Override
-    @ActivateRequestContext
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
+        if (identity.isAnonymous()) {
+            return Uni.createFrom().item(identity);
+        }
 
         if (!config.enabled) {
             if (config.allowAll) {
@@ -49,17 +46,13 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return mockPermissionService.getMockData(identity);
         }
 
-        RoutingContext routingContext = (RoutingContext) identity.getAttributes().get(RoutingContext.class.getName());
+        RoutingContext routingContext = identity.getAttribute(RoutingContext.class.getName());
         if (routingContext == null) {
             return Uni.createFrom().item(identity);
         }
 
-        headerContainer.setContainerRequestContext(routingContext.request(), config.principalTokenHeaderParam);
-        var requestPermissionToken = routingContext.request().getHeader(config.requestTokenHeaderParam);
-
         return service
-                .getPermissions(config.productName, config.applicationId, requestPermissionToken, config.keySeparator,
-                        config.cacheEnabled)
+                .getPermissions(routingContext.request(), config)
                 .onItem().transformToUni(response -> {
                     if (response == null) {
                         return Uni.createFrom().item(identity);

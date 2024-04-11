@@ -35,4 +35,5 @@ public class RoleRestController implements RoleInternalApi {
     public Response updateRole(String id, UpdateRoleRequestDTO updateRoleRequestDTO) {
         return Response.ok().build();
     }
+
 }

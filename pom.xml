@@ -48,13 +48,13 @@
         <enforce-test-deps-scope.skip>${enforcer.skip}</enforce-test-deps-scope.skip>
 
         <!-- Quarkus configuration -->
-        <quarkus.version>3.8.3</quarkus.version>
+        <quarkus.version>3.9.3</quarkus.version>
         <quarkus.hibernate-orm.version>6.4.4.Final</quarkus.hibernate-orm.version>
         <quarkiverse.quarkus-openapi-generator.version>2.4.1</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.6.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->
-        <tkit.quarkus.version>2.17.0</tkit.quarkus.version>
+        <tkit.quarkus.version>2.18.0</tkit.quarkus.version>
 
         <!-- Maven configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

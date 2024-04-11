@@ -14,8 +14,12 @@
 
     <dependencies>
         <dependency>
-        <groupId>org.tkit.quarkus.lib</groupId>
-        <artifactId>tkit-quarkus-log-cdi-deployment</artifactId>
+            <groupId>org.tkit.quarkus.lib</groupId>
+            <artifactId>tkit-quarkus-log-cdi-deployment</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-common-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>org.tkit.onecx.quarkus</groupId>

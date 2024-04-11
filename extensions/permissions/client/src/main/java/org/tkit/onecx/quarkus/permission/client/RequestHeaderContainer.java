@@ -1,46 +1,38 @@
 package org.tkit.onecx.quarkus.permission.client;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 
-import io.quarkus.arc.Unremovable;
-import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.MultiMap;
 
-@RequestScoped
-@Unremovable
 public class RequestHeaderContainer {
 
-    private static final MultivaluedHashMap<String, String> EMPTY_MAP = new MultivaluedHashMap<>();
-    private HttpServerRequest requestContext;
+    private MultivaluedMap<String, String> incomingHeaders = new MultivaluedHashMap<>();
 
     private String tokenHeaderParam;
 
-    public void setContainerRequestContext(HttpServerRequest requestContext, String tokenHeaderParam) {
-        this.requestContext = requestContext;
+    public void setContainerRequestContext(MultiMap headers, String tokenHeaderParam) {
         this.tokenHeaderParam = tokenHeaderParam;
+        if (headers == null || headers.isEmpty()) {
+            return;
+        }
+        incomingHeaders = new CaseInsensitiveMap<>();
+        headers.names().forEach(name -> {
+            var value = headers.getAll(name);
+            if (value != null && !value.isEmpty()) {
+                incomingHeaders.put(name, value);
+            }
+
+        });
     }
 
     public String getTokenHeaderParam() {
         return tokenHeaderParam;
     }
 
-    public MultivaluedMap<String, String> getHeaders() {
-        if (requestContext == null) {
-            return EMPTY_MAP;
-        } else {
-
-            MultivaluedMap<String, String> headers = new CaseInsensitiveMap<>();
-            requestContext.headers().names().forEach(name -> {
-                var value = requestContext.headers().getAll(name);
-                if (value != null && !value.isEmpty()) {
-                    headers.put(name, value);
-                }
-
-            });
-            return headers;
-        }
+    public MultivaluedMap<String, String> getIncomingHeaders() {
+        return incomingHeaders;
     }
 }

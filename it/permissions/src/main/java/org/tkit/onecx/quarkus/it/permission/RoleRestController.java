@@ -3,8 +3,6 @@ package org.tkit.onecx.quarkus.it.permission;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
 
-import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
-
 import gen.org.tkit.onecx.quarkus.permission.example.RoleInternalApi;
 import gen.org.tkit.onecx.quarkus.permission.example.model.CreateRoleRequestDTO;
 import gen.org.tkit.onecx.quarkus.permission.example.model.RoleSearchCriteriaDTO;
@@ -38,9 +36,4 @@ public class RoleRestController implements RoleInternalApi {
         return Response.ok().build();
     }
 
-    @ServerExceptionMapper
-    public Response map(Exception ex) {
-        ex.printStackTrace();
-        return Response.serverError().build();
-    }
 }

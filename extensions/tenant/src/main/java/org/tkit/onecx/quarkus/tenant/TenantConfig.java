@@ -25,6 +25,6 @@ public interface TenantConfig {
      * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_tenant.url`
      */
     @WithName(value = "service.client.url")
-    @WithDefault(value = "http://onecx-tenant:8080")
+    @WithDefault(value = "http://onecx-tenant-svc:8080")
     String clientUrl();
 }

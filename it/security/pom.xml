@@ -74,7 +74,6 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.5.0</version>
                 <configuration>
                     <generatorName>jaxrs-spec</generatorName>
                     <modelNameSuffix>DTO</modelNameSuffix>

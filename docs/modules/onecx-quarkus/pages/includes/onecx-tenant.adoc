@@ -41,6 +41,6 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_TENANT_SERVICE_CLIENT_URL+++`
 endif::add-copy-button-to-env-var[]
 --|string 
-|`http://onecx-tenant:8080`
+|`http://onecx-tenant-svc:8080`
 
 |===

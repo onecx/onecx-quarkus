@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>parameters</module>
+        <!-- <module>parameters</module> -->
         <module>permissions</module>
         <module>permissions-mock</module>
         <module>tenant</module>

@@ -197,7 +197,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[onecx-permissions_onecx-permissions-mock-roles-roles]]`link:#onecx-permissions_onecx-permissions-mock-roles-roles[onecx.permissions.mock.roles]`
+a| [[onecx-permissions_onecx-permissions-mock-roles-roles]]`link:#onecx-permissions_onecx-permissions-mock-roles-roles[onecx.permissions.mock.roles."roles"]`
 
 
 [.description]
@@ -205,12 +205,13 @@ a| [[onecx-permissions_onecx-permissions-mock-roles-roles]]`link:#onecx-permissi
 Mock data for role Map format : .
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_MOCK_ROLES+++[]
+Environment variable: env_var_with_copy_button:+++ONECX_PERMISSIONS_MOCK_ROLES__ROLES_+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PERMISSIONS_MOCK_ROLES+++`
+Environment variable: `+++ONECX_PERMISSIONS_MOCK_ROLES__ROLES_+++`
 endif::add-copy-button-to-env-var[]
---|`Map<String,Map<String,List<String>>>` 
+--|link:https://docs.oracle.com/javase/8/docs/api/java/util/Map.html[Map]
+ 
 |
 
 |===

@@ -78,7 +78,7 @@
         <!-- Documentation -->
         <asciidoctorj.version>2.5.13</asciidoctorj.version>
         <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
-        <git-commit-id-maven-plugin.version>9.0.0</git-commit-id-maven-plugin.version>
+        <git-commit-id-maven-plugin.version>9.0.1</git-commit-id-maven-plugin.version>
 
         <!-- Other -->
         <openapitools.openapi-generator-maven-plugin.version>7.6.0</openapitools.openapi-generator-maven-plugin.version>

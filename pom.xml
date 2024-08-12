@@ -73,7 +73,7 @@
         <nexus.staging-plugin.version>1.7.0</nexus.staging-plugin.version>
         <source-plugin.version>3.3.1</source-plugin.version>
         <javadoc-plugin.version>3.8.0</javadoc-plugin.version>
-        <gpg-plugin.version>3.2.4</gpg-plugin.version>
+        <gpg-plugin.version>3.2.5</gpg-plugin.version>
 
         <!-- Documentation -->
         <asciidoctorj.version>2.5.13</asciidoctorj.version>

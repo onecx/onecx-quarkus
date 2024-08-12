@@ -51,7 +51,7 @@
         <quarkus.version>3.13.2</quarkus.version>
         <quarkus.hibernate-orm.version>6.4.4.Final</quarkus.hibernate-orm.version>
         <quarkiverse.quarkus-openapi-generator.version>2.4.6</quarkiverse.quarkus-openapi-generator.version>
-        <quarkiverse.mockserver.version>1.10.0</quarkiverse.mockserver.version>
+        <quarkiverse.mockserver.version>1.11.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->
         <tkit.quarkus.version>2.30.0</tkit.quarkus.version>

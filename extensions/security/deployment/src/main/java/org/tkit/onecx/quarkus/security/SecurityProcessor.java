@@ -3,10 +3,11 @@ package org.tkit.onecx.quarkus.security;
 import java.util.*;
 
 import org.jboss.jandex.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.quarkus.arc.deployment.AnnotationsTransformerBuildItem;
 import io.quarkus.arc.deployment.BeanArchiveIndexBuildItem;
-import io.quarkus.arc.processor.AnnotationsTransformer;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -22,6 +23,8 @@ public class SecurityProcessor {
 
     static final String FEATURE_NAME = "onecx-security";
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityProcessor.class);
+
     @BuildStep
     void build(BuildProducer<FeatureBuildItem> feature) {
         feature.produce(new FeatureBuildItem(FEATURE_NAME));
@@ -33,131 +36,120 @@ public class SecurityProcessor {
             SecurityCheckRecorder recorder,
             BuildProducer<AdditionalSecurityCheckBuildItem> additionalSecurityChecks) {
 
-        if (!config.mapping.enabled) {
+        if (!config.mapping().enabled()) {
+            log.info("Permissions annotation build check is disabled");
             return;
         }
 
         var index = ci.getIndex();
-        List<AnnotationInstance> permissionInstances = new ArrayList<>(
+        var permissionInstances = new ArrayList<>(
                 index.getAnnotationsWithRepeatable(DotNames.PERMISSIONS_ALLOWED, index));
 
-        if (!permissionInstances.isEmpty()) {
-
-            Map<MethodInfo, AnnotationInstance> methodToInstanceCollector = new HashMap<>();
-            Map<ClassInfo, AnnotationInstance> classAnnotations = new HashMap<>();
-
-            var securityChecks = new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder(recorder)
-                    .gatherPermissionsAllowedAnnotations(permissionInstances, methodToInstanceCollector, classAnnotations)
-                    .validatePermissionClasses(index)
-                    .createPermissionPredicates()
-                    .build().get();
-
-            if (!securityChecks.isEmpty()) {
-
-                for (Map.Entry<MethodInfo, SecurityCheck> e : securityChecks.entrySet()) {
-
-                    var methodInfo = e.getKey();
-                    var tmp = methodInfo.declaringClass();
-                    // skip wrong package
-                    if (isNotPackage(config, tmp.name())) {
-                        continue;
-                    }
-                    if (!tmp.isInterface()) {
-                        continue;
-                    }
-
-                    var classes = index.getKnownDirectImplementors(tmp.name());
-                    for (ClassInfo clas : classes) {
-                        // skip wrong package
-                        if (isNotPackage(config, clas.name())) {
-                            continue;
-                        }
-                        var method = clas.method(methodInfo.name(), methodInfo.parameterTypes().toArray(new Type[0]));
-                        if (method != null) {
-
-                            if (method.hasAnnotation(DotNames.PERMISSIONS_ALLOWED)) {
-                                continue;
-                            }
-                            additionalSecurityChecks.produce(new AdditionalSecurityCheckBuildItem(method, e.getValue()));
-                        }
-                    }
-                }
-            }
+        if (permissionInstances.isEmpty()) {
+            return;
         }
+
+        Map<MethodInfo, AnnotationInstance> methodToInstanceCollector = new HashMap<>();
+        Map<ClassInfo, AnnotationInstance> classAnnotations = new HashMap<>();
+
+        var securityChecks = new CopyPermissionSecurityChecks.PermissionSecurityChecksBuilder(recorder)
+                .gatherPermissionsAllowedAnnotations(permissionInstances, methodToInstanceCollector, classAnnotations)
+                .validatePermissionClasses(index)
+                .createPermissionPredicates()
+                .build().get();
+
+        if (securityChecks.isEmpty()) {
+            return;
+        }
+
+        buildSecurityChecks(securityChecks, additionalSecurityChecks, config, index);
 
     }
 
-    @BuildStep
-    AnnotationsTransformerBuildItem transform(SecurityBuildTimeConfig config, CombinedIndexBuildItem ci) {
+    private void buildSecurityChecks(Map<MethodInfo, SecurityCheck> securityChecks,
+            BuildProducer<AdditionalSecurityCheckBuildItem> additionalSecurityChecks, SecurityBuildTimeConfig config,
+            IndexView index) {
 
-        if (!config.mapping.enabled) {
-            return new AnnotationsTransformerBuildItem(transformationContext -> {
-            });
+        for (Map.Entry<MethodInfo, SecurityCheck> e : securityChecks.entrySet()) {
+
+            var methodInfo = e.getKey();
+            var tmp = methodInfo.declaringClass();
+            // skip wrong package
+            if (!tmp.isInterface() || isNotPackage(config, tmp.name())) {
+                continue;
+            }
+
+            var classes = index.getKnownDirectImplementors(tmp.name());
+            for (ClassInfo clas : classes) {
+                // skip wrong package
+                if (isNotPackage(config, clas.name())) {
+                    continue;
+                }
+                var method = clas.method(methodInfo.name(), methodInfo.parameterTypes().toArray(new Type[0]));
+                if (method != null && !method.hasAnnotation(DotNames.PERMISSIONS_ALLOWED)) {
+                    additionalSecurityChecks.produce(new AdditionalSecurityCheckBuildItem(method, e.getValue()));
+                }
+            }
+        }
+    }
+
+    @BuildStep
+    void transform(SecurityBuildTimeConfig config, CombinedIndexBuildItem ci,
+            BuildProducer<AnnotationsTransformerBuildItem> transformer) {
+
+        if (!config.mapping().enabled()) {
+            log.info("Security annotation mapping is disabled");
+            return;
         }
 
         var index = ci.getIndex();
 
-        return new AnnotationsTransformerBuildItem(new AnnotationsTransformer() {
+        transformer.produce(new AnnotationsTransformerBuildItem(AnnotationTransformation.forMethods()
+                .whenMethod(m -> !m.hasAnnotation(DotNames.PERMISSIONS_ALLOWED)
+                        && !m.declaringClass().isInterface()
+                        && !isNotPackage(config, m.declaringClass().name()))
+                .transform(context -> {
 
-            public boolean appliesTo(AnnotationTarget.Kind kind) {
-                return kind == AnnotationTarget.Kind.METHOD;
-            }
-
-            public void transform(TransformationContext context) {
-                var method = context.getTarget().asMethod();
-                var classInfo = method.declaringClass();
-                if (method.hasAnnotation(DotNames.PERMISSIONS_ALLOWED)) {
-                    return;
-                }
-                if (classInfo.isInterface()) {
-                    return;
-                }
-
-                // skip wrong package
-                if (isNotPackage(config, classInfo.name())) {
-                    return;
-                }
-
-                AnnotationInstance ai = null;
-                List<DotName> interfaces = classInfo.interfaceNames();
-                for (DotName item : interfaces) {
-                    var ite = index.getClassByName(item);
-                    if (ite == null) {
-                        continue;
-                    }
-
-                    // skip wrong package
-                    if (isNotPackage(config, ite.name())) {
+                    var ai = findAnnotationInstance(context.declaration().asMethod(), index, config);
+                    if (ai == null) {
                         return;
                     }
 
-                    var m = ite.method(method.name(), method.parameterTypes().toArray(new Type[0]));
-                    if (m == null) {
-                        continue;
-                    }
+                    List<AnnotationValue> values = ai.value().asArrayList().stream()
+                            .map(x -> AnnotationValue.createStringValue(x.name(), x.asString()))
+                            .toList();
+                    context.add(AnnotationInstance.builder(DotNames.PERMISSIONS_ALLOWED)
+                            .add(AnnotationValue.createArrayValue("value", values)).build());
+                })));
 
-                    ai = m.annotation(DotNames.PERMISSIONS_ALLOWED);
-                    if (ai != null) {
-                        break;
-                    }
-                }
-
-                if (ai == null) {
-                    return;
-                }
-
-                List<AnnotationValue> values = ai.value().asArrayList().stream()
-                        .map(x -> AnnotationValue.createStringValue(x.name(), x.asString()))
-                        .toList();
-                context.transform().add(DotNames.PERMISSIONS_ALLOWED, AnnotationValue.createArrayValue("value", values)).done();
-            }
-        });
     }
 
     private static boolean isNotPackage(SecurityBuildTimeConfig config, DotName name) {
         var n = name.toString();
-        Optional<String> add = config.mapping.packages.stream().filter(n::startsWith).findFirst();
+        Optional<String> add = config.mapping().packages().stream().filter(n::startsWith).findFirst();
         return add.isEmpty();
+    }
+
+    private static AnnotationInstance findAnnotationInstance(MethodInfo method, IndexView index,
+            SecurityBuildTimeConfig config) {
+        var classInfo = method.declaringClass();
+        List<DotName> interfaces = classInfo.interfaceNames();
+        for (DotName item : interfaces) {
+            var ite = index.getClassByName(item);
+            if (ite == null || isNotPackage(config, ite.name())) {
+                continue;
+            }
+
+            var m = ite.method(method.name(), method.parameterTypes().toArray(new Type[0]));
+            if (m != null) {
+                var ai = m.annotation(DotNames.PERMISSIONS_ALLOWED);
+                if (ai != null) {
+                    return ai;
+                }
+            }
+        }
+
+        return null;
     }
 
 }

@@ -31,7 +31,7 @@ public class ModelRestController {
     }
 
     public static class ModelList {
-        public List<Model> models;
+        private List<Model> models;
 
         public static ModelList create(List<Model> models) {
             ModelList m = new ModelList();

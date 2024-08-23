@@ -29,15 +29,14 @@ public class MockPermissionService {
 
         List<String> mockData = new ArrayList<>();
         roles.forEach(role -> {
-            var data = config.mock.roles.get(role);
+            var data = config.mock().roles().get(role);
             if (data != null) {
-                data.forEach((resource, actions) -> {
-                    mockData.addAll(actions.stream().map(action -> resource + config.keySeparator + action).toList());
-                });
+                data.forEach((resource, actions) -> mockData
+                        .addAll(actions.stream().map(action -> resource + config.keySeparator() + action).toList()));
             }
         });
 
-        StringPermission mockPermissions = new StringPermission(config.name, mockData.toArray(new String[0]));
+        StringPermission mockPermissions = new StringPermission(config.name(), mockData.toArray(new String[0]));
         return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
                 .addPermissionChecker(requiredPermission -> {
                     boolean accessGranted = mockPermissions.implies(requiredPermission);

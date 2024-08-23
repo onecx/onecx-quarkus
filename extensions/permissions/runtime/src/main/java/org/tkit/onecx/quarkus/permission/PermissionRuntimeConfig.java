@@ -5,96 +5,107 @@ import java.util.Map;
 
 import jakarta.ws.rs.core.HttpHeaders;
 
-import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithName;
 
-@ConfigRoot(prefix = "onecx", name = "permissions", phase = ConfigPhase.RUN_TIME)
-public class PermissionRuntimeConfig {
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+@ConfigMapping(prefix = "onecx.permissions")
+public interface PermissionRuntimeConfig {
 
     /**
      * Tenant client URL configuration.
      * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
      */
-    @ConfigItem(name = "service.client.url", defaultValue = "http://onecx-permission-svc:8080")
-    String clientUrl;
+    @WithName("service.client.url")
+    @WithDefault("http://onecx-permission-svc:8080")
+    String clientUrl();
 
     /**
      * Enable interface mapping
      */
-    @ConfigItem(name = "enabled", defaultValue = "true")
-    public boolean enabled;
+    @WithName("enabled")
+    @WithDefault("true")
+    boolean enabled();
 
     /**
      * Enable interface mapping
      */
-    @ConfigItem(name = "cache-enabled", defaultValue = "true")
-    public boolean cacheEnabled;
+    @WithName("cache-enabled")
+    @WithDefault("true")
+    boolean cacheEnabled();
 
     /**
      * Allow all permissions
      */
-    @ConfigItem(name = "allow-all", defaultValue = "false")
-    public boolean allowAll;
+    @WithName("allow-all")
+    @WithDefault("false")
+    boolean allowAll();
 
     /**
      * Product name.
      */
-    @ConfigItem(name = "product-name")
-    public String productName;
+    @WithName("product-name")
+    String productName();
 
     /**
      * Permissions application ID.
      */
-    @ConfigItem(name = "application-id", defaultValue = "${quarkus.application.name}")
-    public String applicationId;
+    @WithName("application-id")
+    @WithDefault("${quarkus.application.name}")
+    String applicationId();
 
     /**
      * Permissions prefix name.
      */
-    @ConfigItem(name = "name", defaultValue = "onecx")
-    public String name;
+    @WithName("name")
+    @WithDefault("onecx")
+    String name();
 
     /**
      * Permissions access token header parameter.
      */
-    @ConfigItem(name = "request-token-from-header-param", defaultValue = HttpHeaders.AUTHORIZATION)
-    public String requestTokenHeaderParam;
+    @WithName("request-token-from-header-param")
+    @WithDefault(HttpHeaders.AUTHORIZATION)
+    String requestTokenHeaderParam();
 
     /**
      * Permissions principal token header parameter.
      */
-    @ConfigItem(name = "token-header-param", defaultValue = "${tkit.rs.context.token.header-param:apm-principal-token}")
-    public String principalTokenHeaderParam;
+    @WithName("token-header-param")
+    @WithDefault("${tkit.rs.context.token.header-param:apm-principal-token}")
+    String principalTokenHeaderParam();
 
     /**
      * Permissions resource action separator.
      */
-    @ConfigItem(name = "key-separator", defaultValue = "#")
-    public String keySeparator;
+    @WithName("key-separator")
+    @WithDefault("#")
+    String keySeparator();
 
     /**
      * Mock configuration
      */
-    @ConfigItem(name = "mock")
-    public MockConfig mock;
+    @WithName("mock")
+    MockConfig mock();
 
-    @ConfigGroup
-    public static class MockConfig {
+    interface MockConfig {
 
         /**
          * Enable or disable mock service
          */
-        @ConfigItem(name = "enabled", defaultValue = "false")
-        boolean enabled;
+        @WithName("enabled")
+        @WithDefault("false")
+        boolean enabled();
 
         /**
          * Mock data for role
          * Map format : <role>.<permissions>
          */
-        @ConfigItem(name = "roles")
-        Map<String, Map<String, List<String>>> roles;
+        @WithName("roles")
+        Map<String, Map<String, List<String>>> roles();
     }
 
 }

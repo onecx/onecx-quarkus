@@ -2,18 +2,21 @@ package org.tkit.onecx.quarkus.parameter.deployment;
 
 import org.tkit.onecx.quarkus.parameter.deployment.devservices.DevServicesConfig;
 
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithName;
 
-@ConfigRoot(name = "parameters", prefix = "onecx")
-public class ParametersBuildTimeConfig {
+@ConfigRoot(phase = ConfigPhase.BUILD_TIME)
+@ConfigMapping(prefix = "onecx.parameters")
+public interface ParametersBuildTimeConfig {
 
     /**
      * Configuration for DevServices
      * <p>
      * DevServices allows Quarkus to automatically start MockServer in dev and test mode.
      */
-    @ConfigItem(name = "devservices")
-    public DevServicesConfig devServices;
+    @WithName("devservices")
+    DevServicesConfig devServices();
 
 }

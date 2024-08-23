@@ -40,7 +40,7 @@ public class TestRestController {
     @Path("write")
     @PermissionsAllowed(value = "onecx:resource1#admin-write")
     public Response adminWrite() {
-        log.info("##  {}", httpHeaders.getRequestHeaders());
+        log.info("## @PermissionsAllowed(value='onecx:resource1#admin-write') #  {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 }

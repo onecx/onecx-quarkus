@@ -16,6 +16,7 @@ import io.quarkus.security.runtime.SecurityCheckRecorder;
 import io.quarkus.security.runtime.interceptor.PermissionsAllowedInterceptor;
 import io.quarkus.security.spi.runtime.SecurityCheck;
 
+@SuppressWarnings({ "java:S3776", "java:S1604", "java:S1117", "java:S125", "java:S112", "java:S1119" })
 interface CopyPermissionSecurityChecks {
 
     Map<MethodInfo, SecurityCheck> get();

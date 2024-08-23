@@ -9,6 +9,7 @@ import org.tkit.quarkus.jpa.models.TraceableEntity;
 
 @Entity
 @Table(name = "MODEL")
+@SuppressWarnings("java:S2160")
 public class Model extends TraceableEntity {
 
     @TenantId

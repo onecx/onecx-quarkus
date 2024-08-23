@@ -32,12 +32,12 @@ public class PermissionClientService {
 
     public Uni<PermissionResponse> getPermissions(HttpServerRequest request, PermissionRuntimeConfig config) {
 
-        var token = request.getHeader(config.requestTokenHeaderParam);
+        var token = request.getHeader(config.requestTokenHeaderParam());
 
-        if (!config.cacheEnabled) {
+        if (!config.cacheEnabled()) {
             return getPermissionsLocal(request, config, token);
         }
-        var key = new CompositeCacheKey(config.productName, config.applicationId, token);
+        var key = new CompositeCacheKey(config.productName(), config.applicationId(), token);
         return cache.getAsync(key,
                 compositeCacheKey -> getPermissionsLocal(request, config, token))
                 .onFailure().recoverWithUni(t -> cache.invalidate(key).map(x -> null));
@@ -47,12 +47,13 @@ public class PermissionClientService {
             String token) {
 
         RequestHeaderContainer headerContainer = new RequestHeaderContainer();
-        headerContainer.setContainerRequestContext(request.headers(), config.principalTokenHeaderParam);
+        headerContainer.setContainerRequestContext(request.headers(), config.principalTokenHeaderParam());
 
         var ctx = Vertx.currentContext();
         ctx.putLocal(RequestHeaderContainer.class.getName(), headerContainer);
 
-        return client.getApplicationPermissions(config.productName, config.applicationId, new PermissionRequest().token(token))
+        return client
+                .getApplicationPermissions(config.productName(), config.applicationId(), new PermissionRequest().token(token))
                 .map(response -> {
 
                     ctx.removeLocal(RequestHeaderContainer.class.getName());
@@ -61,7 +62,7 @@ public class PermissionClientService {
                     if (response.getPermissions() != null) {
                         response.getPermissions().forEach((resource, actions) -> {
                             if (actions != null && !actions.isEmpty()) {
-                                actions.forEach(action -> result.add(resource + config.keySeparator + action));
+                                actions.forEach(action -> result.add(resource + config.keySeparator() + action));
                             }
                         });
                     }

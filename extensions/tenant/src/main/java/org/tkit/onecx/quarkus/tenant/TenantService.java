@@ -39,6 +39,7 @@ public class TenantService {
         return getTenantLocal(token);
     }
 
+    @SuppressWarnings({ "java:S1172", "java:S2139" })
     public String getTenantLocal(String token) {
 
         try (Response response = client.getTenantMapsByOrgId()) {
@@ -58,13 +59,13 @@ public class TenantService {
             log.error("Error get tenant-id from service. Status: {}, Message: {}", ex.getResponse().getStatus(), body);
 
             throw new TenantException(ErrorKeys.ERROR_TENANT_SERVICE_EXCEPTION_RESPONSE,
-                    "Error get tenant-id from service. Status: " + ex.getResponse().getStatus());
+                    "Error get tenant-id from service. Status: " + ex.getResponse().getStatus(), ex);
         }
     }
 
     public enum ErrorKeys {
 
         ERROR_TENANT_SERVICE_WRONG_RESPONSE,
-        ERROR_TENANT_SERVICE_EXCEPTION_RESPONSE;
+        ERROR_TENANT_SERVICE_EXCEPTION_RESPONSE
     }
 }

@@ -23,33 +23,33 @@ public class ParametersMetricsService {
     Vertx vertx;
 
     // The bucket contains the current collected requests
-    volatile ParametersBucket bucket;
+    private ParametersBucketHolder bucket;
 
     public void init(ParametersConfig parametersConfig, String applicationId) {
 
-        bucket = new ParametersBucket();
+        bucket = new ParametersBucketHolder();
 
         // init rest client
-        String instanceId = parametersConfig.instanceId.orElse(null);
+        String instanceId = parametersConfig.instanceId().orElse(null);
 
         // update
-        vertx.setPeriodic(parametersConfig.metrics.metricsIntervalInMilliseconds, id -> {
-            ParametersBucket tmp = this.bucket;
-            this.bucket = new ParametersBucket();
-            tmp.instanceId = instanceId;
+        vertx.setPeriodic(parametersConfig.metrics().metricsIntervalInMilliseconds(), id -> {
+            ParametersBucketHolder tmp = this.bucket;
+            this.bucket = new ParametersBucketHolder();
+            tmp.setInstanceId(instanceId);
             tmp.end();
 
-            client.sendMetrics(applicationId, tmp)
+            client.sendMetrics(applicationId, tmp.getBucket())
                     .onItem().transform(resp -> {
                         if (resp.getStatus() != 200) {
-                            log.error("Error send metrics to the parameters management. Code: " + resp.getStatus());
+                            log.error("Error send metrics to the parameters management. Code: {}", resp.getStatus());
                         }
                         return resp.getStatus();
                     })
                     .onFailure().recoverWithItem(ex -> {
-                        log.error("Error send metrics to the parameters management. Error: " + ex.getMessage());
+                        log.error("Error send metrics to the parameters management. Error: {}", ex.getMessage());
                         return -1;
-                    }).subscribe().with(r -> log.debug("Send metrics. Code: " + r));
+                    }).subscribe().with(r -> log.debug("Send metrics. Code: {}", r));
         });
     }
 

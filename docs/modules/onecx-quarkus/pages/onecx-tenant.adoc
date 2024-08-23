@@ -24,12 +24,13 @@ For instance, with Maven, add the following dependency to your POM file:
 
 To activate multi-tenancy also for hibernate, add the following maven dependency to your project [tkit-quarkus-jpa-tenant](https://github.com/1000kit/tkit-quarkus/tree/main/extensions/jpa-tenant).
 
-```xml
+[source,xml,subs=attributes+]
+----
 <dependency>
     <groupId>org.tkit.quarkus.lib</groupId>
     <artifactId>tkit-quarkus-jpa-tenant</artifactId>
 </dependency>
-```
+----
 
 === Configuration
 

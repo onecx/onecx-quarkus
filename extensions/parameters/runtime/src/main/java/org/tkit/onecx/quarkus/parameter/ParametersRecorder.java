@@ -18,21 +18,21 @@ public class ParametersRecorder {
 
     public void configSources(BeanContainer container, ApplicationConfig appConfig, ParametersConfig config) {
         // check if the parameter extension is enabled
-        if (!config.enabled) {
+        if (!config.enabled()) {
             log.debug(
                     "No attempt will be made to obtain configuration from Parameters management because the functionality has been disabled via configuration");
             return;
         }
 
         // Check if there was an applicationId set
-        String applicationId = config.applicationId.orElseGet(() -> appConfig.name.orElse(UNKNOWN_SERVICE_NAME));
+        String applicationId = config.applicationId().orElseGet(() -> appConfig.name.orElse(UNKNOWN_SERVICE_NAME));
 
         // init parameter service
         ParametersService service = container.beanInstance(ParametersService.class, Default.Literal.INSTANCE);
         service.init(config, applicationId);
 
         // if metrics service enabled
-        if (config.metrics.enabled) {
+        if (config.metrics().enabled()) {
             // init metrics service
             ParametersMetricsService metrics = container.beanInstance(ParametersMetricsService.class, Default.Literal.INSTANCE);
             metrics.init(config, applicationId);

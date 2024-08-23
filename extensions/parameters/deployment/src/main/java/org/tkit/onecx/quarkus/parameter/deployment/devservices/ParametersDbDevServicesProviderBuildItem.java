@@ -4,13 +4,25 @@ import io.quarkus.builder.item.SimpleBuildItem;
 
 public final class ParametersDbDevServicesProviderBuildItem extends SimpleBuildItem {
 
-    public String username;
-    public String password;
-    public String jdbcUrl;
+    private final String username;
+    private final String password;
+    private final String jdbcUrl;
 
     public ParametersDbDevServicesProviderBuildItem(String jdbcUrl, String username, String password) {
         this.jdbcUrl = jdbcUrl;
         this.username = username;
         this.password = password;
+    }
+
+    public String getJdbcUrl() {
+        return jdbcUrl;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

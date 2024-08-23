@@ -2,36 +2,39 @@ package org.tkit.onecx.quarkus.security;
 
 import java.util.List;
 
-import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithName;
 
-@ConfigRoot(prefix = "onecx", name = "security", phase = ConfigPhase.BUILD_TIME)
-public class SecurityBuildTimeConfig {
+@ConfigRoot(phase = ConfigPhase.BUILD_TIME)
+@ConfigMapping(prefix = "onecx.security")
+public interface SecurityBuildTimeConfig {
 
     /**
      * Mapping annotation configuration.
      */
-    @ConfigItem(name = "mapping-annotation")
-    public MappingBuildTimeConfig mapping = new MappingBuildTimeConfig();
+    @WithName("mapping-annotation")
+    MappingBuildTimeConfig mapping();
 
     /**
      * Mapping @PermissionsAllowed from interface to implementation class
      */
-    @ConfigGroup
-    public static class MappingBuildTimeConfig {
+    interface MappingBuildTimeConfig {
 
         /**
          * Enable interface mapping
          */
-        @ConfigItem(name = "enabled", defaultValue = "true")
-        public boolean enabled;
+        @WithName("enabled")
+        @WithDefault("true")
+        boolean enabled();
 
         /**
          * Mapping includes packages.
          */
-        @ConfigItem(name = "packages", defaultValue = "org.tkit.onecx,gen.org.tkit.onecx")
-        public List<String> packages;
+        @WithName("packages")
+        @WithDefault("org.tkit.onecx,gen.org.tkit.onecx")
+        List<String> packages();
     }
 }

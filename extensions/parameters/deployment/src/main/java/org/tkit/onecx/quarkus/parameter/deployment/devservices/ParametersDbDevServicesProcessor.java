@@ -31,6 +31,7 @@ import io.quarkus.devservices.common.ConfigureUtil;
 import io.quarkus.devservices.common.ContainerAddress;
 import io.quarkus.devservices.common.ContainerLocator;
 
+@SuppressWarnings({ "java:S112", "java:S2696", "java:S2095", "java:S107", "java:S1181", "java:S3077", "java:S2160" })
 public class ParametersDbDevServicesProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(ParametersDbDevServicesProcessor.class);
@@ -110,12 +111,12 @@ public class ParametersDbDevServicesProcessor {
         if (devService.isOwner()) {
 
             log.info("The Parameters database is ready to accept connections. Config: {}",
-                    devService.jdbcUrl);
+                    devService.getJdbcUrl());
 
             startResultProducer.produce(new ParametersDbDevServicesProviderBuildItem(
-                    devService.jdbcUrl,
-                    devService.dbUsername,
-                    devService.dbPassword));
+                    devService.getJdbcUrl(),
+                    devService.getDbUsername(),
+                    devService.getDbPassword()));
         }
 
         return devService.toBuildItem();
@@ -132,7 +133,7 @@ public class ParametersDbDevServicesProcessor {
             return null;
         }
 
-        if (!dockerStatusBuildItem.isDockerAvailable()) {
+        if (!dockerStatusBuildItem.isContainerRuntimeAvailable()) {
             log.warn(
                     "Docker isn't working, please configure the Parameters URL property ({}).", ParametersConfig.HOST);
             return null;
@@ -172,7 +173,7 @@ public class ParametersDbDevServicesProcessor {
     }
 
     private ParametersDbDevServiceCfg getConfiguration(ParametersBuildTimeConfig cfg) {
-        DevServicesConfig devServicesConfig = cfg.devServices;
+        DevServicesConfig devServicesConfig = cfg.devServices();
         return new ParametersDbDevServiceCfg(devServicesConfig);
     }
 
@@ -186,12 +187,12 @@ public class ParametersDbDevServicesProcessor {
         private final boolean reuse;
 
         public ParametersDbDevServiceCfg(DevServicesConfig config) {
-            this.devServicesEnabled = config.enabled;
-            DevServicesConfig.ParametersDatabaseConfig tmp = config.db;
-            this.imageName = tmp.imageName;
-            this.serviceName = tmp.serviceName;
-            this.shared = config.shared;
-            this.reuse = config.reuse;
+            this.devServicesEnabled = config.enabled();
+            DevServicesConfig.ParametersDatabaseConfig tmp = config.db();
+            this.imageName = tmp.imageName();
+            this.serviceName = tmp.serviceName();
+            this.shared = config.shared();
+            this.reuse = config.reuse();
 
         }
 
@@ -256,12 +257,15 @@ public class ParametersDbDevServicesProcessor {
 
     public static class ParametersDbRunningDevService extends DevServicesResultBuildItem.RunningDevService {
 
-        public String dbUsername;
-        public String dbPassword;
-        public String jdbcUrl;
+        private final String dbUsername;
+        private final String dbPassword;
+        private final String jdbcUrl;
 
         public ParametersDbRunningDevService(String name, String containerId, Closeable closeable) {
             super(name, containerId, closeable, Map.of());
+            this.jdbcUrl = null;
+            this.dbPassword = null;
+            this.dbUsername = null;
         }
 
         public ParametersDbRunningDevService(String name, String containerId, Closeable closeable, String jdbcUrl,
@@ -270,6 +274,18 @@ public class ParametersDbDevServicesProcessor {
             this.jdbcUrl = jdbcUrl;
             this.dbUsername = dbUsername;
             this.dbPassword = dbPassword;
+        }
+
+        public String getJdbcUrl() {
+            return jdbcUrl;
+        }
+
+        public String getDbPassword() {
+            return dbPassword;
+        }
+
+        public String getDbUsername() {
+            return dbUsername;
         }
     }
 

@@ -20,12 +20,14 @@ import io.quarkus.test.junit.QuarkusTest;
 @TestHTTPEndpoint(TestRestController.class)
 class ParametersTest {
 
+    private static final String STRING_TYPE = "String";
+
     static Stream<Arguments> loadParameters() {
         return Stream.of(
-                Arguments.of(Map.of("name", "test", "type", "String"), "NO_STRING_VALUE"),
-                Arguments.of(Map.of("name", "PARAM_TEXT_3", "type", "String"), "1234"),
-                Arguments.of(Map.of("name", "PARAM_TEXT", "type", "String"), "Text Information"),
-                Arguments.of(Map.of("name", "PARAM_TEXT_2", "type", "String"), "4321"),
+                Arguments.of(Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE"),
+                Arguments.of(Map.of("name", "PARAM_TEXT_3", "type", STRING_TYPE), "1234"),
+                Arguments.of(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information"),
+                Arguments.of(Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321"),
                 Arguments.of(Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123"),
                 Arguments.of(Map.of("name", "PARAM_BOOL", "type", "Boolean"), "true"));
     }

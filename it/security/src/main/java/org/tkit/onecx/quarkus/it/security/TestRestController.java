@@ -32,7 +32,7 @@ public class TestRestController {
     @Path("admin")
     @RolesAllowed("role-admin")
     public Response admin() {
-        log.info("##  {}", httpHeaders.getRequestHeaders());
+        log.info("## @RolesAllowed(role-admin) # {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 
@@ -40,7 +40,7 @@ public class TestRestController {
     @Path("write")
     @PermissionsAllowed(value = "microprofile-jwt")
     public Response adminWrite() {
-        log.info("##  {}", httpHeaders.getRequestHeaders());
+        log.info("## @PermissionsAllowed(value =microprofile-jwt) # {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 }

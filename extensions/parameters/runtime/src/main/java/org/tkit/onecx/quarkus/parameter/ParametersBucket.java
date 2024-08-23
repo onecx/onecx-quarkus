@@ -1,7 +1,6 @@
 package org.tkit.onecx.quarkus.parameter;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -11,44 +10,56 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection
 public class ParametersBucket {
 
-    public Map<String, ParameterInfo> parameters = new ConcurrentHashMap<>();
+    private Map<String, ParameterInfo> parameters = new ConcurrentHashMap<>();
 
-    public String instanceId;
+    private String instanceId;
 
-    public OffsetDateTime start = now();
+    private OffsetDateTime start;
 
-    public OffsetDateTime end;
+    private OffsetDateTime end;
 
-    /**
-     * Add a new request to the bucket, this will increase the count of requests
-     * for the parameter.
-     *
-     * @param name the name of the parameter requested
-     * @param clazz the class/type of the parameter requested
-     * @param defaultValue the default value of the parameter requested
-     */
-    public void addParameterRequest(String name, Class<?> clazz, Object defaultValue, Object currentValue) {
-        parameters.computeIfAbsent(name, s -> new ParameterInfo(clazz, defaultValue, currentValue)).count.incrementAndGet();
+    public Map<String, ParameterInfo> getParameters() {
+        return parameters;
     }
 
-    public void end() {
-        end = now();
+    public void setParameters(Map<String, ParameterInfo> parameters) {
+        this.parameters = parameters;
     }
 
-    static OffsetDateTime now() {
-        return OffsetDateTime.now(ZoneId.of("UTC"));
+    public OffsetDateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(OffsetDateTime end) {
+        this.end = end;
+    }
+
+    public OffsetDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(OffsetDateTime start) {
+        this.start = start;
+    }
+
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
     }
 
     @RegisterForReflection
     public static class ParameterInfo {
 
-        public AtomicLong count;
+        private final AtomicLong count;
 
-        public String type;
+        private final String type;
 
-        public Object defaultValue;
+        private final Object defaultValue;
 
-        public Object currentValue;
+        private final Object currentValue;
 
         ParameterInfo(Class<?> type, Object defaultValue, Object currentValue) {
             this.count = new AtomicLong(0);
@@ -57,5 +68,20 @@ public class ParametersBucket {
             this.currentValue = currentValue;
         }
 
+        public AtomicLong getCount() {
+            return count;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public Object getCurrentValue() {
+            return currentValue;
+        }
+
+        public Object getDefaultValue() {
+            return defaultValue;
+        }
     }
 }

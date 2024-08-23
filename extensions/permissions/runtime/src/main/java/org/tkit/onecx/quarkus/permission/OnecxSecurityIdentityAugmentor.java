@@ -33,8 +33,8 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return Uni.createFrom().item(identity);
         }
 
-        if (!config.enabled) {
-            if (config.allowAll) {
+        if (!config.enabled()) {
+            if (config.allowAll()) {
                 return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
                         .addPermissionChecker(permission -> Uni.createFrom().item(true))
                         .build());
@@ -42,7 +42,7 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
             return Uni.createFrom().item(identity);
         }
 
-        if (config.mock.enabled) {
+        if (config.mock().enabled()) {
             return mockPermissionService.getMockData(identity);
         }
 
@@ -61,7 +61,7 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
                     if (actions == null) {
                         return Uni.createFrom().item(identity);
                     }
-                    StringPermission possessedPermission = new StringPermission(config.name, actions.toArray(new String[0]));
+                    StringPermission possessedPermission = new StringPermission(config.name(), actions.toArray(new String[0]));
                     return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
                             .addPermissionChecker(requiredPermission -> {
                                 boolean accessGranted = possessedPermission.implies(requiredPermission);

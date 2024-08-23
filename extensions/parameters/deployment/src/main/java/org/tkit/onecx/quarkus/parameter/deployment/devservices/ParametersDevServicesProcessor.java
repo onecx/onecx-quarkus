@@ -33,6 +33,8 @@ import io.quarkus.devservices.common.ContainerAddress;
 import io.quarkus.devservices.common.ContainerLocator;
 import io.quarkus.runtime.configuration.ConfigUtils;
 
+@SuppressWarnings({ "java:S2160", "java:S2696", "java:S2095", "java:S2696", "java:S107", "java:S1181", "java:S112",
+        "java:S1075", "java:S3077" })
 public class ParametersDevServicesProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(ParametersDevServicesProcessor.class);
@@ -128,7 +130,7 @@ public class ParametersDevServicesProcessor {
             return null;
         }
 
-        if (!dockerStatusBuildItem.isDockerAvailable()) {
+        if (!dockerStatusBuildItem.isContainerRuntimeAvailable()) {
             log.warn(
                     "Docker isn't working, please configure the Parameters URL property ({}).", ParametersConfig.HOST);
             return null;
@@ -189,7 +191,7 @@ public class ParametersDevServicesProcessor {
     }
 
     private ParametersDevServiceCfg getConfiguration(ParametersBuildTimeConfig cfg) {
-        var devServicesConfig = cfg.devServices;
+        var devServicesConfig = cfg.devServices();
         return new ParametersDevServiceCfg(devServicesConfig);
     }
 
@@ -208,14 +210,14 @@ public class ParametersDevServicesProcessor {
         private final boolean log;
 
         public ParametersDevServiceCfg(DevServicesConfig config) {
-            this.devServicesEnabled = config.enabled;
-            this.imageName = config.imageName.orElse(DEFAULT_DOCKER_IMAGE);
-            this.fixedExposedPort = config.port.orElse(0);
-            this.shared = config.shared;
-            this.serviceName = config.serviceName;
-            this.reuse = config.reuse;
-            this.importFile = config.importFile.orElse(null);
-            this.log = config.log;
+            this.devServicesEnabled = config.enabled();
+            this.imageName = config.imageName().orElse(DEFAULT_DOCKER_IMAGE);
+            this.fixedExposedPort = config.port().orElse(0);
+            this.shared = config.shared();
+            this.serviceName = config.serviceName();
+            this.reuse = config.reuse();
+            this.importFile = config.importFile().orElse(null);
+            this.log = config.log();
         }
 
         @Override
@@ -268,9 +270,9 @@ public class ParametersDevServicesProcessor {
             this.withEnv("_PROD_TKIT_LOG_JSON_ENABLED", "false");
 
             // set up the database for parameters service
-            this.withEnv("_PROD_QUARKUS_DATASOURCE_JDBC_URL", dbSettings.jdbcUrl)
-                    .withEnv("_PROD_QUARKUS_DATASOURCE_USERNAME", dbSettings.username)
-                    .withEnv("_PROD_QUARKUS_DATASOURCE_PASSWORD", dbSettings.password);
+            this.withEnv("_PROD_QUARKUS_DATASOURCE_JDBC_URL", dbSettings.getJdbcUrl())
+                    .withEnv("_PROD_QUARKUS_DATASOURCE_USERNAME", dbSettings.getUsername())
+                    .withEnv("_PROD_QUARKUS_DATASOURCE_PASSWORD", dbSettings.getPassword());
 
             if (serviceName != null) {
                 this.withLabel(DEV_SERVICE_LABEL, serviceName);

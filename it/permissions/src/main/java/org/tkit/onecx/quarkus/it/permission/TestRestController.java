@@ -32,7 +32,7 @@ public class TestRestController {
     @Path("admin")
     @RolesAllowed("role-admin")
     public Response admin() {
-        log.info("##  {}", httpHeaders.getRequestHeaders());
+        log.info("## @RolesAllowed('role-admin') # {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 
@@ -40,7 +40,7 @@ public class TestRestController {
     @Path("write")
     @PermissionsAllowed(value = "onecx:resource1#admin-write")
     public Response adminWrite() {
-        log.info("##  {}", httpHeaders.getRequestHeaders());
+        log.info("## @PermissionsAllowed(value=onecx:resource1#admin-write) # {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
 }

@@ -34,7 +34,7 @@ class ModelRestControllerTest extends AbstractTest {
                 .statusCode(INTERNAL_SERVER_ERROR.getStatusCode());
 
         // 100
-        var dto1 = given()
+        given()
                 .contentType(APPLICATION_JSON)
                 .header("Apm-Principal-Token", "token-response-count")
                 .get()

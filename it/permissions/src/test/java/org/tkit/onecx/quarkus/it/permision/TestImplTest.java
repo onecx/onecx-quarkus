@@ -13,7 +13,7 @@ import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 @TestHTTPEndpoint(TestImpl.class)
-public class TestImplTest {
+class TestImplTest {
 
     @Test
     void test1() {

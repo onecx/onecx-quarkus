@@ -19,3 +19,119 @@ include::./includes/attributes.adoc[]
     </dependencies>
 </plugin>
 ----
+
+=== Configuration
+
+==== OAuth2 scopes
+
+To enable the OpenAPI generator extension for OAuth2 scopes from the OpenAPI definition file, use the following additional property `onecx-scopes=true` in the maven plugin configuration.
+
+[source,xml,subs=attributes+]
+----
+<plugin>
+    <groupId>org.openapitools</groupId>
+    <artifactId>openapi-generator-maven-plugin</artifactId>
+    <configuration>
+        <!-- configuration -->
+        <additionalProperties>onecx-scopes=true</additionalProperties>
+        <configOptions>
+            <!-- configuration options -->
+        </configOptions>
+    </configuration>
+</plugin>
+----
+
+Define OAuth2 scopes in your openapi file.
+[source,yaml,subs=attributes+]
+----
+openapi: 3.0.3
+info:
+  title: example
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /v1/themes:
+    get:
+      security:
+        - oauth2: [ ocx-th:read ]
+      operationId: getThemesInfo
+      responses:
+        200:
+          description: OK
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.simple.api/token
+          scopes:
+            ocx-th:read: Grants read access
+----
+
+The generated Java source code contains the additional Quarkus annotation `io.quarkus.security.PermissionsAllowed` with the scope defined in the OpenAPI file.
+[source,java,subs=attributes+]
+----
+    @io.quarkus.security.PermissionsAllowed({ "ocx-th:read" })
+    @GET
+    @Produces({ "application/json" })
+    Response getThemesInfo();
+----
+
+==== Permissions
+
+To enable the OpenAPI generator extension for OneCX permissions from the OpenAPI definition file, use the following additional property `onecx-permissions=true` in the maven plugin configuration.
+
+[source,xml,subs=attributes+]
+----
+<plugin>
+    <groupId>org.openapitools</groupId>
+    <artifactId>openapi-generator-maven-plugin</artifactId>
+    <configuration>
+        <!-- configuration -->
+        <additionalProperties>onecx-scopes=true</additionalProperties>
+        <configOptions>
+            <!-- configuration options -->
+        </configOptions>
+    </configuration>
+</plugin>
+----
+Define Onecx permission in your openapi file as vendor extension.
+[source,yaml,subs=attributes+]
+----
+   x-onecx:
+    permissions:
+     themes:
+      - read
+----
+
+Openapi example:
+[source,yaml,subs=attributes+]
+----
+openapi: 3.0.3
+info:
+  title: example
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+paths:
+ /themes:
+  get:
+   x-onecx:
+    permissions:
+     themes:
+      - read
+   operationId: getThemes
+   responses:
+    200:
+     description: OK
+----
+The generated Java source code contains the additional Quarkus annotation `io.quarkus.security.PermissionsAllowed` with the scope defined in the OpenAPI file.
+[source,java,subs=attributes+]
+----
+    @io.quarkus.security.PermissionsAllowed({ "onecx:themes#read" })
+    @GET
+    @Produces({ "application/json" })
+    Response getThemes();
+----

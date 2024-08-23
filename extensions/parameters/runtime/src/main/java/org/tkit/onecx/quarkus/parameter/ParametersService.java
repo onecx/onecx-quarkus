@@ -52,7 +52,7 @@ public class ParametersService {
      * @param parametersConfig the parameters management configuration
      */
     public void init(ParametersConfig parametersConfig, String applicationId) {
-        this.metrics = parametersConfig.metrics.enabled;
+        this.metrics = parametersConfig.metrics().enabled();
 
         // create custom config
         ConfigBuilder builder = ConfigProviderResolver.instance()
@@ -63,13 +63,13 @@ public class ParametersService {
         quarkusConfig = (SmallRyeConfig) ConfigProvider.getConfig();
 
         // update parameters at start
-        if (parametersConfig.updateAtStart) {
+        if (parametersConfig.updateAtStart()) {
             update(applicationId)
                     .subscribe().with(d -> log.info("Init parameters cache: {}", d));
         }
 
         // setup scheduler for update
-        vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds,
+        vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds(),
                 id -> update(applicationId).subscribe().with(d -> log.info("Update parameters cache: {}", d)));
     }
 

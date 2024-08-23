@@ -19,13 +19,13 @@ public class PermissionDefaultClientHeadersFactoryImpl extends DefaultClientHead
         RequestHeaderContainer headerContainer = ctx.getLocal(RequestHeaderContainer.class.getName());
         ctx.removeLocal(RequestHeaderContainer.class.getName());
 
-        incomingHeaders = headerContainer.getIncomingHeaders();
-        MultivaluedMap<String, String> propagatedHeaders = super.update(incomingHeaders, clientOutgoingHeaders);
+        var tmp = headerContainer.getIncomingHeaders();
+        MultivaluedMap<String, String> propagatedHeaders = super.update(tmp, clientOutgoingHeaders);
 
         var tokenHeaderParam = headerContainer.getTokenHeaderParam();
         if (tokenHeaderParam != null && !propagatedHeaders.containsKey(tokenHeaderParam)
-                && incomingHeaders.containsKey(tokenHeaderParam)) {
-            propagatedHeaders.put(tokenHeaderParam, incomingHeaders.get(tokenHeaderParam));
+                && tmp.containsKey(tokenHeaderParam)) {
+            propagatedHeaders.put(tokenHeaderParam, tmp.get(tokenHeaderParam));
         }
 
         return propagatedHeaders;

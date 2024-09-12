@@ -199,7 +199,7 @@ a| [[onecx-permissions_onecx-permissions-mock-roles-roles]] [.property-path]##`o
 
 [.description]
 --
-Mock data for role Map format : .
+Mock data for role Map format : ++[++role++]++.++[++permission++]++=++[++actions++]++
 
 
 ifdef::add-copy-button-to-env-var[]

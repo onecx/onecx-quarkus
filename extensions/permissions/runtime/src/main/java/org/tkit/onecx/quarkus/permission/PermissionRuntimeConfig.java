@@ -102,7 +102,7 @@ public interface PermissionRuntimeConfig {
 
         /**
          * Mock data for role
-         * Map format : <role>.<permissions>
+         * Map format : [role].[permission]=[actions]
          */
         @WithName("roles")
         Map<String, Map<String, List<String>>> roles();

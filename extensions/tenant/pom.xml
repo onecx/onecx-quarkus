@@ -86,10 +86,10 @@
                         </goals>
                         <configuration>
                             <url>
-                                https://raw.githubusercontent.com/onecx/onecx-tenant-svc/main/src/main/openapi/tenant-svc-openapi-v1.yaml
+                                https://raw.githubusercontent.com/onecx/onecx-tenant/main/openapi/onecx-tenant-v1.yaml
                             </url>
                             <outputDirectory>target/tmp/openapi</outputDirectory>
-                            <outputFileName>tenant-svc-openapi-v1.yaml</outputFileName>
+                            <outputFileName>onecx-tenant-v1.yaml</outputFileName>
                             <skipCache>true</skipCache>
                         </configuration>
                     </execution>

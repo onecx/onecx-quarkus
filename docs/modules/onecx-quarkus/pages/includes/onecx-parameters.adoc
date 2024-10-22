@@ -8,7 +8,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-enabled]] [.property-path]##`onecx.parameters.devservices.enabled`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-enabled[`onecx.parameters.devservices.enabled`]##
 
 [.description]
 --
@@ -27,7 +27,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-log]] [.property-path]##`onecx.parameters.devservices.log`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-log]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-log[`onecx.parameters.devservices.log`]##
 
 [.description]
 --
@@ -44,7 +44,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`false`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-image-name]] [.property-path]##`onecx.parameters.devservices.image-name`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-image-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-image-name[`onecx.parameters.devservices.image-name`]##
 
 [.description]
 --
@@ -61,7 +61,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-port]] [.property-path]##`onecx.parameters.devservices.port`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-port]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-port[`onecx.parameters.devservices.port`]##
 
 [.description]
 --
@@ -80,7 +80,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-shared]] [.property-path]##`onecx.parameters.devservices.shared`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-shared]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-shared[`onecx.parameters.devservices.shared`]##
 
 [.description]
 --
@@ -101,7 +101,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-service-name]] [.property-path]##`onecx.parameters.devservices.service-name`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-service-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-service-name[`onecx.parameters.devservices.service-name`]##
 
 [.description]
 --
@@ -120,7 +120,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`onecx-parameters`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-reuse]] [.property-path]##`onecx.parameters.devservices.reuse`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-reuse]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-reuse[`onecx.parameters.devservices.reuse`]##
 
 [.description]
 --
@@ -137,7 +137,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`false`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-import-file]] [.property-path]##`onecx.parameters.devservices.import-file`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-import-file]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-import-file[`onecx.parameters.devservices.import-file`]##
 
 [.description]
 --
@@ -154,7 +154,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-db-image-name]] [.property-path]##`onecx.parameters.devservices.db.image-name`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-db-image-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-db-image-name[`onecx.parameters.devservices.db.image-name`]##
 
 [.description]
 --
@@ -171,7 +171,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`postgres:15.2`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-db-service-name]] [.property-path]##`onecx.parameters.devservices.db.service-name`##
+a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-devservices-db-service-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-devservices-db-service-name[`onecx.parameters.devservices.db.service-name`]##
 
 [.description]
 --
@@ -190,7 +190,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`parameters-db`
 
-a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##`onecx.parameters.enabled`##
+a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-enabled[`onecx.parameters.enabled`]##
 
 [.description]
 --
@@ -207,7 +207,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a| [[onecx-parameters_onecx-parameters-update-interval-in-milliseconds]] [.property-path]##`onecx.parameters.update-interval-in-milliseconds`##
+a| [[onecx-parameters_onecx-parameters-update-interval-in-milliseconds]] [.property-path]##link:#onecx-parameters_onecx-parameters-update-interval-in-milliseconds[`onecx.parameters.update-interval-in-milliseconds`]##
 
 [.description]
 --
@@ -224,7 +224,7 @@ endif::add-copy-button-to-env-var[]
 |long
 |`30000`
 
-a| [[onecx-parameters_onecx-parameters-update-at-start]] [.property-path]##`onecx.parameters.update-at-start`##
+a| [[onecx-parameters_onecx-parameters-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-update-at-start[`onecx.parameters.update-at-start`]##
 
 [.description]
 --
@@ -241,7 +241,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`false`
 
-a| [[onecx-parameters_onecx-parameters-application-id]] [.property-path]##`onecx.parameters.application-id`##
+a| [[onecx-parameters_onecx-parameters-application-id]] [.property-path]##link:#onecx-parameters_onecx-parameters-application-id[`onecx.parameters.application-id`]##
 
 [.description]
 --
@@ -258,7 +258,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[onecx-parameters_onecx-parameters-instance-id]] [.property-path]##`onecx.parameters.instance-id`##
+a| [[onecx-parameters_onecx-parameters-instance-id]] [.property-path]##link:#onecx-parameters_onecx-parameters-instance-id[`onecx.parameters.instance-id`]##
 
 [.description]
 --
@@ -275,7 +275,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[onecx-parameters_onecx-parameters-metrics-enabled]] [.property-path]##`onecx.parameters.metrics.enabled`##
+a| [[onecx-parameters_onecx-parameters-metrics-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-metrics-enabled[`onecx.parameters.metrics.enabled`]##
 
 [.description]
 --
@@ -292,7 +292,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a| [[onecx-parameters_onecx-parameters-metrics-metrics-interval-in-milliseconds]] [.property-path]##`onecx.parameters.metrics.metrics-interval-in-milliseconds`##
+a| [[onecx-parameters_onecx-parameters-metrics-metrics-interval-in-milliseconds]] [.property-path]##link:#onecx-parameters_onecx-parameters-metrics-metrics-interval-in-milliseconds[`onecx.parameters.metrics.metrics-interval-in-milliseconds`]##
 
 [.description]
 --

@@ -8,7 +8,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-enabled]] [.property-path]##`onecx.security.mapping-annotation.enabled`##
+a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-enabled]] [.property-path]##link:#onecx-security_onecx-security-mapping-annotation-enabled[`onecx.security.mapping-annotation.enabled`]##
 
 [.description]
 --
@@ -25,7 +25,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-packages]] [.property-path]##`onecx.security.mapping-annotation.packages`##
+a|icon:lock[title=Fixed at build time] [[onecx-security_onecx-security-mapping-annotation-packages]] [.property-path]##link:#onecx-security_onecx-security-mapping-annotation-packages[`onecx.security.mapping-annotation.packages`]##
 
 [.description]
 --

@@ -62,7 +62,7 @@
                         </goals>
                         <configuration>
                             <url>
-                                https://raw.githubusercontent.com/onecx/onecx-permission-svc/main/src/main/openapi/onecx-permission-v1.yaml
+                                https://raw.githubusercontent.com/onecx/onecx-permission/main/openapi/onecx-permission-v1.yaml
                             </url>
                             <outputDirectory>target/tmp/openapi</outputDirectory>
                             <outputFileName>onecx-permission-v1.yaml</outputFileName>

@@ -64,7 +64,7 @@
                             <url>
                                 https://raw.githubusercontent.com/onecx/onecx-permission/main/openapi/onecx-permission-v1.yaml
                             </url>
-                            <outputDirectory>target/tmp/openapi</outputDirectory>
+                            <outputDirectory>target/onecx/quarkus/permissions/openapi</outputDirectory>
                             <outputFileName>onecx-permission-v1.yaml</outputFileName>
                             <skipCache>true</skipCache>
                         </configuration>

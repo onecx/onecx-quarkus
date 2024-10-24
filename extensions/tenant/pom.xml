@@ -88,7 +88,7 @@
                             <url>
                                 https://raw.githubusercontent.com/onecx/onecx-tenant/main/openapi/onecx-tenant-v1.yaml
                             </url>
-                            <outputDirectory>target/tmp/openapi</outputDirectory>
+                            <outputDirectory>target/onecx/quarkus/tenant/openapi</outputDirectory>
                             <outputFileName>onecx-tenant-v1.yaml</outputFileName>
                             <skipCache>true</skipCache>
                         </configuration>

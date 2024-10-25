@@ -11,3 +11,9 @@ OneCx Quarkus Extensions. Set of Quarkus extensions and libraries to speed up On
 ## Documentation
 
 Please, see the latest released [documentation page](https://onecx.github.io/docs/onecx-quarkus/current/onecx-quarkus/index.html).
+
+## Versions
+
+Branches:
+* `main` - Quarkus latest version
+* `0.x` - Quarkus LTS 3.15.x

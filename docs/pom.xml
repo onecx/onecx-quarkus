@@ -34,11 +34,6 @@
             <artifactId>onecx-tenant</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.tkit.onecx.quarkus</groupId>
-            <artifactId>onecx-security-deployment</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

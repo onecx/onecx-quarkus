@@ -19,11 +19,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.tkit.onecx.quarkus</groupId>
-            <artifactId>onecx-security</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-context-propagation</artifactId>
         </dependency>

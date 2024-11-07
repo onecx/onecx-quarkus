@@ -18,9 +18,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.tkit.onecx.quarkus</groupId>
-            <artifactId>onecx-security</artifactId>
-            <version>${project.version}</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-security</artifactId>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>

@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>onecx-permissions-client</artifactId>
+    <artifactId>onecx-parameters-client</artifactId>
 
     <dependencies>
         <dependency>
@@ -55,17 +55,17 @@
                 <artifactId>download-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>permissions</id>
+                        <id>parameters</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>wget</goal>
                         </goals>
                         <configuration>
                             <url>
-                                https://raw.githubusercontent.com/onecx/onecx-permission/main/openapi/onecx-permission-v1.yaml
+                                https://raw.githubusercontent.com/onecx/onecx-parameter/main/openapi/onecx-parameter-v1.yaml
                             </url>
-                            <outputDirectory>target/onecx/quarkus/permissions/openapi</outputDirectory>
-                            <outputFileName>onecx-permission-v1.yaml</outputFileName>
+                            <outputDirectory>target/onecx/quarkus/parameters/openapi</outputDirectory>
+                            <outputFileName>onecx-parameter-v1.yaml</outputFileName>
                             <skipCache>${download-maven-plugin.skip-cache}</skipCache>
                             <cacheDirectory>target/.cache</cacheDirectory>
                         </configuration>

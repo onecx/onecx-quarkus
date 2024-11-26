@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-public class ParametersBucket {
+public class ParametersBucketItem {
 
-    private Map<String, ParameterInfo> parameters = new ConcurrentHashMap<>();
+    private Map<String, ParameterInfoItem> parameters = new ConcurrentHashMap<>();
 
     private String instanceId;
 
@@ -18,11 +18,11 @@ public class ParametersBucket {
 
     private OffsetDateTime end;
 
-    public Map<String, ParameterInfo> getParameters() {
+    public Map<String, ParameterInfoItem> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Map<String, ParameterInfo> parameters) {
+    public void setParameters(Map<String, ParameterInfoItem> parameters) {
         this.parameters = parameters;
     }
 
@@ -51,17 +51,17 @@ public class ParametersBucket {
     }
 
     @RegisterForReflection
-    public static class ParameterInfo {
+    public static class ParameterInfoItem {
 
         private final AtomicLong count;
 
         private final String type;
 
-        private final Object defaultValue;
+        private final String defaultValue;
 
-        private final Object currentValue;
+        private final String currentValue;
 
-        ParameterInfo(Class<?> type, Object defaultValue, Object currentValue) {
+        ParameterInfoItem(Class<?> type, String defaultValue, String currentValue) {
             this.count = new AtomicLong(0);
             this.type = type.getSimpleName();
             this.defaultValue = defaultValue;
@@ -76,11 +76,11 @@ public class ParametersBucket {
             return type;
         }
 
-        public Object getCurrentValue() {
+        public String getCurrentValue() {
             return currentValue;
         }
 
-        public Object getDefaultValue() {
+        public String getDefaultValue() {
             return defaultValue;
         }
     }

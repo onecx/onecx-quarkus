@@ -36,10 +36,17 @@ public interface ParametersConfig {
     boolean updateAtStart();
 
     /**
-     * Application ID
+     * Product name.
+     */
+    @WithName("product-name")
+    String productName();
+
+    /**
+     * Permissions application ID.
      */
     @WithName("application-id")
-    Optional<String> applicationId();
+    @WithDefault("${quarkus.application.name}")
+    String applicationId();
 
     /**
      * Instance ID

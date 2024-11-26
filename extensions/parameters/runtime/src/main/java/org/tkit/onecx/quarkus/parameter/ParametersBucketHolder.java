@@ -5,10 +5,10 @@ import java.time.ZoneId;
 
 public class ParametersBucketHolder {
 
-    private final ParametersBucket bucket;
+    private final ParametersBucketItem bucket;
 
     public ParametersBucketHolder() {
-        bucket = new ParametersBucket();
+        bucket = new ParametersBucketItem();
         bucket.setStart(now());
     }
 
@@ -20,8 +20,9 @@ public class ParametersBucketHolder {
      * @param clazz the class/type of the parameter requested
      * @param defaultValue the default value of the parameter requested
      */
-    public void addParameterRequest(String name, Class<?> clazz, Object defaultValue, Object currentValue) {
-        bucket.getParameters().computeIfAbsent(name, s -> new ParametersBucket.ParameterInfo(clazz, defaultValue, currentValue))
+    public void addParameterRequest(String name, Class<?> clazz, String defaultValue, String currentValue) {
+        bucket.getParameters()
+                .computeIfAbsent(name, s -> new ParametersBucketItem.ParameterInfoItem(clazz, defaultValue, currentValue))
                 .getCount().incrementAndGet();
     }
 
@@ -33,7 +34,7 @@ public class ParametersBucketHolder {
         bucket.setEnd(now());
     }
 
-    public ParametersBucket getBucket() {
+    public ParametersBucketItem getBucket() {
         return bucket;
     }
 

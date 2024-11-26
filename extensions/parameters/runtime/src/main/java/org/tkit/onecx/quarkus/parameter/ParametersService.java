@@ -12,7 +12,6 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.spi.ConfigBuilder;
 import org.eclipse.microprofile.config.spi.ConfigProviderResolver;
 import org.eclipse.microprofile.config.spi.ConfigSource;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +30,6 @@ public class ParametersService {
     static ParametersConfigSource source = new ParametersConfigSource();
 
     @Inject
-    @RestClient
     ParameterRestClient client;
 
     @Inject
@@ -51,7 +49,7 @@ public class ParametersService {
      *
      * @param parametersConfig the parameters management configuration
      */
-    public void init(ParametersConfig parametersConfig, String applicationId) {
+    public void init(ParametersConfig parametersConfig) {
         this.metrics = parametersConfig.metrics().enabled();
 
         // create custom config
@@ -64,20 +62,20 @@ public class ParametersService {
 
         // update parameters at start
         if (parametersConfig.updateAtStart()) {
-            update(applicationId)
+            update()
                     .subscribe().with(d -> log.info("Init parameters cache: {}", d));
         }
 
         // setup scheduler for update
         vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds(),
-                id -> update(applicationId).subscribe().with(d -> log.info("Update parameters cache: {}", d)));
+                id -> update().subscribe().with(d -> log.info("Update parameters cache: {}", d)));
     }
 
     /**
      * Update the cache of the parameters
      */
-    Uni<Map<String, String>> update(String applicationId) {
-        return client.getParameters(applicationId)
+    Uni<Map<String, String>> update() {
+        return client.getApplicationParameters()
                 .onFailure().recoverWithItem(ex -> {
                     log.error("Error updating the configuration from parameters management. Error: {}", ex.getMessage());
                     return null;

@@ -3,7 +3,6 @@ package org.tkit.onecx.quarkus.parameter;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,6 @@ public class ParametersMetricsService {
     private static final Logger log = LoggerFactory.getLogger(ParametersMetricsService.class);
 
     @Inject
-    @RestClient
     ParameterRestClient client;
 
     @Inject
@@ -25,7 +23,7 @@ public class ParametersMetricsService {
     // The bucket contains the current collected requests
     private ParametersBucketHolder bucket;
 
-    public void init(ParametersConfig parametersConfig, String applicationId) {
+    public void init(ParametersConfig parametersConfig) {
 
         bucket = new ParametersBucketHolder();
 
@@ -39,7 +37,7 @@ public class ParametersMetricsService {
             tmp.setInstanceId(instanceId);
             tmp.end();
 
-            client.sendMetrics(applicationId, tmp.getBucket())
+            client.sendMetrics(tmp.getBucket())
                     .onItem().transform(resp -> {
                         if (resp.getStatus() != 200) {
                             log.error("Error send metrics to the parameters management. Code: {}", resp.getStatus());

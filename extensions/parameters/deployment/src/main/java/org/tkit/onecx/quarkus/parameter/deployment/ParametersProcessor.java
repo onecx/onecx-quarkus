@@ -9,7 +9,6 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
-import io.quarkus.runtime.ApplicationConfig;
 
 public class ParametersProcessor {
 
@@ -22,9 +21,8 @@ public class ParametersProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config,
-            ApplicationConfig appConfig) {
+    public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config) {
         BeanContainer container = beanContainer.getValue();
-        recorder.configSources(container, appConfig, config);
+        recorder.configSources(container, config);
     }
 }

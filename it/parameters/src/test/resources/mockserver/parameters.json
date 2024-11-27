@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "httpRequest": {
+      "headers": {
+        "!apm-principal-token": [ ".*" ]
+      },
+      "path": "/v1/test1/app1/parameters"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "PARAM_TEXT": "Text Information",
+          "PARAM_TEXT_2": "4321",
+          "PARAM_NUMBER": "123",
+          "PARAM_BOOL": "true"
+        },
+        "contentType": "application/json"
+      }
+    }
+  }
+]

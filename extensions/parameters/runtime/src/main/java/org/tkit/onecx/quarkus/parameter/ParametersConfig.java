@@ -12,7 +12,13 @@ import io.smallrye.config.WithName;
 @ConfigMapping(prefix = "onecx.parameters")
 public interface ParametersConfig {
 
-    String HOST = "quarkus.rest-client.onecx-parameters.url";
+    /**
+     * Parameters client URL configuration.
+     * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
+     */
+    @WithName("service.client.url")
+    @WithDefault("http://onecx-parameter-svc:8080")
+    String clientUrl();
 
     /**
      * If set to true, the application will attempt to look up the configuration from Consul

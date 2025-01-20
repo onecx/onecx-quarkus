@@ -86,7 +86,7 @@
         <projectlombok.version>1.18.36</projectlombok.version>
         <projectlombok.mapstruct-binding.version>0.2.0</projectlombok.mapstruct-binding.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <assertj.version>3.26.3</assertj.version>
+        <assertj.version>3.27.3</assertj.version>
     </properties>    
 
     <modules>

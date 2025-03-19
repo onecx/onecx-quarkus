@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.annotations.Recorder;
+import org.tkit.onecx.quarkus.parameter.metrics.ParametersMetricsService;
 
 @Recorder
 public class ParametersRecorder {

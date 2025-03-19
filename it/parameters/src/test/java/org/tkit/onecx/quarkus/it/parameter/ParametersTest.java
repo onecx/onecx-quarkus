@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import jakarta.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,7 +26,6 @@ class ParametersTest {
     static Stream<Arguments> loadParameters() {
         return Stream.of(
                 Arguments.of(Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE"),
-                Arguments.of(Map.of("name", "PARAM_TEXT_3", "type", STRING_TYPE), "1234"),
                 Arguments.of(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information"),
                 Arguments.of(Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321"),
                 Arguments.of(Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123"),
@@ -47,5 +47,24 @@ class ParametersTest {
                 .extract().response().asString();
 
         Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    void testParamTest() {
+
+        var result = given()
+                .when()
+                .contentType(APPLICATION_JSON)
+                .get("testParam")
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .log().all()
+                .extract().as(TestParam.class);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("text", result.getA());
+        Assertions.assertEquals(100, result.getB());
+        Assertions.assertEquals(true, result.isC());
     }
 }

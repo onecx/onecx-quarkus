@@ -27,4 +27,10 @@ public class TestRestController {
 
         return Response.ok(parametersService.getValue(name, defaultValue.getClass(), "" + defaultValue)).build();
     }
+
+    @GET
+    @Path("testParam")
+    public Response testParam() {
+        return Response.ok(parametersService.getValue("PARAM_TEXT_4", TestParam.class)).build();
+    }
 }

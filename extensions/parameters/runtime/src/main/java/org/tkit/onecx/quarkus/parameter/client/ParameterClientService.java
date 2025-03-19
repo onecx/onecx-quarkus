@@ -1,30 +1,32 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.client;
 
 import java.util.Map;
 
+import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import gen.org.tkit.onecx.parameters.api.ParameterApi;
-import gen.org.tkit.onecx.parameters.model.ParameterInfo;
-import gen.org.tkit.onecx.parameters.model.ParametersBucket;
+import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
+import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
 import io.smallrye.mutiny.Uni;
+import org.tkit.onecx.quarkus.parameter.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.metrics.ParametersBucketItem;
 
 @ApplicationScoped
-public class ParameterRestClient {
+public class ParameterClient {
 
     @Inject
     ParametersConfig config;
 
     @Inject
     @RestClient
-    ParameterApi client;
+    ParameterV1Api client;
 
     public Uni<Map<String, String>> getApplicationParameters() {
-        return client.getApplicationParameters(config.productName(), config.applicationId());
+        return client.getParameters(config.productName(), config.applicationId());
     }
 
     public Uni<Response> sendMetrics(ParametersBucketItem bucket) {
@@ -38,7 +40,7 @@ public class ParameterRestClient {
             var v = item.getValue();
             pb.putParametersItem(item.getKey(), new ParameterInfo()
                     .count(v.getCount().get())
-                    .type(v.getType())
+                    .description(v.getDescription())
                     .currentValue(v.getCurrentValue())
                     .defaultValue(v.getDefaultValue()));
         }

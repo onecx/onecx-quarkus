@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>org.tkit.onecx.quarkus</groupId>
-        <artifactId>onecx-permissions-parent</artifactId>
+        <artifactId>onecx-parameters-parent</artifactId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

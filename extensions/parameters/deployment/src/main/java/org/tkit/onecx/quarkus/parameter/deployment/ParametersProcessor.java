@@ -1,7 +1,7 @@
 package org.tkit.onecx.quarkus.parameter.deployment;
 
-import org.tkit.onecx.quarkus.parameter.ParametersConfig;
-import org.tkit.onecx.quarkus.parameter.ParametersRecorder;
+import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.runtime.ParametersRecorder;
 
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.runtime.BeanContainer;

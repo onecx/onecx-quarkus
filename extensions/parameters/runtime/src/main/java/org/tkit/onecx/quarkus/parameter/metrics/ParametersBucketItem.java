@@ -1,4 +1,4 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.metrics;
 
 import java.time.OffsetDateTime;
 import java.util.Map;
@@ -55,15 +55,15 @@ public class ParametersBucketItem {
 
         private final AtomicLong count;
 
-        private final String type;
+        private final String description;
 
-        private final String defaultValue;
+        private final Object defaultValue;
 
-        private final String currentValue;
+        private final Object currentValue;
 
-        ParameterInfoItem(Class<?> type, String defaultValue, String currentValue) {
+        ParameterInfoItem(Object defaultValue, Object currentValue, String description) {
             this.count = new AtomicLong(0);
-            this.type = type.getSimpleName();
+            this.description = description;
             this.defaultValue = defaultValue;
             this.currentValue = currentValue;
         }
@@ -72,15 +72,15 @@ public class ParametersBucketItem {
             return count;
         }
 
-        public String getType() {
-            return type;
+        public String getDescription() {
+            return description;
         }
 
-        public String getCurrentValue() {
+        public Object getCurrentValue() {
             return currentValue;
         }
 
-        public String getDefaultValue() {
+        public Object getDefaultValue() {
             return defaultValue;
         }
     }

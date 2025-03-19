@@ -1,5 +1,6 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.config;
 
+import java.util.Map;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.*;
@@ -65,6 +66,28 @@ public interface ParametersConfig {
      */
     @WithName("metrics")
     MetricsConfig metrics();
+
+    /**
+     * Parameters configuration
+     */
+    @WithName("keys")
+    Map<String, Parameter> parameters();
+
+    interface Parameter {
+
+        /**
+         * Parameter value
+         */
+        @WithName("value")
+        Optional<String> value();
+
+        /**
+         * Parameter description
+         */
+        @WithName("description")
+        Optional<String> description();
+
+    }
 
     /**
      * Metrics configuration

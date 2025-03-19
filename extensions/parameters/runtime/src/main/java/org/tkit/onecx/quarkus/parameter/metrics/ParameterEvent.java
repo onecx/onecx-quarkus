@@ -1,25 +1,25 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.metrics;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
 public class ParameterEvent {
-    static final String NAME = "ParameterEvent";
+    public static final String NAME = "ParameterEvent";
 
-    String propertyName;
+    String name;
 
-    Class<?> propertyType;
+    Class<?> type;
 
     String defaultValue;
 
-    String currentValue;
+    Object value;
 
-    public static ParameterEvent of(String propertyName, Class<?> propertyType, String defaultValue, String currentValue) {
+    public static ParameterEvent of(String name, Class<?> type, String defaultValue, Object value) {
         ParameterEvent e = new ParameterEvent();
-        e.propertyName = propertyName;
-        e.propertyType = propertyType;
+        e.name = name;
+        e.type = type;
         e.defaultValue = defaultValue;
-        e.currentValue = currentValue;
+        e.value = value;
         return e;
     }
 }

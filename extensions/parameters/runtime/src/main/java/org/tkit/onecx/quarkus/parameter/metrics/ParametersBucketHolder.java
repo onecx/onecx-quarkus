@@ -1,4 +1,4 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.metrics;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -12,17 +12,9 @@ public class ParametersBucketHolder {
         bucket.setStart(now());
     }
 
-    /**
-     * Add a new request to the bucket, this will increase the count of requests
-     * for the parameter.
-     *
-     * @param name the name of the parameter requested
-     * @param clazz the class/type of the parameter requested
-     * @param defaultValue the default value of the parameter requested
-     */
-    public void addParameterRequest(String name, Class<?> clazz, String defaultValue, String currentValue) {
+    public void addParameterRequest(String name, String defaultValue, Object currentValue, String description) {
         bucket.getParameters()
-                .computeIfAbsent(name, s -> new ParametersBucketItem.ParameterInfoItem(clazz, defaultValue, currentValue))
+                .computeIfAbsent(name, s -> new ParametersBucketItem.ParameterInfoItem(defaultValue, currentValue, description))
                 .getCount().incrementAndGet();
     }
 

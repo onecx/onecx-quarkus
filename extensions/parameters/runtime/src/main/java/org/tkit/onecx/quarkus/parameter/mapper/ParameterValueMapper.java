@@ -1,8 +1,10 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.mapper;
 
 public interface ParameterValueMapper {
 
-    <T> T from(final String value, final Class<T> clazz);
+    <T> T toType(final Object value, final Class<T> clazz) throws ReadValueException;
+
+    Object toMap(final String value) throws ReadValueException;
 
     class ReadValueException extends RuntimeException {
 

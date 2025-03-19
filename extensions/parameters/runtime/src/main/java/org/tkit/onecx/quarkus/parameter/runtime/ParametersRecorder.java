@@ -1,13 +1,15 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.runtime;
 
 import jakarta.enterprise.inject.Default;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tkit.onecx.quarkus.parameter.ParametersService;
+import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.metrics.ParametersMetricsService;
 
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.annotations.Recorder;
-import org.tkit.onecx.quarkus.parameter.metrics.ParametersMetricsService;
 
 @Recorder
 public class ParametersRecorder {

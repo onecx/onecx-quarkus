@@ -2,21 +2,21 @@ package org.tkit.onecx.quarkus.parameter.client;
 
 import java.util.Map;
 
-import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.metrics.ParametersBucketItem;
 
+import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
 import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
 import io.smallrye.mutiny.Uni;
-import org.tkit.onecx.quarkus.parameter.ParametersConfig;
-import org.tkit.onecx.quarkus.parameter.metrics.ParametersBucketItem;
 
 @ApplicationScoped
-public class ParameterClient {
+public class ParameterClientService {
 
     @Inject
     ParametersConfig config;
@@ -25,7 +25,7 @@ public class ParameterClient {
     @RestClient
     ParameterV1Api client;
 
-    public Uni<Map<String, String>> getApplicationParameters() {
+    public Uni<Map<String, Object>> getApplicationParameters() {
         return client.getParameters(config.productName(), config.applicationId());
     }
 

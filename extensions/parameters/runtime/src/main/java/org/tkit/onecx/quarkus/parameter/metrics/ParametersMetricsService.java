@@ -1,10 +1,16 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.metrics;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tkit.onecx.quarkus.parameter.client.ParameterClientService;
+import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
 
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.core.Vertx;
@@ -15,7 +21,7 @@ public class ParametersMetricsService {
     private static final Logger log = LoggerFactory.getLogger(ParametersMetricsService.class);
 
     @Inject
-    ParameterRestClient client;
+    ParameterClientService client;
 
     @Inject
     Vertx vertx;
@@ -23,7 +29,12 @@ public class ParametersMetricsService {
     // The bucket contains the current collected requests
     private ParametersBucketHolder bucket;
 
+    // cache description of the parameters
+    static Map<String, String> descriptions = new HashMap<>();
+
     public void init(ParametersConfig parametersConfig) {
+
+        parametersConfig.parameters().forEach((k, v) -> descriptions.put(k, v.description().orElse(null)));
 
         bucket = new ParametersBucketHolder();
 
@@ -39,7 +50,7 @@ public class ParametersMetricsService {
 
             client.sendMetrics(tmp.getBucket())
                     .onItem().transform(resp -> {
-                        if (resp.getStatus() != 200) {
+                        if (resp.getStatus() != Response.Status.OK.getStatusCode()) {
                             log.error("Error send metrics to the parameters management. Code: {}", resp.getStatus());
                         }
                         return resp.getStatus();
@@ -53,7 +64,7 @@ public class ParametersMetricsService {
 
     @ConsumeEvent(ParameterEvent.NAME)
     public void consumeEvent(ParameterEvent event) {
-        bucket.addParameterRequest(event.propertyName, event.propertyType, event.defaultValue, event.currentValue);
+        bucket.addParameterRequest(event.name, event.defaultValue, event.value, descriptions.get(event.name));
     }
 
 }

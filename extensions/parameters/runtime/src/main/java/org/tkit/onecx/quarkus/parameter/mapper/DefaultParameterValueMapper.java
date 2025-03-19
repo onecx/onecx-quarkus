@@ -1,11 +1,11 @@
-package org.tkit.onecx.quarkus.parameter;
+package org.tkit.onecx.quarkus.parameter.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.arc.DefaultBean;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.quarkus.arc.DefaultBean;
 
 @Singleton
 @DefaultBean
@@ -15,13 +15,25 @@ public class DefaultParameterValueMapper implements ParameterValueMapper {
     ObjectMapper mapper;
 
     @Override
-    public <T> T from(String value, Class<T> clazz) {
+    public <T> T toType(Object value, Class<T> clazz) throws ReadValueException {
         try {
-            return mapper.readValue(value, clazz);
-        } catch (IOException ex) {
+            return mapper.convertValue(value, clazz);
+        } catch (Exception ex) {
             throw new ReadValueException(
-                    "The given string value: " + value + " cannot be transformed to Json object: " + clazz,
-                    ex);
+                    "The given value: " + value + " cannot be transformed to object: " + clazz, ex);
+        }
+    }
+
+    @Override
+    public Object toMap(String value) throws ReadValueException {
+        if (value == null) {
+            return null;
+        }
+        try {
+            return mapper.readValue(value, Object.class);
+        } catch (Exception ex) {
+            throw new ReadValueException(
+                    "The given string: " + value + " cannot be transformed to json map", ex);
         }
     }
 }

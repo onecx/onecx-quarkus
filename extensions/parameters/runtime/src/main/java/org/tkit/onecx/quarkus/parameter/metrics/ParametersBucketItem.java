@@ -50,6 +50,10 @@ public class ParametersBucketItem {
         this.instanceId = instanceId;
     }
 
+    public boolean isEmpty() {
+        return parameters.isEmpty();
+    }
+
     @RegisterForReflection
     public static class ParameterInfoItem {
 

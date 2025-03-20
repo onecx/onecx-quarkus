@@ -31,6 +31,8 @@ public class TestRestController {
     @GET
     @Path("testParam")
     public Response testParam() {
+        parametersService.getValue("DOES_NOT_EXISTS_1", String.class, "{\"x\": true, \"data\": {\"a\": 100 }}");
+        parametersService.getValue("DOES_NOT_EXISTS_2", boolean.class, "true");
         return Response.ok(parametersService.getValue("PARAM_TEXT_4", TestParam.class)).build();
     }
 }

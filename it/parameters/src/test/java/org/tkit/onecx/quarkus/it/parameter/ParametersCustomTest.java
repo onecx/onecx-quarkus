@@ -9,7 +9,6 @@ import static org.mockserver.model.HttpResponse.response;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response;
@@ -21,13 +20,16 @@ import org.mockserver.model.MediaType;
 
 import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
 import io.quarkiverse.mockserver.test.InjectMockServerClient;
+import io.quarkiverse.mockserver.test.MockServerTestResource;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 @TestHTTPEndpoint(TestRestController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ParametersTest extends AbstractTest {
+@QuarkusTestResource(MockServerTestResource.class)
+class ParametersCustomTest extends AbstractTest {
 
     @InjectMockServerClient
     MockServerClient mockServerClient;
@@ -38,7 +40,6 @@ class ParametersTest extends AbstractTest {
 
     @BeforeAll
     void init() {
-
         mocks = mockServerClient
                 .when(request().withPath("/v1/test1/app1/history").withMethod(HttpMethod.POST))
                 .respond(httpRequest -> {
@@ -56,31 +57,25 @@ class ParametersTest extends AbstractTest {
         }
     }
 
-    private static final String STRING_TYPE = "String";
-
     @Test
-    void loadParametersTest() {
+    void testParamTest() {
 
-        call(Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE");
-        call(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information");
-        call(Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321");
-        call(Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123");
-        call(Map.of("name", "PARAM_BOOL", "type", "Boolean"), "true");
-
-        await().atMost(15, SECONDS)
-                .until(() -> histories.stream().map(x -> x.getParameters().size()).reduce(0, Integer::sum) == 5);
-    }
-
-    private void call(Map<String, String> params, String expected) {
         var result = given()
                 .when()
-                .pathParams(params)
                 .contentType(APPLICATION_JSON)
-                .get("{name}/{type}")
+                .get("testParam")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
                 .contentType(APPLICATION_JSON)
-                .extract().response().asString();
-        Assertions.assertEquals(expected, result);
+                .log().all()
+                .extract().as(TestParam.class);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("text", result.getA());
+        Assertions.assertEquals(100, result.getB());
+        Assertions.assertEquals(true, result.isC());
+
+        await().atMost(15, SECONDS)
+                .until(() -> histories.stream().map(x -> x.getParameters().size()).reduce(0, Integer::sum) == 3);
     }
 }

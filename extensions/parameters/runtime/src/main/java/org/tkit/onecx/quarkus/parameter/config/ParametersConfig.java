@@ -105,7 +105,7 @@ public interface ParametersConfig {
          * Metrics scheduler configuration
          */
         @WithName("metrics-interval-in-milliseconds")
-        @WithDefault("20000")
+        @WithDefault("300000")
         Long metricsIntervalInMilliseconds();
 
     }

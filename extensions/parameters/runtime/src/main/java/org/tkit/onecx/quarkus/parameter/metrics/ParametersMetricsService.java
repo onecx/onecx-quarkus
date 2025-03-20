@@ -48,6 +48,11 @@ public class ParametersMetricsService {
             tmp.setInstanceId(instanceId);
             tmp.end();
 
+            // do not send empty bucket
+            if (tmp.getBucket().isEmpty()) {
+                return;
+            }
+
             client.sendMetrics(tmp.getBucket())
                     .onItem().transform(resp -> {
                         if (resp.getStatus() != Response.Status.OK.getStatusCode()) {

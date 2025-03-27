@@ -1,7 +1,8 @@
 [
   {
-    "id": "1",
+    "id": "0",
     "httpRequest": {
+      "method": "GET",
       "headers": {
         "!apm-principal-token": [ ".*" ]
       },
@@ -20,5 +21,5 @@
         "contentType": "application/json"
       }
     }
-  },
+  }
 ]

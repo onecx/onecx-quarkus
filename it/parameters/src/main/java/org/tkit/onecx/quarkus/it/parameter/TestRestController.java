@@ -18,21 +18,22 @@ public class TestRestController {
     @GET
     @Path("{name}/{type}")
     public Response parameters(@PathParam("name") String name, @PathParam("type") String type) {
-        Object defaultValue = switch (type) {
-            case "String" -> "NO_STRING_VALUE";
-            case "Integer" -> Integer.MIN_VALUE;
-            case "Boolean" -> Boolean.FALSE;
+
+        Object value = switch (type) {
+            case "String" -> parametersService.getValue(name, String.class, "NO_STRING_VALUE");
+            case "Integer" -> parametersService.getValue(name, Integer.class, Integer.MIN_VALUE);
+            case "Boolean" -> parametersService.getValue(name, Boolean.class, Boolean.FALSE);
             default -> "NO_VALUE";
         };
 
-        return Response.ok(parametersService.getValue(name, defaultValue.getClass(), "" + defaultValue)).build();
+        return Response.ok(value).build();
     }
 
     @GET
     @Path("testParam")
     public Response testParam() {
         parametersService.getValue("DOES_NOT_EXISTS_1", String.class, "{\"x\": true, \"data\": {\"a\": 100 }}");
-        parametersService.getValue("DOES_NOT_EXISTS_2", boolean.class, "true");
+        parametersService.getValue("DOES_NOT_EXISTS_2", boolean.class, true);
         return Response.ok(parametersService.getValue("PARAM_TEXT_4", TestParam.class)).build();
     }
 }

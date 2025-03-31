@@ -9,7 +9,7 @@ import io.quarkus.arc.DefaultBean;
 
 @Singleton
 @DefaultBean
-public class DefaultParameterValueMapper implements ParameterValueMapper {
+public class DefaultParametersValueMapper implements ParametersValueMapper {
 
     @Inject
     ObjectMapper mapper;

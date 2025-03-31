@@ -29,18 +29,10 @@ public interface ParametersConfig {
     boolean enabled();
 
     /**
-     * Scheduler configuration
+     * Cache configuration
      */
-    @WithName("update-interval-in-milliseconds")
-    @WithDefault("30000")
-    long updateIntervalInMilliseconds();
-
-    /**
-     * Pull parameters during start phase
-     */
-    @WithName("update-at-start")
-    @WithDefault("false")
-    boolean updateAtStart();
+    @WithName("cache")
+    CacheConfig cache();
 
     /**
      * Product name.
@@ -62,51 +54,88 @@ public interface ParametersConfig {
     Optional<String> instanceId();
 
     /**
-     * Metrics configuration.
+     * History configuration.
      */
-    @WithName("metrics")
-    MetricsConfig metrics();
+    @WithName("history")
+    HistoryConfig history();
 
     /**
      * Parameters configuration
      */
-    @WithName("keys")
-    Map<String, Parameter> parameters();
-
-    interface Parameter {
-
-        /**
-         * Parameter value
-         */
-        @WithName("value")
-        Optional<String> value();
-
-        /**
-         * Parameter description
-         */
-        @WithName("description")
-        Optional<String> description();
-
-    }
+    @WithName("items")
+    Map<String, String> parameters();
 
     /**
-     * Metrics configuration
+     * Multi-tenancy configuration.
      */
-    interface MetricsConfig {
+    @WithName("tenant")
+    TenantConfig tenant();
 
+    /**
+     * Cache configuration.
+     */
+    interface CacheConfig {
         /**
-         * If set to true, the application will send metrics information to the parameter management.
+         * Enable or disable client cache.
          */
         @WithName("enabled")
         @WithDefault("true")
         boolean enabled();
 
         /**
-         * Metrics scheduler configuration
+         * Scheduler configuration
          */
-        @WithName("metrics-interval-in-milliseconds")
+        @WithName("update-interval-in-milliseconds")
+        @WithDefault("30000")
+        long updateIntervalInMilliseconds();
+
+        /**
+         * Pull parameters during start phase
+         */
+        @WithName("update-at-start")
+        @WithDefault("false")
+        boolean updateAtStart();
+    }
+
+    /**
+     * History configuration
+     */
+    interface HistoryConfig {
+
+        /**
+         * If set to true, the application will send history information to the parameter management.
+         */
+        @WithName("enabled")
+        @WithDefault("true")
+        boolean enabled();
+
+        /**
+         * Update history interval in milliseconds
+         */
+        @WithName("update-interval-in-milliseconds")
         @WithDefault("300000")
-        Long metricsIntervalInMilliseconds();
+        Long updateIntervalInMilliseconds();
+
+    }
+
+    /**
+     * Multi-tenancy configuration.
+     */
+    interface TenantConfig {
+
+        /**
+         * Enable or disable multi-tenancy.
+         */
+        @WithName("enabled")
+        @WithDefault("true")
+        boolean enabled();
+
+        /**
+         * Default tenant id.
+         */
+        @WithName("default-tenant")
+        @WithDefault("default")
+        String defaultTenant();
 
     }
 

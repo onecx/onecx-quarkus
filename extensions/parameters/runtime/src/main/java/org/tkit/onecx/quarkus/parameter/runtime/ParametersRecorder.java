@@ -4,9 +4,8 @@ import jakarta.enterprise.inject.Default;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tkit.onecx.quarkus.parameter.ParametersService;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
-import org.tkit.onecx.quarkus.parameter.metrics.ParametersMetricsService;
+import org.tkit.onecx.quarkus.parameter.history.ParametersHistoryService;
 
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.annotations.Recorder;
@@ -25,13 +24,13 @@ public class ParametersRecorder {
         }
 
         // init parameter service
-        ParametersService service = container.beanInstance(ParametersService.class, Default.Literal.INSTANCE);
+        ParametersDataService service = container.beanInstance(ParametersDataService.class, Default.Literal.INSTANCE);
         service.init(config);
 
         // if metrics service enabled
-        if (config.metrics().enabled()) {
+        if (config.history().enabled()) {
             // init metrics service
-            ParametersMetricsService metrics = container.beanInstance(ParametersMetricsService.class, Default.Literal.INSTANCE);
+            ParametersHistoryService metrics = container.beanInstance(ParametersHistoryService.class, Default.Literal.INSTANCE);
             metrics.init(config);
         }
     }

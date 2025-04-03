@@ -1,11 +1,8 @@
 package org.tkit.onecx.quarkus.parameter.metrics;
 
-import jakarta.enterprise.context.ApplicationScoped;
-
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 
-@ApplicationScoped
 public class MicrometerMetricsRecorder implements MetricsRecorder {
 
     @Override

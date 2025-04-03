@@ -10,6 +10,7 @@ import org.tkit.onecx.quarkus.parameter.runtime.ParametersRecorder;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
+import io.quarkus.arc.processor.BuiltinScope;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -51,7 +52,10 @@ public class ParametersProcessor {
             boolean withMicrometer = metricsCapability.map(cap -> cap.metricsSupported(MetricsFactory.MICROMETER))
                     .orElse(false);
             if (withMicrometer) {
-                additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(MicrometerMetricsRecorder.class));
+                additionalBeans.produce(new AdditionalBeanBuildItem.Builder().addBeanClass(MicrometerMetricsRecorder.class)
+                        .setDefaultScope(BuiltinScope.APPLICATION.getName())
+                        .setUnremovable()
+                        .build());
                 return;
             }
         }

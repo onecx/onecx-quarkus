@@ -42,24 +42,58 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a| [[onecx-parameters_onecx-parameters-update-interval-in-milliseconds]] [.property-path]##link:#onecx-parameters_onecx-parameters-update-interval-in-milliseconds[`onecx.parameters.update-interval-in-milliseconds`]##
+a| [[onecx-parameters_onecx-parameters-throw-update-exception]] [.property-path]##link:#onecx-parameters_onecx-parameters-throw-update-exception[`onecx.parameters.throw-update-exception`]##
 
 [.description]
 --
-Scheduler configuration
+Throw update exception when parameters are loaded from backend.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_UPDATE_INTERVAL_IN_MILLISECONDS+++[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_THROW_UPDATE_EXCEPTION+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PARAMETERS_UPDATE_INTERVAL_IN_MILLISECONDS+++`
+Environment variable: `+++ONECX_PARAMETERS_THROW_UPDATE_EXCEPTION+++`
 endif::add-copy-button-to-env-var[]
 --
-|long
-|`30000`
+|boolean
+|`false`
 
-a| [[onecx-parameters_onecx-parameters-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-update-at-start[`onecx.parameters.update-at-start`]##
+a| [[onecx-parameters_onecx-parameters-cache-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-enabled[`onecx.parameters.cache.enabled`]##
+
+[.description]
+--
+Enable or disable client cache.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_CACHE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_CACHE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[onecx-parameters_onecx-parameters-cache-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-schedule[`onecx.parameters.cache.update-schedule`]##
+
+[.description]
+--
+Update parameter scheduler configuration. The syntax used in CRON expressions.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_CACHE_UPDATE_SCHEDULE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_CACHE_UPDATE_SCHEDULE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`0 0/15 * * * ?`
+
+a| [[onecx-parameters_onecx-parameters-cache-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-at-start[`onecx.parameters.cache.update-at-start`]##
 
 [.description]
 --
@@ -67,10 +101,27 @@ Pull parameters during start phase
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_UPDATE_AT_START+++[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_CACHE_UPDATE_AT_START+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PARAMETERS_UPDATE_AT_START+++`
+Environment variable: `+++ONECX_PARAMETERS_CACHE_UPDATE_AT_START+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[onecx-parameters_onecx-parameters-cache-failed-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-failed-at-start[`onecx.parameters.cache.failed-at-start`]##
+
+[.description]
+--
+Does not start the microservices if an error occurs while retrieving the parameters during the startup phase.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_CACHE_FAILED_AT_START+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_CACHE_FAILED_AT_START+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
@@ -127,39 +178,73 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[onecx-parameters_onecx-parameters-metrics-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-metrics-enabled[`onecx.parameters.metrics.enabled`]##
+a| [[onecx-parameters_onecx-parameters-history-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-history-enabled[`onecx.parameters.history.enabled`]##
 
 [.description]
 --
-If set to true, the application will send metrics information to the parameter management.
+If set to true, the application will send history information to the parameter management.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_METRICS_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_HISTORY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PARAMETERS_METRICS_ENABLED+++`
+Environment variable: `+++ONECX_PARAMETERS_HISTORY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`true`
 
-a| [[onecx-parameters_onecx-parameters-metrics-metrics-interval-in-milliseconds]] [.property-path]##link:#onecx-parameters_onecx-parameters-metrics-metrics-interval-in-milliseconds[`onecx.parameters.metrics.metrics-interval-in-milliseconds`]##
+a| [[onecx-parameters_onecx-parameters-history-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-history-update-schedule[`onecx.parameters.history.update-schedule`]##
 
 [.description]
 --
-Metrics scheduler configuration
+Update history scheduler configuration. The syntax used in CRON expressions.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_METRICS_METRICS_INTERVAL_IN_MILLISECONDS+++[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_HISTORY_UPDATE_SCHEDULE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PARAMETERS_METRICS_METRICS_INTERVAL_IN_MILLISECONDS+++`
+Environment variable: `+++ONECX_PARAMETERS_HISTORY_UPDATE_SCHEDULE+++`
 endif::add-copy-button-to-env-var[]
 --
-|long
-|`20000`
+|string
+|`0 0/15 * * * ?`
+
+a| [[onecx-parameters_onecx-parameters-items-parameters]] [.property-path]##link:#onecx-parameters_onecx-parameters-items-parameters[`onecx.parameters.items."parameters"`]##
+
+[.description]
+--
+Parameters configuration
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_ITEMS__PARAMETERS_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_ITEMS__PARAMETERS_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a| [[onecx-parameters_onecx-parameters-tenant-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-tenant-enabled[`onecx.parameters.tenant.enabled`]##
+
+[.description]
+--
+Enable or disable multi-tenancy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_TENANT_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_TENANT_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
 
 |===
 

@@ -1,15 +1,11 @@
 package org.tkit.onecx.quarkus.parameter.mapper;
 
+import org.tkit.onecx.quarkus.parameter.ConvertValueException;
+
 public interface ParametersValueMapper {
 
-    <T> T toType(final Object value, final Class<T> clazz) throws ReadValueException;
+    <T> T toType(final Object value, final Class<T> clazz) throws ConvertValueException;
 
-    Object toMap(final String value) throws ReadValueException;
+    Object toMap(final String value) throws ConvertValueException;
 
-    class ReadValueException extends RuntimeException {
-
-        public ReadValueException(String message, Throwable e) {
-            super(message, e);
-        }
-    }
 }

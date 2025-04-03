@@ -4,7 +4,9 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response;
@@ -37,10 +39,12 @@ public abstract class AbstractTest {
     @InjectMockServerClient
     protected MockServerClient mockServerClient;
 
-    protected List<ParametersBucket> histories = new ArrayList<>();
+    protected Map<String, List<ParametersBucket>> histories = new HashMap<>();
 
     private final List<String> ids = new ArrayList<>();
     private final List<String> historyIds = new ArrayList<>();
+
+    private static final String NO_TENANT = "none";
 
     @BeforeAll
     void beforeAll() {
@@ -49,7 +53,7 @@ public abstract class AbstractTest {
                 .when(request().withPath("/v1/test1/app1/history").withMethod(HttpMethod.POST))
                 .respond(httpRequest -> {
                     var data = mapper.readValue(httpRequest.getBodyAsJsonOrXmlString(), ParametersBucket.class);
-                    histories.add(data);
+                    histories.computeIfAbsent(NO_TENANT, x -> new ArrayList<>()).add(data);
                     return response().withStatusCode(Response.Status.OK.getStatusCode())
                             .withContentType(MediaType.APPLICATION_JSON);
                 });
@@ -83,5 +87,13 @@ public abstract class AbstractTest {
         for (var i : e) {
             ids.add(i.getId());
         }
+    }
+
+    protected List<ParametersBucket> getHistory() {
+        var tmp = histories.get(NO_TENANT);
+        if (tmp != null) {
+            return tmp;
+        }
+        return List.of();
     }
 }

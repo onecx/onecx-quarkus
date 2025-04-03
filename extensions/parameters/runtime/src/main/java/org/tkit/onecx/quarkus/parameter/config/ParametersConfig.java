@@ -29,6 +29,13 @@ public interface ParametersConfig {
     boolean enabled();
 
     /**
+     * Throw update exception when parameters are loaded from backend.
+     */
+    @WithName("throw-update-exception")
+    @WithDefault("false")
+    boolean throwUpdateException();
+
+    /**
      * Cache configuration
      */
     @WithName("cache")
@@ -83,11 +90,11 @@ public interface ParametersConfig {
         boolean enabled();
 
         /**
-         * Scheduler configuration
+         * Update parameter scheduler configuration. The syntax used in CRON expressions.
          */
-        @WithName("update-interval-in-milliseconds")
-        @WithDefault("30000")
-        long updateIntervalInMilliseconds();
+        @WithName("update-schedule")
+        @WithDefault("0 0/15 * * * ?")
+        String updateSchedule();
 
         /**
          * Pull parameters during start phase
@@ -95,6 +102,14 @@ public interface ParametersConfig {
         @WithName("update-at-start")
         @WithDefault("false")
         boolean updateAtStart();
+
+        /**
+         * Does not start the microservices
+         * if an error occurs while retrieving the parameters during the startup phase.
+         */
+        @WithName("failed-at-start")
+        @WithDefault("false")
+        boolean failedAtStart();
     }
 
     /**
@@ -110,11 +125,11 @@ public interface ParametersConfig {
         boolean enabled();
 
         /**
-         * Update history interval in milliseconds
+         * Update history scheduler configuration. The syntax used in CRON expressions.
          */
-        @WithName("update-interval-in-milliseconds")
-        @WithDefault("300000")
-        Long updateIntervalInMilliseconds();
+        @WithName("update-schedule")
+        @WithDefault("0 0/15 * * * ?")
+        String updateSchedule();
 
     }
 
@@ -129,13 +144,6 @@ public interface ParametersConfig {
         @WithName("enabled")
         @WithDefault("true")
         boolean enabled();
-
-        /**
-         * Default tenant id.
-         */
-        @WithName("default-tenant")
-        @WithDefault("default")
-        String defaultTenant();
 
     }
 

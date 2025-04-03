@@ -4,13 +4,20 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.core.Response;
 
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tkit.onecx.quarkus.parameter.client.ParameterClientService;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.tenant.TenantResolver;
+import org.tkit.quarkus.context.ApplicationContext;
 
+import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
+import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
+import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
+import io.quarkus.scheduler.Scheduled;
+import io.quarkus.scheduler.ScheduledExecution;
+import io.quarkus.scheduler.Scheduler;
 import io.quarkus.vertx.ConsumeEvent;
-import io.vertx.core.Vertx;
 
 @Singleton
 public class ParametersHistoryService {
@@ -18,49 +25,97 @@ public class ParametersHistoryService {
     private static final Logger log = LoggerFactory.getLogger(ParametersHistoryService.class);
 
     @Inject
-    ParameterClientService client;
+    Scheduler scheduler;
 
     @Inject
-    Vertx vertx;
+    @RestClient
+    ParameterV1Api client;
+
+    @Inject
+    ParametersConfig config;
+
+    @Inject
+    TenantResolver resolver;
 
     // The history contains the current collected requests
     private ParametersHistory history;
 
+    private static String instanceId;
+
+    private static boolean multiTenant;
+
     public void init(ParametersConfig parametersConfig) {
 
         // init rest client
-        String instanceId = parametersConfig.instanceId().orElse(null);
-
+        instanceId = parametersConfig.instanceId().orElse(null);
+        multiTenant = parametersConfig.tenant().enabled();
         history = new ParametersHistory(instanceId);
 
         // update
         if (parametersConfig.history().enabled()) {
-            vertx.setPeriodic(parametersConfig.history().updateIntervalInMilliseconds(), id -> {
-                ParametersHistory tmp = this.history;
-                this.history = new ParametersHistory(instanceId);
-                tmp.end();
+            scheduler.newJob("parameters-history")
+                    .setCron(parametersConfig.history().updateSchedule())
+                    .setConcurrentExecution(Scheduled.ConcurrentExecution.SKIP)
+                    .setTask(this::sendHistory)
+                    .schedule();
+        }
+    }
 
-                // do not send empty bucket
-                if (tmp.isEmpty()) {
-                    return;
-                }
+    private void sendHistory(ScheduledExecution scheduledExecution) {
+        ParametersHistory tmp = this.history;
+        this.history = new ParametersHistory(instanceId);
+        tmp.end();
 
-                // send bucket to backend
-                try (var response = client.sendMetrics(tmp)) {
-                    if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-                        log.error("Error send metrics to the parameters management. Code: {}", response.getStatus());
-                    }
-                    log.debug("Send metrics. Code: {}", response.getStatus());
-                } catch (Exception ex) {
-                    log.error("Error send metrics to the parameters management. Error: {}", ex.getMessage());
+        // do not send empty bucket
+        if (tmp.isEmpty()) {
+            return;
+        }
+
+        tmp.getTenants().forEach((tenantId, value) -> {
+            if (value.isEmpty()) {
+                return;
+            }
+            if (multiTenant) {
+                var ctx = resolver.getTenantContext(value.getCtx());
+                ApplicationContext.start(ctx);
+                try {
+                    sendMetrics(history, value);
+                } finally {
+                    ApplicationContext.close();
                 }
-            });
+            } else {
+                sendMetrics(history, value);
+            }
+        });
+    }
+
+    private void sendMetrics(ParametersHistory history, ParametersHistory.TenantParameters parameters) {
+
+        ParametersBucket pb = new ParametersBucket()
+                .start(history.getStart())
+                .end(history.getEnd())
+                .instanceId(history.getInstanceId());
+
+        parameters.getParameters().forEach((k, v) -> {
+            pb.putParametersItem(k, new ParameterInfo()
+                    .count(v.getCount().get())
+                    .currentValue(v.getCurrentValue())
+                    .defaultValue(v.getDefaultValue()));
+        });
+
+        try (var response = client.bucketRequest(config.productName(), config.applicationId(), pb)) {
+            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+                log.error("Error send metrics to the parameters management. Code: {}", response.getStatus());
+            }
+            log.debug("Send metrics. Code: {}", response.getStatus());
+        } catch (Exception ex) {
+            log.error("Error send metrics to the parameters management. Error: {}", ex.getMessage());
         }
     }
 
     @ConsumeEvent(ParametersHistoryEvent.NAME)
     public void consumeEvent(ParametersHistoryEvent event) {
-        history.addParameterRequest(event.name, event.defaultValue, event.value);
+        history.addParameterRequest(event);
     }
 
 }

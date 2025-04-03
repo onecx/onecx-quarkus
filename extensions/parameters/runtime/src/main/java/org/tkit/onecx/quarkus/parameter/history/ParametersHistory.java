@@ -1,17 +1,19 @@
 package org.tkit.onecx.quarkus.parameter.history;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.tkit.quarkus.context.Context;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
 public class ParametersHistory {
 
-    private final Map<String, ParameterInfoItem> parameters = new ConcurrentHashMap<>();
+    private final Map<String, TenantParameters> tenants = new ConcurrentHashMap<>();
 
     private final String instanceId;
 
@@ -28,14 +30,13 @@ public class ParametersHistory {
         this.end = now();
     }
 
-    public void addParameterRequest(String name, Object defaultValue, Object currentValue) {
-        getParameters()
-                .computeIfAbsent(name, s -> new ParametersHistory.ParameterInfoItem(defaultValue, currentValue))
-                .getCount().incrementAndGet();
+    public void addParameterRequest(ParametersHistoryEvent event) {
+        tenants.computeIfAbsent(event.ctx.getTenantId(), t -> new TenantParameters(event.ctx))
+                .addParameter(event.name, event.defaultValue, event.value);
     }
 
-    public Map<String, ParameterInfoItem> getParameters() {
-        return parameters;
+    public Map<String, TenantParameters> getTenants() {
+        return tenants;
     }
 
     public OffsetDateTime getEnd() {
@@ -51,11 +52,40 @@ public class ParametersHistory {
     }
 
     public boolean isEmpty() {
-        return parameters.isEmpty();
+        return tenants.isEmpty();
     }
 
     static OffsetDateTime now() {
-        return OffsetDateTime.now(ZoneId.of("UTC"));
+        return OffsetDateTime.now(ZoneOffset.UTC);
+    }
+
+    @RegisterForReflection
+    public static class TenantParameters {
+
+        private final Context ctx;
+
+        private final Map<String, ParameterInfoItem> parameters = new ConcurrentHashMap<>();
+
+        public TenantParameters(Context ctx) {
+            this.ctx = ctx;
+        }
+
+        public Context getCtx() {
+            return ctx;
+        }
+
+        public boolean isEmpty() {
+            return parameters.isEmpty();
+        }
+
+        public Map<String, ParameterInfoItem> getParameters() {
+            return parameters;
+        }
+
+        public void addParameter(String name, Object defaultValue, Object currentValue) {
+            parameters.computeIfAbsent(name, k -> new ParametersHistory.ParameterInfoItem(defaultValue, currentValue))
+                    .getCount().incrementAndGet();
+        }
     }
 
     @RegisterForReflection

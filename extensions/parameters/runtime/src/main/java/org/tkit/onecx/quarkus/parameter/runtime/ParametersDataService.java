@@ -17,11 +17,13 @@ import org.tkit.onecx.quarkus.parameter.UpdateException;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
 import org.tkit.onecx.quarkus.parameter.history.ParametersHistoryEvent;
 import org.tkit.onecx.quarkus.parameter.mapper.ParametersValueMapper;
+import org.tkit.onecx.quarkus.parameter.metrics.MetricsRecorder;
 import org.tkit.onecx.quarkus.parameter.tenant.TenantResolver;
 import org.tkit.quarkus.context.ApplicationContext;
 import org.tkit.quarkus.context.Context;
 
 import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
+import io.quarkus.arc.Arc;
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.scheduler.ScheduledExecution;
 import io.quarkus.scheduler.Scheduler;
@@ -61,6 +63,8 @@ public class ParametersDataService {
     @Inject
     TenantResolver tenantResolver;
 
+    MetricsRecorder metricsRecorder;
+
     private static boolean multiTenant;
 
     /**
@@ -70,6 +74,8 @@ public class ParametersDataService {
      */
     public void init(ParametersConfig parametersConfig) {
         multiTenant = parametersConfig.tenant().enabled();
+        metricsRecorder = Arc.container().instance(MetricsRecorder.class).get();
+
         parametersConfig.parameters().forEach((k, v) -> localData.put(k, mapper.toMap(v)));
 
         if (parametersConfig.cache().enabled()) {
@@ -152,6 +158,8 @@ public class ParametersDataService {
                 throw ex;
             }
         }
+
+        metricsRecorder.increase(name);
         return params.getOrDefault(name, localData.get(name));
     }
 

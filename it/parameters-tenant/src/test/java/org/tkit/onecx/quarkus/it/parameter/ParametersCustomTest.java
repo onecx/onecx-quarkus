@@ -21,6 +21,7 @@ import io.quarkiverse.mockserver.test.MockServerTestResource;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 
 @QuarkusTest
 @TestHTTPEndpoint(TestRestController.class)
@@ -88,6 +89,19 @@ class ParametersCustomTest extends AbstractTest {
         Assertions.assertEquals(t.getA(), result.getA());
         Assertions.assertEquals(t.getB(), result.getB());
         Assertions.assertEquals(t.isC(), result.isC());
+
+        // check metrics
+        var metrics = given()
+                .when()
+                .get(RestAssured.baseURI + "/q/metrics")
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().response().asString();
+
+        Assertions.assertTrue(metrics.contains("# HELP onecx_parameters Number of times parameter have been used"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_total{name=\"DOES_NOT_EXISTS_2\"} 17.0"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_total{name=\"PARAM_TEXT_4\"} 17.0"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_total{name=\"DOES_NOT_EXISTS_1\"} 17.0"));
     }
 
     private TestParam getTestParam(String token) {

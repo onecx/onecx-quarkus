@@ -79,7 +79,7 @@
                 <artifactId>download-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>permissions</id>
+                        <id>tenant</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>wget</goal>
@@ -90,7 +90,8 @@
                             </url>
                             <outputDirectory>target/onecx/quarkus/tenant/openapi</outputDirectory>
                             <outputFileName>onecx-tenant-v1.yaml</outputFileName>
-                            <skipCache>true</skipCache>
+                            <skipCache>${download-maven-plugin.skip-cache}</skipCache>
+                            <cacheDirectory>target/.cache</cacheDirectory>
                         </configuration>
                     </execution>
                 </executions>

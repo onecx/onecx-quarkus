@@ -66,7 +66,8 @@
                             </url>
                             <outputDirectory>target/onecx/quarkus/permissions/openapi</outputDirectory>
                             <outputFileName>onecx-permission-v1.yaml</outputFileName>
-                            <skipCache>true</skipCache>
+                            <skipCache>${download-maven-plugin.skip-cache}</skipCache>
+                            <cacheDirectory>target/.cache</cacheDirectory>
                         </configuration>
                     </execution>
                 </executions>

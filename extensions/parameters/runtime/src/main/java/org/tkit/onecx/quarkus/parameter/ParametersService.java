@@ -1,189 +1,73 @@
 package org.tkit.onecx.quarkus.parameter;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.spi.ConfigBuilder;
-import org.eclipse.microprofile.config.spi.ConfigProviderResolver;
-import org.eclipse.microprofile.config.spi.ConfigSource;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.smallrye.config.SmallRyeConfig;
-import io.smallrye.config.common.AbstractConfigSource;
-import io.smallrye.mutiny.Uni;
-import io.vertx.core.Vertx;
-import io.vertx.mutiny.core.eventbus.EventBus;
+import org.tkit.onecx.quarkus.parameter.mapper.ParametersValueMapper;
+import org.tkit.onecx.quarkus.parameter.runtime.ParametersDataService;
 
 @ApplicationScoped
 public class ParametersService {
-    private static final Logger log = LoggerFactory.getLogger(ParametersService.class);
-
-    static Map<String, String> data = new ConcurrentHashMap<>();
-
-    static ParametersConfigSource source = new ParametersConfigSource();
 
     @Inject
-    @RestClient
-    ParameterRestClient client;
+    ParametersDataService dataService;
 
     @Inject
-    EventBus bus;
-
-    @Inject
-    Vertx vertx;
-
-    SmallRyeConfig config;
-
-    SmallRyeConfig quarkusConfig;
-
-    boolean metrics;
+    ParametersValueMapper mapper;
 
     /**
-     * Initialize the cache and parameters client
-     *
-     * @param parametersConfig the parameters management configuration
-     */
-    public void init(ParametersConfig parametersConfig, String applicationId) {
-        this.metrics = parametersConfig.metrics().enabled();
-
-        // create custom config
-        ConfigBuilder builder = ConfigProviderResolver.instance()
-                .getBuilder()
-                .addDiscoveredConverters()
-                .withSources(source);
-        config = (SmallRyeConfig) builder.build();
-        quarkusConfig = (SmallRyeConfig) ConfigProvider.getConfig();
-
-        // update parameters at start
-        if (parametersConfig.updateAtStart()) {
-            update(applicationId)
-                    .subscribe().with(d -> log.info("Init parameters cache: {}", d));
-        }
-
-        // setup scheduler for update
-        vertx.setPeriodic(parametersConfig.updateIntervalInMilliseconds(),
-                id -> update(applicationId).subscribe().with(d -> log.info("Update parameters cache: {}", d)));
-    }
-
-    /**
-     * Update the cache of the parameters
-     */
-    Uni<Map<String, String>> update(String applicationId) {
-        return client.getParameters(applicationId)
-                .onFailure().recoverWithItem(ex -> {
-                    log.error("Error updating the configuration from parameters management. Error: {}", ex.getMessage());
-                    return null;
-                })
-                .onItem().ifNotNull().invoke(m -> data.putAll(m));
-    }
-
-    /**
-     * Parameters config source
-     */
-    public static class ParametersConfigSource extends AbstractConfigSource {
-
-        public ParametersConfigSource() {
-            super("onecx-parameters-config-source", 999);
-        }
-
-        @Override
-        public Map<String, String> getProperties() {
-            return ParametersService.data;
-        }
-
-        @Override
-        public Set<String> getPropertyNames() {
-            return ParametersService.data.keySet();
-        }
-
-        @Override
-        public String getValue(String propertyName) {
-            return ParametersService.data.get(propertyName);
-        }
-
-    }
-
-    /**
-     * Return the resolved property value with the specified type for the
-     * specified property name from the underlying {@linkplain ConfigSource configuration sources}.
-     * <p>
-     * The configuration value is not guaranteed to be cached by the implementation, and may be expensive
-     * to compute; therefore, if the returned value is intended to be frequently used, callers should consider storing
-     * rather than recomputing it.
+     * Return the resolved parameter value with the specified type.
      *
      * @param <T>
-     *        The property type
-     * @param propertyName
-     *        The configuration property name
-     * @param propertyType
-     *        The type into which the resolved property value should get converted
+     *        The parameter type
+     * @param name
+     *        The parameter name
+     * @param type
+     *        The type into which the resolved parameter value should get converted
      * @param defaultValue
-     *        The default value to return if the property value could not get resolved
-     * @return the resolved property value as an instance of the requested type
-     * @throws java.lang.IllegalArgumentException if the property cannot be converted to the specified type
-     * @throws java.util.NoSuchElementException if the property isn't present in the configuration
+     *        The default parameter value to return if the parameter value could not get resolved
+     *
+     * @return the resolved parameter value as an instance of the requested type
+     *
+     * @throws org.tkit.onecx.quarkus.parameter.UpdateException if the update of the parameter failed and property
+     *         <code>onecx.parameters.throw-update-exception</code> is set to <code>true</code>.
+     * @throws org.tkit.onecx.quarkus.parameter.ConvertValueException if the parameter value cannot be converted to the
+     *         specified type
+     * @throws org.tkit.onecx.quarkus.parameter.TenantException if you enable multi-tenancy and <code>ApplicationContext</code>
+     *         is null.
      */
-    public <T> T getValue(String propertyName, Class<T> propertyType, String defaultValue) {
-        // check value from cache
-        Optional<T> value = config.getOptionalValue(propertyName, propertyType);
-        if (value.isPresent()) {
-            return sendMetrics(propertyName, propertyType, defaultValue, config.getRawValue(propertyName), value.get());
+    public <T> T getValue(String name, Class<T> type, T defaultValue) {
+        var value = defaultValue;
+        var raw = dataService.getRawValue(name);
+        if (raw != null) {
+            value = mapper.toType(raw, type);
         }
-
-        // check value from quarkus configuration
-        value = quarkusConfig.getOptionalValue(propertyName, propertyType);
-        if (value.isPresent()) {
-            return sendMetrics(propertyName, propertyType, defaultValue, quarkusConfig.getRawValue(propertyName), value.get());
-        }
-
-        // check default value
-        if (defaultValue != null && !defaultValue.isBlank()) {
-            return sendMetrics(propertyName, propertyType, defaultValue, defaultValue,
-                    quarkusConfig.convert(defaultValue, propertyType));
-        }
-
-        // no default value return null
-        return null;
-    }
-
-    private <T> T sendMetrics(String propertyName, Class<T> propertyType, String defaultValue, String rawValue,
-            T currentValue) {
-        if (metrics) {
-            bus.send(ParameterEvent.NAME, ParameterEvent.of(propertyName, propertyType, defaultValue, rawValue));
-        }
-        return currentValue;
+        dataService.addHistory(name, type, value, defaultValue);
+        return value;
     }
 
     /**
-     * Return the resolved property value with the specified type for the
-     * specified property name from the underlying {@linkplain ConfigSource configuration sources}.
+     * Return the resolved parameter value with the specified type.
      * <p>
-     * The configuration value is not guaranteed to be cached by the implementation, and may be expensive
-     * to compute; therefore, if the returned value is intended to be frequently used, callers should consider storing
-     * rather than recomputing it.
-     * <p>
-     * This is a shortcut to the {@link #getValue(String, Class, String) getValue} method using <code>null</code> as
+     * This is a shortcut to the {@link #getValue(String, Class, T) getValue} method using <code>null</code> as
      * <code>defaultValue</code>.
      *
      * @param <T>
-     *        The property type
-     * @param propertyName
-     *        The configuration property name
-     * @param propertyType
-     *        The type into which the resolved property value should get converted
-     * @return the resolved property value as an instance of the requested type
-     * @throws java.lang.IllegalArgumentException if the property cannot be converted to the specified type
-     * @throws java.util.NoSuchElementException if the property isn't present in the configuration
+     *        The parameter type
+     * @param name
+     *        The parameter name
+     * @param type
+     *        The type into which the resolved parameter value should get converted
+     *
+     * @return the resolved parameter value as an instance of the requested type
+     * @throws org.tkit.onecx.quarkus.parameter.UpdateException if the update of the parameter failed and property
+     *         <code>onecx.parameters.throw-update-exception</code> is set to <code>true</code>.
+     * @throws org.tkit.onecx.quarkus.parameter.ConvertValueException if the parameter value cannot be converted to the
+     *         specified type
+     * @throws org.tkit.onecx.quarkus.parameter.TenantException if you enable multi-tenancy and <code>ApplicationContext</code>
+     *         is null.
      */
-    public <T> T getValue(String propertyName, Class<T> propertyType) {
-        return getValue(propertyName, propertyType, null);
+    public <T> T getValue(String name, Class<T> type) {
+        return getValue(name, type, null);
     }
 }

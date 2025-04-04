@@ -3,7 +3,6 @@ package org.tkit.onecx.quarkus.parameter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import org.tkit.onecx.quarkus.parameter.mapper.ParametersValueMapper;
 import org.tkit.onecx.quarkus.parameter.runtime.ParametersDataService;
 
 @ApplicationScoped
@@ -11,9 +10,6 @@ public class ParametersService {
 
     @Inject
     ParametersDataService dataService;
-
-    @Inject
-    ParametersValueMapper mapper;
 
     /**
      * Return the resolved parameter value with the specified type.
@@ -37,13 +33,7 @@ public class ParametersService {
      *         is null.
      */
     public <T> T getValue(String name, Class<T> type, T defaultValue) {
-        var value = defaultValue;
-        var raw = dataService.getRawValue(name);
-        if (raw != null) {
-            value = mapper.toType(raw, type);
-        }
-        dataService.addHistory(name, type, value, defaultValue);
-        return value;
+        return dataService.getValue(name, type, defaultValue);
     }
 
     /**

@@ -6,7 +6,4 @@ public class TenantException extends RuntimeException {
         super(message);
     }
 
-    public TenantException(Throwable throwable) {
-        super(throwable);
-    }
 }

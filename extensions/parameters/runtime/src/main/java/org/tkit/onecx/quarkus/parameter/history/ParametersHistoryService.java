@@ -2,18 +2,21 @@ package org.tkit.onecx.quarkus.parameter.history;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
+import org.tkit.onecx.quarkus.parameter.metrics.MetricsRecorder;
 import org.tkit.onecx.quarkus.parameter.tenant.TenantResolver;
 import org.tkit.quarkus.context.ApplicationContext;
 
 import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
 import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
+import io.quarkus.arc.Arc;
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.scheduler.ScheduledExecution;
 import io.quarkus.scheduler.Scheduler;
@@ -37,6 +40,8 @@ public class ParametersHistoryService {
     @Inject
     TenantResolver resolver;
 
+    MetricsRecorder metricsRecorder;
+
     // The history contains the current collected requests
     private ParametersHistory history;
 
@@ -45,6 +50,7 @@ public class ParametersHistoryService {
     private static boolean multiTenant;
 
     public void init(ParametersConfig parametersConfig) {
+        metricsRecorder = Arc.container().instance(MetricsRecorder.class).get();
 
         // init rest client
         instanceId = parametersConfig.instanceId().orElse(null);
@@ -79,17 +85,17 @@ public class ParametersHistoryService {
                 var ctx = resolver.getTenantContext(value.getCtx());
                 ApplicationContext.start(ctx);
                 try {
-                    sendMetrics(history, value);
+                    sendMetrics(tenantId, history, value);
                 } finally {
                     ApplicationContext.close();
                 }
             } else {
-                sendMetrics(history, value);
+                sendMetrics(value.getCtx().getTenantId(), history, value);
             }
         });
     }
 
-    private void sendMetrics(ParametersHistory history, ParametersHistory.TenantParameters parameters) {
+    private void sendMetrics(String tenantId, ParametersHistory history, ParametersHistory.TenantParameters parameters) {
 
         ParametersBucket pb = new ParametersBucket()
                 .start(history.getStart())
@@ -108,7 +114,13 @@ public class ParametersHistoryService {
                 log.error("Error send metrics to the parameters management. Code: {}", response.getStatus());
             }
             log.debug("Send metrics. Code: {}", response.getStatus());
+            metricsRecorder.history(tenantId, "" + response.getStatus());
         } catch (Exception ex) {
+            if (ex instanceof WebApplicationException w) {
+                metricsRecorder.history(tenantId, "" + w.getResponse().getStatus());
+            } else {
+                metricsRecorder.history(tenantId, MetricsRecorder.STATUS_UNDEFINED);
+            }
             log.error("Error send metrics to the parameters management. Error: {}", ex.getMessage());
         }
     }

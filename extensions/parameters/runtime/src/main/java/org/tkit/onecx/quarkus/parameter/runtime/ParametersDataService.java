@@ -1,5 +1,7 @@
 package org.tkit.onecx.quarkus.parameter.runtime;
 
+import static org.tkit.onecx.quarkus.parameter.metrics.MetricsRecorder.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,6 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.GenericType;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
@@ -40,7 +44,7 @@ public class ParametersDataService {
     // cache data of the parameters
     static Map<String, Object> localData = new HashMap<>();
 
-    public static final String DEFAULT_TENANT = "default-tenant";
+    private static final String DEFAULT_TENANT = "default-tenant";
 
     static Context ctxDefaultTenant = Context.builder().tenantId(DEFAULT_TENANT).build();
 
@@ -85,7 +89,8 @@ public class ParametersDataService {
                     log.warn("Update cache at star-up is not supported for multi-tenancy");
                 } else {
                     try {
-                        data.put(ctxDefaultTenant.getTenantId(), new TenantParameters(ctxDefaultTenant, getParameters()));
+                        data.put(ctxDefaultTenant.getTenantId(), new TenantParameters(ctxDefaultTenant,
+                                getParameters(ctxDefaultTenant.getTenantId(), TYPE_START_UP)));
                     } catch (UpdateException ex) {
                         log.error("Error loading parameters during start of the application. Error: {}", ex.getMessage(), ex);
                         if (parametersConfig.cache().failedAtStart()) {
@@ -127,7 +132,7 @@ public class ParametersDataService {
 
     private void updateTenant(String tenantId) {
         try {
-            var params = getParameters();
+            var params = getParameters(tenantId, TYPE_SCHEDULER);
             data.get(tenantId).updateParameters(params);
         } catch (UpdateException ex) {
             log.warn("Update parameters for tenant: {} failed. Error: {}", tenantId, ex.getMessage());
@@ -148,9 +153,12 @@ public class ParametersDataService {
         try {
             if (config.cache().enabled()) {
                 var c = ctx;
-                params = data.computeIfAbsent(ctx.getTenantId(), t -> new TenantParameters(c, getParameters())).getParameters();
+                params = data
+                        .computeIfAbsent(ctx.getTenantId(),
+                                t -> new TenantParameters(c, getParameters(c.getTenantId(), TYPE_CACHE)))
+                        .getParameters();
             } else {
-                params = getParameters();
+                params = getParameters(ctx.getTenantId(), TYPE_NO_CACHE);
             }
         } catch (UpdateException ex) {
             log.warn("Update parameters during raw value failed. Error: {}", ex.getMessage());
@@ -179,10 +187,18 @@ public class ParametersDataService {
         bus.send(ParametersHistoryEvent.NAME, ParametersHistoryEvent.of(ctx, name, type, defaultValue, value));
     }
 
-    public Map<String, Object> getParameters() throws UpdateException {
-        try {
-            return client.getParameters(config.productName(), config.applicationId());
+    public Map<String, Object> getParameters(String tenantId, String type) throws UpdateException {
+        try (var response = client.getParameters(config.productName(), config.applicationId())) {
+            var tmp = response.readEntity(new GenericType<HashMap<String, Object>>() {
+            });
+            metricsRecorder.update(tenantId, type, "" + response.getStatus());
+            return tmp;
         } catch (Exception ex) {
+            if (ex instanceof WebApplicationException w) {
+                metricsRecorder.update(tenantId, type, "" + w.getResponse().getStatus());
+            } else {
+                metricsRecorder.update(tenantId, type, STATUS_UNDEFINED);
+            }
             throw new UpdateException(ex);
         }
     }

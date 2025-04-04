@@ -64,6 +64,8 @@ public class ParametersService {
      *         <code>onecx.parameters.throw-update-exception</code> is set to <code>true</code>.
      * @throws org.tkit.onecx.quarkus.parameter.ConvertValueException if the parameter value cannot be converted to the
      *         specified type
+     * @throws org.tkit.onecx.quarkus.parameter.TenantException if you enable multi-tenancy and <code>ApplicationContext</code>
+     *         is null.
      */
     public <T> T getValue(String name, Class<T> type) {
         return getValue(name, type, null);

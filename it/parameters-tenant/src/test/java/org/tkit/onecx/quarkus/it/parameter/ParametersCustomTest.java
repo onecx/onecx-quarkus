@@ -98,8 +98,15 @@ class ParametersCustomTest extends AbstractTest {
                 .statusCode(Response.Status.OK.getStatusCode())
                 .extract().response().asString();
 
-        Assertions.assertTrue(metrics.contains("# HELP onecx_parameters Number of times parameter have been used"));
-        Assertions.assertTrue(metrics.contains("onecx_parameters_total{name="));
+        Assertions.assertTrue(metrics.contains("# HELP onecx_parameters_item Number of times parameter have been used"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_item_total{name="));
+        Assertions.assertTrue(
+                metrics.contains("# HELP onecx_parameters_update Number of times tenant parameters have been updated"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_update_total{status="));
+
+        Assertions.assertTrue(
+                metrics.contains("HELP onecx_parameters_history Number of times parameters history have been send"));
+        Assertions.assertTrue(metrics.contains("onecx_parameters_history_total{status="));
     }
 
     private TestParam getTestParam(String token) {

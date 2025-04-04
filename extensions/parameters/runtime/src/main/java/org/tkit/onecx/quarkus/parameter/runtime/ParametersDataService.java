@@ -139,8 +139,7 @@ public class ParametersDataService {
         }
     }
 
-    public Object getRawValue(String name) {
-
+    public <T> T getValue(String name, Class<T> type, T defaultValue) {
         var ctx = ctxDefaultTenant;
         if (config.tenant().enabled()) {
             ctx = ApplicationContext.get();
@@ -149,13 +148,22 @@ public class ParametersDataService {
             }
         }
 
+        var value = defaultValue;
+        var raw = getRawValue(ctx, name);
+        if (raw != null) {
+            value = mapper.toType(raw, type);
+        }
+        addHistory(ctx, name, type, value, defaultValue);
+        return value;
+    }
+
+    private Object getRawValue(Context ctx, String name) {
         Map<String, Object> params = new HashMap<>();
         try {
             if (config.cache().enabled()) {
-                var c = ctx;
                 params = data
                         .computeIfAbsent(ctx.getTenantId(),
-                                t -> new TenantParameters(c, getParameters(c.getTenantId(), TYPE_CACHE)))
+                                t -> new TenantParameters(ctx, getParameters(ctx.getTenantId(), TYPE_CACHE)))
                         .getParameters();
             } else {
                 params = getParameters(ctx.getTenantId(), TYPE_NO_CACHE);
@@ -171,19 +179,10 @@ public class ParametersDataService {
         return params.getOrDefault(name, localData.get(name));
     }
 
-    public <T> void addHistory(String name, Class<T> type, T value, T defaultValue) {
+    private <T> void addHistory(Context ctx, String name, Class<T> type, T value, T defaultValue) {
         if (!config.history().enabled()) {
             return;
         }
-        var ctx = ctxDefaultTenant;
-        if (config.tenant().enabled()) {
-            ctx = ApplicationContext.get();
-            if (ctx == null || ctx.getTenantId() == null) {
-                throw new TenantException("ApplicationContext with not null tenant-id is required for multi-tenancy");
-            }
-            ctx = data.get(ctx.getTenantId()).getCtx();
-        }
-
         bus.send(ParametersHistoryEvent.NAME, ParametersHistoryEvent.of(ctx, name, type, defaultValue, value));
     }
 

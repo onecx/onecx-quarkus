@@ -4,6 +4,9 @@ import java.util.Map;
 
 import org.tkit.quarkus.context.Context;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class TenantParameters {
 
     private final Context ctx;

@@ -1,10 +1,11 @@
 == onecx-parameters
+:icons: font
 
 include::./includes/attributes.adoc[]
 
 TIP: This extension currently does not support multi-tenancy.
 
-=== Installation
+== Installation
 
 If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-parameters` extension first to your build file.
 
@@ -19,30 +20,93 @@ For instance, with Maven, add the following dependency to your POM file:
 </dependency>
 ----
 
-=== Usage
+== Usage
 
-First you need to add the maven dependency shown at the top
+=== Parameter client
 
-Then you can inject the ParametersService:
+Assuming you have `Parameters` running on localhost:8088 you should add the following properties to your application.properties and fill in the values for url.
+
+[source,properties]
+----
+onecx.parameters.service.client.url=http://localhost:8088/api
+----
+
+Once you have configured the properties, you can start using a Parameters-client.
+
 [source,java]
 ----
-@Inject ParametersService parametersService;
+@ApplicationScoped
+public class TestService {
+
+    @Inject
+    ParametersService parameters;
+
+    public boolean isTest() {
+        return parameters.getValue("key", String.class, "DEFAULT_VALUE");
+    }
+}
 ----
-After that you can use the `getValue` Method:
+
+=== @Parameter
+
+By using the `@Parameter` annotation there is a shortcut to inject value of the parameter.
+
 [source,java]
 ----
-String value = parametersService.getValue("key", String.class, "DEFAULT_VALUE");
+@ApplicationScoped
+public class TestService {
+
+    @Parameter(name = "param-name-1")
+    Instance<Variant> param1;
+
+    @Parameter(name = "param-name-2")
+    Instance<String> param2;
+
+    @Parameter(name = "param-name-3")
+    Instance<MyCustomJsonModel> param3;
+
+}
 ----
+
+[NOTE]
+====
+`@Parameter` should only be used with the `Instance<?>` type.
+====
+
+=== History
+
+By default, the client will send history of used parameters to the backend. History contains count of usage of the parameter in the interval configure by the `onecx.parameters.history.update-schedule` property.
+
+=== Cache
+
+To avoid to many calls the client will use local cache for parameters. To disable the local cache you can use this property `onecx.parameters.cache.enabled`.
+The local cache is updated via the scheduler and schedule time is configurable with `onecx.parameters.cache.update-schedule` property.
+
+You can update cache at start of the application `onecx.parameters.cache.update-at-start` and control if the application should not start if there is error to update cache at the start `onecx.parameters.cache.failed-at-start`.
+
+=== Multi-tenancy
+
+To disable or enable multi-tenancy you can use this property `onecx.parameters.tenant.enabled`. To resolve the tenant the https://1000kit.github.io/tkit-quarkus/current/tkit-quarkus/tkit-quarkus-context.html[ApplicationContext] will be used.
+
+For background job like cache update you need to implement `@org.tkit.onecx.quarkus.parameter.tenant.TenantResolver` and create ApplicationContext for each cache update.
+
+=== Metrics
+
+Micrometer metrics are support by the client library. By default, there are
+
+* parameter usage count `onecx_parameters_item_total`
+* update parameters background job counter with response codes `onecx_parameters_update_total`
+* send history background job counter with response codes `onecx_parameters_history_total`
+
+=== Value configuration priority
 
 You retrieve either the value from the...
 
-1. Parameter-Service
-2. Project application.properties
-3. Default Value
+1. Backend parameter service.
+2. Project application.properties See: https://quarkus.io/guides/config-reference[Quarkus configuration reference guide]
+3. Source code default value.
 
 in this respective order.
-
-So if you want to retrieve a value from the parameter-service/application.properties and throw an exception if it was not configured there, be sure to set the default-value to null or something else and check if a valid value was returned.
 
 === Configuration
 

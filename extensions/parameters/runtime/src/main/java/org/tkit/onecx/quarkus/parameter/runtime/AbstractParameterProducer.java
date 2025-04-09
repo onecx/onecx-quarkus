@@ -10,11 +10,11 @@ import org.tkit.onecx.quarkus.parameter.ParametersService;
 public class AbstractParameterProducer {
 
     protected Object getParameter(InjectionPoint injectionPoint, Class<?> clazz, ParametersService service) {
-        Parameter param = getFeatureVariant(injectionPoint);
+        Parameter param = getParameterAnno(injectionPoint);
         return service.getValue(param.name(), clazz);
     }
 
-    protected Parameter getFeatureVariant(InjectionPoint injectionPoint) {
+    protected Parameter getParameterAnno(InjectionPoint injectionPoint) {
         Parameter ft = null;
         for (Annotation qualifier : injectionPoint.getQualifiers()) {
             if (qualifier.annotationType().equals(Parameter.class)) {

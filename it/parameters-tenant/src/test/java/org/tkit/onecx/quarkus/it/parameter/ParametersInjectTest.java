@@ -12,7 +12,8 @@ import java.util.Map;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.JsonBody;
 import org.mockserver.model.MediaType;
 
@@ -20,55 +21,58 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-@TestHTTPEndpoint(TestRestController.class)
-class ParametersTest extends AbstractTest {
+@TestHTTPEndpoint(TestInjectRestController.class)
+class ParametersInjectTest extends AbstractTest {
 
     private static final String STRING_TYPE = "String";
 
     @Test
     void loadParametersTest() {
+
+        var tenantId = "500";
+        var token = createToken(tenantId);
+
         var data = Map.of(
-                "PARAM_TEXT_3", Map.of("a", "1"),
-                "PARAM_TEXT", "Text Information",
-                "PARAM_TEXT_2", "4321",
-                "PARAM_NUMBER", 123,
-                "PARAM_BOOL", true);
+                "I_PARAM_TEXT_3", Map.of("a", "1"),
+                "I_PARAM_TEXT", "Inject Text Information",
+                "I_PARAM_TEXT_2", "43219",
+                "I_PARAM_NUMBER", 1239,
+                "I_PARAM_BOOL", true);
 
         addExpectation(
                 mockServerClient
                         .when(request()
                                 .withPath("/v1/test1/app1/parameters")
-                                .withMethod(HttpMethod.GET))
-                        .withPriority(100)
+                                .withMethod(HttpMethod.GET)
+                                .withHeader(APM_HEADER_PARAM, token))
                         .respond(httpRequest -> response().withStatusCode(Response.Status.OK.getStatusCode())
                                 .withContentType(MediaType.APPLICATION_JSON)
                                 .withBody(JsonBody.json(data))));
 
         await().atMost(10, SECONDS)
                 .until(() -> {
-                    var r = callTest(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE));
-                    return "Text Information".equals(r);
+                    var r = callTest(token, Map.of("name", "I_PARAM_TEXT", "type", STRING_TYPE));
+                    return "Inject Text Information".equals(r);
                 });
 
-        call(Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE");
-        call(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information");
-        call(Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321");
-        call(Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123");
-        call(Map.of("name", "PARAM_BOOL", "type", "Boolean"), "true");
+        call(token, Map.of("name", "I_PARAM_TEXT", "type", STRING_TYPE), "Inject Text Information");
+        call(token, Map.of("name", "I_PARAM_NUMBER", "type", "Integer"), "1239");
+        call(token, Map.of("name", "I_PARAM_BOOL", "type", "Boolean"), "true");
 
         await().atMost(15, SECONDS)
-                .until(() -> getHistory().stream().map(x -> x.getParameters().entrySet()
-                        .stream().filter(a -> !a.getKey().startsWith("I_")).count()).reduce(0L, Long::sum) >= 6);
+                .until(() -> getHistory(tenantId).stream().map(x -> x.getParameters().entrySet()
+                        .stream().filter(a -> a.getKey().startsWith("I_")).count()).reduce(0L, Long::sum) == 3);
     }
 
-    private void call(Map<String, String> params, String expected) {
-        var result = callTest(params);
+    private void call(String token, Map<String, String> params, String expected) {
+        var result = callTest(token, params);
         Assertions.assertEquals(expected, result);
     }
 
-    private String callTest(Map<String, String> params) {
+    private String callTest(String token, Map<String, String> params) {
         return given()
                 .when()
+                .header(APM_HEADER_PARAM, token)
                 .pathParams(params)
                 .contentType(APPLICATION_JSON)
                 .get("{name}/{type}")

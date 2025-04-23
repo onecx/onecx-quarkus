@@ -39,7 +39,7 @@ public class ParametersService {
     /**
      * Return the resolved parameter value with the specified type.
      * <p>
-     * This is a shortcut to the {@link #getValue(String, Class, T) getValue} method using <code>null</code> as
+     * This is a shortcut to the {@link #getValue(String, Class, Object)} method using <code>null</code> as
      * <code>defaultValue</code>.
      *
      * @param <T>

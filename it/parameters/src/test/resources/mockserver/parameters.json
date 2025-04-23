@@ -1,0 +1,22 @@
+[
+  {
+    "id": "0",
+    "httpRequest": {
+      "method": "GET",
+      "path": "/v1/test1/app1/parameters"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "PARAM_TEXT_3": {"a": "NO_VALUE"},
+          "PARAM_TEXT": "NO_VALUE",
+          "PARAM_TEXT_2": "NO_VALUE",
+          "PARAM_NUMBER": -1,
+          "PARAM_BOOL": false
+        },
+        "contentType": "application/json"
+      }
+    }
+  }
+]

@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>org.tkit.onecx.quarkus</groupId>
+            <artifactId>onecx-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-parameters</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -33,6 +38,23 @@
         <dependency>
             <groupId>org.tkit.quarkus.lib</groupId>
             <artifactId>tkit-quarkus-log-rs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.mockserver</groupId>
+            <artifactId>quarkus-mockserver</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TEST -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-test-keycloak-server</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.mockserver</groupId>
+            <artifactId>quarkus-mockserver-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

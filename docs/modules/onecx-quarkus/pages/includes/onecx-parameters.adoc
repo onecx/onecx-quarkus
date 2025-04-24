@@ -46,7 +46,7 @@ a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-p
 
 [.description]
 --
-If set to true, the application will attempt to look up the configuration from Consul
+If set to true, the application will attempt to look up the configuration from Parameter service
 
 
 ifdef::add-copy-button-to-env-var[]

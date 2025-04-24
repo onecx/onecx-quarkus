@@ -21,7 +21,7 @@ public interface ParametersConfig {
     String clientUrl();
 
     /**
-     * If set to true, the application will attempt to look up the configuration from Consul
+     * If set to true, the application will attempt to look up the configuration from Parameter service
      */
     @WithName("enabled")
     @WithDefault("true")

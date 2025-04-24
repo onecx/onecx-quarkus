@@ -140,6 +140,9 @@ public class ParametersDataService {
     }
 
     public <T> T getValue(String name, Class<T> type, T defaultValue) {
+        if (!config.enabled()) {
+            return defaultValue;
+        }
         var ctx = ctxDefaultTenant;
         if (config.tenant().enabled()) {
             ctx = ApplicationContext.get();

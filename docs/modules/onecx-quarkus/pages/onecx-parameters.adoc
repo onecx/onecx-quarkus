@@ -3,8 +3,6 @@
 
 include::./includes/attributes.adoc[]
 
-TIP: This extension currently does not support multi-tenancy.
-
 == Installation
 
 If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-parameters` extension first to your build file.

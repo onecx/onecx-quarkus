@@ -14,7 +14,7 @@ public interface ParametersConfig {
 
     /**
      * Parameters client URL configuration.
-     * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
+     * This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_parameter.url`
      */
     @WithName("service.client.url")
     @WithDefault("http://onecx-parameter-svc:8080")
@@ -47,7 +47,7 @@ public interface ParametersConfig {
     String productName();
 
     /**
-     * Permissions application ID.
+     * Parameters application ID.
      */
     @WithName("application-id")
     @WithDefault("${quarkus.application.name}")

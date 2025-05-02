@@ -24,28 +24,11 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`true`
 
-a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-build-health-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-build-health-enabled[`onecx.parameters.build.health.enabled`]##
-
-[.description]
---
-Whether a health check is published in case the smallrye-health extension is present.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_BUILD_HEALTH_ENABLED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++ONECX_PARAMETERS_BUILD_HEALTH_ENABLED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`true`
-
 a| [[onecx-parameters_onecx-parameters-service-client-url]] [.property-path]##link:#onecx-parameters_onecx-parameters-service-client-url[`onecx.parameters.service.client.url`]##
 
 [.description]
 --
-Parameters client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_permission.url`
+Parameters client URL configuration. This property is alias for rest-client generated configuration property `quarkus.rest-client.onecx_parameter.url`
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -62,7 +45,7 @@ a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-p
 
 [.description]
 --
-If set to true, the application will attempt to look up the configuration from Consul
+If set to true, the application will attempt to look up the configuration from Parameter service
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -181,7 +164,7 @@ a| [[onecx-parameters_onecx-parameters-application-id]] [.property-path]##link:#
 
 [.description]
 --
-Permissions application ID.
+Parameters application ID.
 
 
 ifdef::add-copy-button-to-env-var[]

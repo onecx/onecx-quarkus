@@ -19,6 +19,7 @@
         <module>security</module>
         <module>parameters</module>
         <module>parameters-tenant</module>
+        <module>constraints</module>
     </modules>
 
     <properties>

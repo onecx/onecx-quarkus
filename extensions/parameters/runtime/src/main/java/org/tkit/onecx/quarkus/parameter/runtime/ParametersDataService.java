@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
@@ -33,7 +34,7 @@ import io.quarkus.scheduler.ScheduledExecution;
 import io.quarkus.scheduler.Scheduler;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
-@Singleton
+@ApplicationScoped
 public class ParametersDataService {
 
     private static final Logger log = LoggerFactory.getLogger(ParametersDataService.class);

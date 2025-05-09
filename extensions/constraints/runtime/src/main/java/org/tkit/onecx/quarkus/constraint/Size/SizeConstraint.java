@@ -15,11 +15,11 @@ public @interface SizeConstraint {
 
     String min() default "1";
 
-    String max() default "100000";
+    String max() default "1000000";
 
     String key() default "";
 
-    String message() default "Size constraint violated";
+    String message() default "Size Constraint Violation";
 
     Class<?>[] groups() default {};
 

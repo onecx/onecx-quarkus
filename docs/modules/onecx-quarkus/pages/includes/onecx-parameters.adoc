@@ -8,6 +8,10 @@ h|Type
 h|Default
 
 a|icon:lock[title=Fixed at build time] [[onecx-parameters_onecx-parameters-build-metrics-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-build-metrics-enabled[`onecx.parameters.build.metrics.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.build.metrics.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -25,6 +29,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[onecx-parameters_onecx-parameters-service-client-url]] [.property-path]##link:#onecx-parameters_onecx-parameters-service-client-url[`onecx.parameters.service.client.url`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.service.client.url+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -42,6 +50,10 @@ endif::add-copy-button-to-env-var[]
 |`http://onecx-parameter-svc:8080`
 
 a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-enabled[`onecx.parameters.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -59,6 +71,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[onecx-parameters_onecx-parameters-throw-update-exception]] [.property-path]##link:#onecx-parameters_onecx-parameters-throw-update-exception[`onecx.parameters.throw-update-exception`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.throw-update-exception+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -76,6 +92,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[onecx-parameters_onecx-parameters-cache-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-enabled[`onecx.parameters.cache.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.cache.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -93,6 +113,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[onecx-parameters_onecx-parameters-cache-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-schedule[`onecx.parameters.cache.update-schedule`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.cache.update-schedule+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -110,6 +134,10 @@ endif::add-copy-button-to-env-var[]
 |`0 0/15 * * * ?`
 
 a| [[onecx-parameters_onecx-parameters-cache-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-at-start[`onecx.parameters.cache.update-at-start`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.cache.update-at-start+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -127,6 +155,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[onecx-parameters_onecx-parameters-cache-failed-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-failed-at-start[`onecx.parameters.cache.failed-at-start`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.cache.failed-at-start+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -144,6 +176,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[onecx-parameters_onecx-parameters-product-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-product-name[`onecx.parameters.product-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.product-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -161,6 +197,10 @@ endif::add-copy-button-to-env-var[]
 |required icon:exclamation-circle[title=Configuration property is required]
 
 a| [[onecx-parameters_onecx-parameters-application-id]] [.property-path]##link:#onecx-parameters_onecx-parameters-application-id[`onecx.parameters.application-id`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.application-id+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -178,6 +218,10 @@ endif::add-copy-button-to-env-var[]
 |`${quarkus.application.name}`
 
 a| [[onecx-parameters_onecx-parameters-instance-id]] [.property-path]##link:#onecx-parameters_onecx-parameters-instance-id[`onecx.parameters.instance-id`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.instance-id+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -195,6 +239,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[onecx-parameters_onecx-parameters-history-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-history-enabled[`onecx.parameters.history.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.history.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -212,6 +260,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[onecx-parameters_onecx-parameters-history-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-history-update-schedule[`onecx.parameters.history.update-schedule`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.history.update-schedule+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -229,6 +281,10 @@ endif::add-copy-button-to-env-var[]
 |`0 0/15 * * * ?`
 
 a| [[onecx-parameters_onecx-parameters-items-parameters]] [.property-path]##link:#onecx-parameters_onecx-parameters-items-parameters[`onecx.parameters.items."parameters"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.items."parameters"+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -246,6 +302,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[onecx-parameters_onecx-parameters-tenant-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-tenant-enabled[`onecx.parameters.tenant.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.tenant.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --

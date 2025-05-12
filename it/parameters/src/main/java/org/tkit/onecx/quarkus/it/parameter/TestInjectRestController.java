@@ -32,6 +32,7 @@ public class TestInjectRestController {
 
     @GET
     @Path("{name}/{type}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response parameters(@PathParam("name") String name, @PathParam("type") String type) {
 
         Object value = switch (type) {

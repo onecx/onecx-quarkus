@@ -43,6 +43,10 @@
             <artifactId>quarkus-rest-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkiverse.openapi.generator</groupId>
+            <artifactId>quarkus-openapi-generator-oidc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-oidc-filter</artifactId>
         </dependency>

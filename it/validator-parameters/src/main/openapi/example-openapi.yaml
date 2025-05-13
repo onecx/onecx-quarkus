@@ -1,0 +1,146 @@
+---
+openapi: 3.0.3
+info:
+  title: onecx-it-validator internal service
+  version: 1.0.0
+servers:
+  - url: "http://onecx-it-validator:8080"
+tags:
+  - name: imagesInternal
+paths:
+  /internal/images/custom:
+    post:
+      tags:
+        - imagesInternal
+      description: upload image
+      operationId: uploadImageCustomValidation
+      parameters:
+        - in: header
+          name: Content-Length
+          required: true
+          x-onecx:
+            validator:
+              size:
+                min: 100
+                max: 1100000
+                message: "error-message from openapi definition"
+                key: notDefined
+          schema:
+            type: integer
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: CREATED
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
+  /internal/images/default:
+    post:
+      tags:
+        - imagesInternal
+      description: upload image
+      operationId: uploadImageDefaultValidation
+      parameters:
+        - in: header
+          name: Content-Length
+          required: true
+          x-onecx:
+            validator:
+              size:
+                min: 1
+                max: 1000000
+                key: paramNull
+          schema:
+            type: integer
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: CREATED
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
+  /internal/images/parameter:
+    post:
+      tags:
+        - imagesInternal
+      description: upload image
+      operationId: uploadImageParameterValidation
+      parameters:
+        - in: header
+          name: Content-Length
+          required: true
+          x-onecx:
+            validator:
+              size:
+                min: 1
+                max: 1100000
+                message: "constraint validation with parameter"
+                key: param1
+          schema:
+            type: integer
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: CREATED
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
+components:
+  schemas:
+    OffsetDateTime:
+      format: date-time
+      type: string
+      example: 2022-03-10T12:15:50-04:00
+    ProblemDetailResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        detail:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemDetailParam'
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemDetailInvalidParam'
+    ProblemDetailParam:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    ProblemDetailInvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string

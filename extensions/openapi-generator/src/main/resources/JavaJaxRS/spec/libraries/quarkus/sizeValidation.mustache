@@ -1,8 +1,0 @@
-{{#onecx-constraints}}
-    {{#vendorExtensions.x-onecx-constraints}}
-      {{#size}} @org.tkit.onecx.quarkus.constraint.Size.SizeConstraint({{#min}} min = "{{min}}"{{/min}}{{#max}}{{#min}}, {{/min}}max = "{{max}}"{{/max}}{{#key}}{{#min}}{{^max}}, {{/max}}{{/min}}{{#max}},{{/max}}
-    key = "{{key}}"{{/key}}{{#message}}{{#min}}{{^max}}{{^key}}, {{/key}}{{/max}}{{/min}}{{#max}}{{^key}}, {{/key}}{{/max}}{{#key}}, {{/key}}
-    message = "{{message}}"
-    {{/message}}){{/size}}{{^size.min}}{{^size.max}}{{^size.key}}{{^size.message}} @org.tkit.onecx.quarkus.constraint.Size.SizeConstraint(){{/size.message}}{{/size.key}}{{/size.max}}{{/size.min}}
-    {{/vendorExtensions.x-onecx-constraints}}
-{{/onecx-constraints}}

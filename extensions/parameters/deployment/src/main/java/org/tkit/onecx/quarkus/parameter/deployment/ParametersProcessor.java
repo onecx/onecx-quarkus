@@ -25,6 +25,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.CapabilityBuildItem;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.metrics.MetricsCapabilityBuildItem;
@@ -48,6 +49,11 @@ public class ParametersProcessor {
     public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config) {
         BeanContainer container = beanContainer.getValue();
         recorder.configSources(container, config);
+    }
+
+    @BuildStep
+    void capabilities(BuildProducer<CapabilityBuildItem> capabilityProducer) {
+        capabilityProducer.produce(new CapabilityBuildItem("org.tkit.onecx.parameters", "onecx"));
     }
 
     @BuildStep

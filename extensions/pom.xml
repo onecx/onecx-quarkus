@@ -18,7 +18,7 @@
         <module>parameters</module>
         <module>permissions</module>
         <module>openapi-generator</module>
-        <module>constraints</module>
+        <module>validator</module>
     </modules>
 
 </project>

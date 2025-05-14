@@ -1,8 +1,8 @@
-{{#onecx-validator}}
+{{#onecx-constraints}}
     {{#vendorExtensions.x-onecx.constraints}}
       {{#size}} @org.tkit.onecx.quarkus.validator.constraints.Size({{#min}} min = {{min}}{{/min}}{{#max}}{{#min}}, {{/min}}max = {{max}}{{/max}}{{#key}}{{#min}}{{^max}}, {{/max}}{{/min}}{{#max}},{{/max}}
     key = "{{key}}"{{/key}}{{#message}}{{#min}}{{^max}}{{^key}}, {{/key}}{{/max}}{{/min}}{{#max}}{{^key}}, {{/key}}{{/max}}{{#key}}, {{/key}}
     message = "{{message}}"
     {{/message}}){{/size}}
     {{/vendorExtensions.x-onecx.constraints}}
-{{/onecx-validator}}
+{{/onecx-constraints}}

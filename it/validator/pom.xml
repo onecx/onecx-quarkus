@@ -76,7 +76,7 @@
                     <generateSupportingFiles>false</generateSupportingFiles>
                     <addCompileSourceRoot>true</addCompileSourceRoot>
                     <library>quarkus</library>
-                    <additionalProperties>onecx-validator=true</additionalProperties>
+                    <additionalProperties>onecx-constraints=true</additionalProperties>
                     <configOptions>
                         <sourceFolder>/</sourceFolder>
                         <openApiNullable>false</openApiNullable>

@@ -42,7 +42,7 @@
             </dependency>
             <dependency>
                 <groupId>org.tkit.onecx.quarkus</groupId>
-                <artifactId>onecx-constraints</artifactId>
+                <artifactId>onecx-validator</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

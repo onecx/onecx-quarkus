@@ -1,0 +1,34 @@
+== onecx-validator
+
+include::./includes/attributes.adoc[]
+
+=== Installation
+
+If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-validator` extension first to your build file.
+
+For instance, with Maven, add the following dependency to your POM file:
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+    <groupId>org.tkit.onecx.quarkus</groupId>
+    <artifactId>onecx-validator</artifactId>
+    <version>{project-version}</version>
+</dependency>
+----
+
+=== Usage
+
+==== Constraints
+
+TIP: Constraints are generated automatically from the open-api definition file. See xref:onecx-openapi-generator.adoc#_constraints[Constraints]
+
+===== @Size
+
+`@org.tkit.onecx.quarkus.validator.constraints.Size` constraints annotation validate the numeric value between min and max attribute. Additional to these constraints contain parameter key which cloud be optionally mapped to the xref:onecx-parameters.adoc[onecx-parameters] backend service and this enables dynamic validation of the parameter.
+
+
+=== Configuration
+
+include::includes/onecx-validator.adoc[leveloffset=+1, opts=optional]
+

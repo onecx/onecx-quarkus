@@ -25,6 +25,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.CapabilityBuildItem;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.metrics.MetricsCapabilityBuildItem;
@@ -33,6 +34,9 @@ import io.quarkus.runtime.metrics.MetricsFactory;
 import io.quarkus.runtime.util.HashUtil;
 
 public class ParametersProcessor {
+
+    static final String CAPABILITY_PROVIDER = "onecx";
+    static final String CAPABILITY_PARAMETERS = "org.tkit.onecx.parameters";
 
     public static final DotName DN_PARAMETER = DotName.createSimple(Parameter.class);
 
@@ -48,6 +52,11 @@ public class ParametersProcessor {
     public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config) {
         BeanContainer container = beanContainer.getValue();
         recorder.configSources(container, config);
+    }
+
+    @BuildStep
+    void capabilities(BuildProducer<CapabilityBuildItem> capabilityProducer) {
+        capabilityProducer.produce(new CapabilityBuildItem(CAPABILITY_PARAMETERS, CAPABILITY_PROVIDER));
     }
 
     @BuildStep

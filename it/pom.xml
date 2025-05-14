@@ -19,6 +19,8 @@
         <module>security</module>
         <module>parameters</module>
         <module>parameters-tenant</module>
+        <module>validator</module>
+        <module>validator-parameters</module>
     </modules>
 
     <properties>

@@ -135,3 +135,71 @@ The generated Java source code contains the additional Quarkus annotation `io.qu
     @Produces({ "application/json" })
     Response getThemes();
 ----
+
+==== Constraints
+
+To enable the OpenAPI generator extension for OneCX validator from the OpenAPI definition file, use the following additional property `onecx-constraints=true` in the maven plugin configuration.
+
+NOTE: This feature requires the extension xref:onecx-validator.adoc[onecx-validator] in the classpath
+
+[source,xml,subs=attributes+]
+----
+<plugin>
+    <groupId>org.openapitools</groupId>
+    <artifactId>openapi-generator-maven-plugin</artifactId>
+    <configuration>
+        <!-- configuration -->
+        <additionalProperties>onecx-constraints=true</additionalProperties>
+        <configOptions>
+            <!-- configuration options -->
+        </configOptions>
+    </configuration>
+</plugin>
+----
+Define Onecx constraints in your openapi file as vendor extension.
+[source,yaml,subs=attributes+]
+----
+   x-onecx:
+    constraints:
+     size:
+        min: 10
+        max: 100
+        key: paramKey
+----
+
+Openapi example:
+[source,yaml,subs=attributes+]
+----
+openapi: 3.0.3
+info:
+  title: example
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+paths:
+ /themes:
+  post:
+   operationId: createThemes
+   parameters:
+     - in: header
+       name: Content-Length
+       required: true
+       x-onecx:
+         constraints:
+           size:
+             min: 10
+             max: 100
+             key: paramKey
+   responses:
+    200:
+     description: OK
+----
+The generated Java source code contains the additional Quarkus annotation `org.tkit.onecx.quarkus.validator.constraints.Size` with the size constraints defined in the OpenAPI file.
+[source,java,subs=attributes+]
+----
+    @HeaderParam("Content-Length") @NotNull
+    @org.tkit.onecx.quarkus.validator.constraints.Size(
+            min = 10,
+            max = 100,
+            key = "paramKey")
+----

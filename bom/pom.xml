@@ -40,6 +40,11 @@
                 <artifactId>onecx-parameters</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.tkit.onecx.quarkus</groupId>
+                <artifactId>onecx-validator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,0 +1,74 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a| [[onecx-validator_onecx-validator-values-enabled]] [.property-path]##link:#onecx-validator_onecx-validator-values-enabled[`onecx.validator.values.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.validator.values.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether parameter-svc is enabled in case the parameter extension is present.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_VALIDATOR_VALUES_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_VALIDATOR_VALUES_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[onecx-validator_onecx-validator-values-mapping-mapping]] [.property-path]##link:#onecx-validator_onecx-validator-values-mapping-mapping[`onecx.validator.values.mapping."mapping"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.validator.values.mapping."mapping"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key to parameter-name mapping
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_VALIDATOR_VALUES_MAPPING__MAPPING_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_VALIDATOR_VALUES_MAPPING__MAPPING_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a| [[onecx-validator_onecx-validator-size-template]] [.property-path]##link:#onecx-validator_onecx-validator-size-template[`onecx.validator.size.template`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.validator.size.template+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Template for the constraint violations error message 4 parameters required: %1$s, %2$s, %3$s, %4$d, %5$d %1$s = provider %2$s = key %3$s = parameter %4$s = message %5$d = min-size value %6$d = max-size value
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_VALIDATOR_SIZE_TEMPLATE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_VALIDATOR_SIZE_TEMPLATE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`OneCX Size constraint. Provider: %1$s Key: %2$s Parameter: %3$s Message: %4$s (%5$d Bytes - %6$d Bytes)`
+
+|===
+

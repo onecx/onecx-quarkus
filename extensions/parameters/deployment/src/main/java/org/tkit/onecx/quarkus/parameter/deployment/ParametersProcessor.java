@@ -76,7 +76,10 @@ public class ParametersProcessor {
                 return;
             }
         }
-        additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(NoopMetricsRecorder.class));
+        additionalBeans.produce(new AdditionalBeanBuildItem.Builder().addBeanClass(NoopMetricsRecorder.class)
+                .setDefaultScope(BuiltinScope.APPLICATION.getName())
+                .setUnremovable()
+                .build());
     }
 
     @BuildStep

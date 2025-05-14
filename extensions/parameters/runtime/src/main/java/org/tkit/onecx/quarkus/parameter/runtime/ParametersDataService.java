@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
@@ -27,7 +28,6 @@ import org.tkit.quarkus.context.ApplicationContext;
 import org.tkit.quarkus.context.Context;
 
 import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
-import io.quarkus.arc.Arc;
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.scheduler.ScheduledExecution;
 import io.quarkus.scheduler.Scheduler;
@@ -67,9 +67,8 @@ public class ParametersDataService {
     @Inject
     TenantResolver tenantResolver;
 
-    MetricsRecorder metricsRecorder;
-
-    private static boolean multiTenant;
+    @Inject
+    Instance<MetricsRecorder> metricsRecorder;
 
     /**
      * Initialize the cache and parameters client
@@ -77,8 +76,6 @@ public class ParametersDataService {
      * @param parametersConfig the parameters management configuration
      */
     public void init(ParametersConfig parametersConfig) {
-        multiTenant = parametersConfig.tenant().enabled();
-        metricsRecorder = Arc.container().instance(MetricsRecorder.class).get();
 
         parametersConfig.parameters().forEach((k, v) -> localData.put(k, mapper.toMap(v)));
 
@@ -116,7 +113,7 @@ public class ParametersDataService {
             return;
         }
         for (var tenantId : tenants) {
-            if (multiTenant) {
+            if (config.tenant().enabled()) {
                 var ctx = tenantResolver.getTenantContext(data.get(tenantId).getCtx());
                 ApplicationContext.start(ctx);
                 try {
@@ -141,7 +138,11 @@ public class ParametersDataService {
 
     public <T> T getValue(String name, Class<T> type, T defaultValue) {
         if (!config.enabled()) {
-            return defaultValue;
+            var raw = localData.get(name);
+            if (raw == null) {
+                return defaultValue;
+            }
+            return mapper.toType(raw, type);
         }
         var ctx = ctxDefaultTenant;
         if (config.tenant().enabled()) {
@@ -178,7 +179,7 @@ public class ParametersDataService {
             }
         }
 
-        metricsRecorder.increase(name);
+        metricsRecorder.get().increase(name);
         return params.getOrDefault(name, localData.get(name));
     }
 
@@ -193,13 +194,13 @@ public class ParametersDataService {
         try (var response = client.getParameters(config.productName(), config.applicationId())) {
             var tmp = response.readEntity(new GenericType<HashMap<String, Object>>() {
             });
-            metricsRecorder.update(tenantId, type, "" + response.getStatus());
+            metricsRecorder.get().update(tenantId, type, "" + response.getStatus());
             return tmp;
         } catch (Exception ex) {
             if (ex instanceof WebApplicationException w) {
-                metricsRecorder.update(tenantId, type, "" + w.getResponse().getStatus());
+                metricsRecorder.get().update(tenantId, type, "" + w.getResponse().getStatus());
             } else {
-                metricsRecorder.update(tenantId, type, STATUS_UNDEFINED);
+                metricsRecorder.get().update(tenantId, type, STATUS_UNDEFINED);
             }
             throw new UpdateException(ex);
         }

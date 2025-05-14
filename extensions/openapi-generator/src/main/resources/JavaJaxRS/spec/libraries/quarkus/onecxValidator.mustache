@@ -1,8 +1,0 @@
-{{#onecx-validator}}
-    {{#vendorExtensions.x-onecx.validator}}
-      {{#size}} @org.tkit.onecx.quarkus.validator.size.Size({{#min}} min = {{min}}{{/min}}{{#max}}{{#min}}, {{/min}}max = {{max}}{{/max}}{{#key}}{{#min}}{{^max}}, {{/max}}{{/min}}{{#max}},{{/max}}
-    key = "{{key}}"{{/key}}{{#message}}{{#min}}{{^max}}{{^key}}, {{/key}}{{/max}}{{/min}}{{#max}}{{^key}}, {{/key}}{{/max}}{{#key}}, {{/key}}
-    message = "{{message}}"
-    {{/message}}){{/size}}{{^size.min}}{{^size.max}}{{^size.key}}{{^size.message}} @org.tkit.onecx.quarkus.validator.size.Size(){{/size.message}}{{/size.key}}{{/size.max}}{{/size.min}}
-    {{/vendorExtensions.x-onecx.validator}}
-{{/onecx-validator}}

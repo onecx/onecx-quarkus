@@ -6,6 +6,9 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import org.tkit.onecx.quarkus.validator.constraints.Size;
+import org.tkit.onecx.quarkus.validator.parameters.SizeParameter;
+
 @Dependent
 public class SizeValidator implements ConstraintValidator<Size, Integer> {
 
@@ -31,18 +34,21 @@ public class SizeValidator implements ConstraintValidator<Size, Integer> {
             return true;
         }
 
-        var service = sizeValidatorService.get();
-        var sizeValidatorResult = service.initSizeParameter(key, defaultSizeParameter);
+        var sizeValidatorResult = sizeValidatorService.get().initSizeParameter(key, defaultSizeParameter);
         if (value > sizeValidatorResult.getValue().getMax()) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(sizeValidatorResult.getMessage()).addConstraintViolation();
-            return false;
+            return violation(sizeValidatorResult, context);
         }
         if (value < sizeValidatorResult.getValue().getMin()) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(sizeValidatorResult.getMessage()).addConstraintViolation();
-            return false;
+            return violation(sizeValidatorResult, context);
         }
         return true;
+    }
+
+    private boolean violation(SizeValidatorService.SizeValidatorResult sizeValidatorResult,
+            ConstraintValidatorContext context) {
+        context.disableDefaultConstraintViolation();
+        var msg = sizeValidatorService.get().getMessage(sizeValidatorResult);
+        context.buildConstraintViolationWithTemplate(msg).addConstraintViolation();
+        return false;
     }
 }

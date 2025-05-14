@@ -57,7 +57,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Template for the constraint violations error message 4 parameters required: %1$s, %2$s, %3$d, %4$d %1$s = key %2$s = message %3$d = min-size value %4$d = max-size value
+Template for the constraint violations error message 4 parameters required: %1$s, %2$s, %3$s, %4$d, %5$d %1$s = provider %2$s = key %3$s = parameter %4$s = message %5$d = min-size value %6$d = max-size value
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -68,7 +68,7 @@ Environment variable: `+++ONECX_VALIDATOR_SIZE_TEMPLATE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`OneCX Size constraint %1$s - %2$s (%3$d Bytes - %4$d Bytes)`
+|`OneCX Size constraint. Provider: %1$s Key: %2$s Parameter: %3$s Message: %4$s (%5$d Bytes - %6$d Bytes)`
 
 |===
 

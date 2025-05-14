@@ -11,7 +11,7 @@ public class ParameterValueService implements ValueService {
 
     @Override
     public String getName() {
-        return "dynamic";
+        return "onecx-parameters";
     }
 
     @Override

@@ -1,7 +1,10 @@
-package org.tkit.onecx.quarkus.validator.size;
+package org.tkit.onecx.quarkus.validator.parameters;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
+/**
+ * API model for the parameters' management.
+ */
 @RegisterForReflection
 public class SizeParameter {
 

@@ -5,6 +5,7 @@ import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 
 import org.tkit.onecx.quarkus.validator.config.ValidatorConfig;
+import org.tkit.onecx.quarkus.validator.parameters.SizeParameter;
 import org.tkit.onecx.quarkus.validator.service.ValueService;
 
 @ApplicationScoped
@@ -16,7 +17,7 @@ public class SizeValidatorService {
     @Inject
     Instance<ValueService> valueService;
 
-    public SizeValidatorResult initSizeParameter(String key, SizeParameter defaultSizeParameter) {
+    SizeValidatorResult initSizeParameter(String key, SizeParameter defaultSizeParameter) {
         SizeValidatorResult result = new SizeValidatorResult();
         result.key = key;
         result.defaultValue = defaultSizeParameter;
@@ -28,17 +29,17 @@ public class SizeValidatorService {
         result.provider = valueService.get().getName();
         result.parameterName = config.values().mapping().getOrDefault(key, key);
         result.value = valueService.get().getValue(result.parameterName, SizeParameter.class, defaultSizeParameter);
-
-        String template = config.size().template();
-
-        result.message = String.format(template, result.provider, result.key, result.parameterName, result.value.getMessage(),
-                result.value.getMin(),
-                result.value.getMax());
-
         return result;
     }
 
-    public static class SizeValidatorResult {
+    String getMessage(SizeValidatorResult result) {
+        String template = config.size().template();
+        return String.format(template, result.provider, result.key, result.parameterName, result.value.getMessage(),
+                result.value.getMin(),
+                result.value.getMax());
+    }
+
+    static class SizeValidatorResult {
 
         private String provider;
 
@@ -49,8 +50,6 @@ public class SizeValidatorService {
         private SizeParameter defaultValue;
 
         private SizeParameter value;
-
-        private String message;
 
         public String getKey() {
             return key;
@@ -68,8 +67,5 @@ public class SizeValidatorService {
             return value;
         }
 
-        public String getMessage() {
-            return message;
-        }
     }
 }

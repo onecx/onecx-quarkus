@@ -4,7 +4,7 @@ public class NoopValueService implements ValueService {
 
     @Override
     public String getName() {
-        return "static";
+        return "openapi";
     }
 
     @Override

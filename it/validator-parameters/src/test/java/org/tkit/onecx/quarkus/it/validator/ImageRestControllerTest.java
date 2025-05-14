@@ -41,7 +41,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
+                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
     }
 
     @Test
@@ -68,7 +68,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
+                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
     }
 
     @Test
@@ -96,7 +96,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
+                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
     }
 
     @Test
@@ -123,7 +123,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
+                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
     }
 
     @Test
@@ -150,7 +150,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageParameterValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: param1 Parameter: parameter1 Message: error-message from parameter (50 Bytes - 250 Bytes)");
+                "uploadImageParameterValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: param1 Parameter: parameter1 Message: error-message from parameter (50 Bytes - 250 Bytes)");
     }
 
     @Test
@@ -179,6 +179,6 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageParameterValidation.contentLength: OneCX Size constraint. Provider: dynamic Key: param1 Parameter: parameter1 Message: error-message from parameter (50 Bytes - 250 Bytes)");
+                "uploadImageParameterValidation.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: param1 Parameter: parameter1 Message: error-message from parameter (50 Bytes - 250 Bytes)");
     }
 }

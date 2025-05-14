@@ -35,6 +35,9 @@ import io.quarkus.runtime.util.HashUtil;
 
 public class ParametersProcessor {
 
+    static final String CAPABILITY_PROVIDER = "onecx";
+    static final String CAPABILITY_PARAMETERS = "org.tkit.onecx.parameters";
+
     public static final DotName DN_PARAMETER = DotName.createSimple(Parameter.class);
 
     public static final String FEATURE = "onecx-parameters";
@@ -53,7 +56,7 @@ public class ParametersProcessor {
 
     @BuildStep
     void capabilities(BuildProducer<CapabilityBuildItem> capabilityProducer) {
-        capabilityProducer.produce(new CapabilityBuildItem("org.tkit.onecx.parameters", "onecx"));
+        capabilityProducer.produce(new CapabilityBuildItem(CAPABILITY_PARAMETERS, CAPABILITY_PROVIDER));
     }
 
     @BuildStep

@@ -1,0 +1,22 @@
+== onecx-operator
+
+include::./includes/attributes.adoc[]
+
+=== Installation
+
+If you want to use this extension, you need to add the `org.tkit.onecx.quarkus:onecx-operator` extension first to your build file.
+
+For instance, with Maven, add the following dependency to your POM file:
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+    <groupId>org.tkit.onecx.quarkus</groupId>
+    <artifactId>onecx-operator</artifactId>
+    <version>{project-version}</version>
+</dependency>
+----
+
+=== Configuration
+
+include::includes/onecx-operator.adoc[leveloffset=+1, opts=optional]

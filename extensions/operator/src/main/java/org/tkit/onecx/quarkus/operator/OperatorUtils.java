@@ -1,5 +1,7 @@
 package org.tkit.onecx.quarkus.operator;
 
+import static org.tkit.onecx.quarkus.operator.OperatorConfig.TOUCH_ANNOTATION_DEFAULT;
+
 import java.util.Objects;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -31,7 +33,8 @@ public class OperatorUtils {
     }
 
     static private boolean touchAnnotationChanged(ObjectMeta newResource, ObjectMeta oldResource) {
-        var touchAnnotation = ConfigProvider.getConfig().getValue("onecx.operator.touch-annotation", String.class);
+        var touchAnnotation = ConfigProvider.getConfig().getOptionalValue("onecx.operator.touch-annotation", String.class)
+                .orElse(TOUCH_ANNOTATION_DEFAULT);
         return !Objects.equals(getTouchAnnotation(newResource, touchAnnotation),
                 getTouchAnnotation(oldResource, touchAnnotation));
     }

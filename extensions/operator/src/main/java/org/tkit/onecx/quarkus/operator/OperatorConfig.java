@@ -13,10 +13,32 @@ import io.smallrye.config.WithName;
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public interface OperatorConfig {
 
+    String TOUCH_ANNOTATION_DEFAULT = "org.tkit.onecx.touchedAt";
+
     /**
-     * Annotation name to set if resource was touched
+     * Operator touch configuration
      */
-    @WithName(value = "touch-annotation")
-    @WithDefault(value = "org.tkit.onecx.touchedAt")
-    String touchAnnotation();
+    @WithName(value = "touched")
+    TouchedConfig touched();
+
+    /**
+     * Operator touch configuration
+     */
+    interface TouchedConfig {
+
+        /**
+         * Annotation name to set if resource was touched at
+         */
+        @WithName(value = "annotation-at")
+        @WithDefault(value = TOUCH_ANNOTATION_DEFAULT)
+        String annotationAt();
+
+        /**
+         * Annotation name to set if resource was touched by
+         */
+        @WithName(value = "annotation-by")
+        @WithDefault(value = "org.tkit.onecx.touchedBy")
+        String annotationBy();
+
+    }
 }

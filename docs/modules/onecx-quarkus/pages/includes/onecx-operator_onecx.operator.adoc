@@ -1,0 +1,53 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a| [[onecx-operator_onecx-operator-touched-annotation-at]] [.property-path]##link:#onecx-operator_onecx-operator-touched-annotation-at[`onecx.operator.touched.annotation-at`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.operator.touched.annotation-at+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Annotation name to set if resource was touched at
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_OPERATOR_TOUCHED_ANNOTATION_AT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_OPERATOR_TOUCHED_ANNOTATION_AT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`org.tkit.onecx.touchedAt`
+
+a| [[onecx-operator_onecx-operator-touched-annotation-by]] [.property-path]##link:#onecx-operator_onecx-operator-touched-annotation-by[`onecx.operator.touched.annotation-by`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.operator.touched.annotation-by+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Annotation name to set if resource was touched by
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_OPERATOR_TOUCHED_ANNOTATION_BY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_OPERATOR_TOUCHED_ANNOTATION_BY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`org.tkit.onecx.touchedBy`
+
+|===
+

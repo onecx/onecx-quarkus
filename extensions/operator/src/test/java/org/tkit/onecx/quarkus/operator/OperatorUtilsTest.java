@@ -1,6 +1,7 @@
 package org.tkit.onecx.quarkus.operator;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.tkit.onecx.quarkus.operator.OperatorConfig.TOUCH_ANNOTATION_DEFAULT;
 
 import java.util.Map;
 
@@ -57,12 +58,12 @@ class OperatorUtilsTest {
         var newResource = new TestCustomResource();
         newResource.setSpec(new Object());
         var newMeta = new ObjectMeta();
-        newMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "abc"));
+        newMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "abc"));
         newResource.setMetadata(newMeta);
 
         var oldResource = new TestCustomResource();
         var oldMeta = new ObjectMeta();
-        oldMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "xyz"));
+        oldMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "xyz"));
         oldResource.setMetadata(oldMeta);
 
         assertTrue(OperatorUtils.shouldProcessUpdate(newResource, oldResource));
@@ -73,13 +74,13 @@ class OperatorUtilsTest {
         var newResource = new TestCustomResource();
         newResource.setSpec(new Object());
         var newMeta = new ObjectMeta();
-        newMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "same"));
+        newMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "same"));
         newMeta.setGeneration(2L);
         newResource.setMetadata(newMeta);
 
         var oldResource = new TestCustomResource();
         var oldMeta = new ObjectMeta();
-        oldMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "same"));
+        oldMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "same"));
         oldMeta.setGeneration(1L);
         oldResource.setMetadata(oldMeta);
 
@@ -91,13 +92,13 @@ class OperatorUtilsTest {
         var newResource = new TestCustomResource();
         newResource.setSpec(new Object());
         var newMeta = new ObjectMeta();
-        newMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "same"));
+        newMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "same"));
         newMeta.setGeneration(1L);
         newResource.setMetadata(newMeta);
 
         var oldResource = new TestCustomResource();
         var oldMeta = new ObjectMeta();
-        oldMeta.setAnnotations(Map.of("org.tkit.onecx.touchedAt", "same"));
+        oldMeta.setAnnotations(Map.of(TOUCH_ANNOTATION_DEFAULT, "same"));
         oldMeta.setGeneration(1L);
         oldResource.setMetadata(oldMeta);
 

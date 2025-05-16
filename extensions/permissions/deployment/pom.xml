@@ -49,6 +49,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-oidc-filter-deployment</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-http-deployment</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

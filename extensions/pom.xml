@@ -19,6 +19,7 @@
         <module>permissions</module>
         <module>openapi-generator</module>
         <module>validator</module>
+        <module>operator</module>
     </modules>
 
 </project>

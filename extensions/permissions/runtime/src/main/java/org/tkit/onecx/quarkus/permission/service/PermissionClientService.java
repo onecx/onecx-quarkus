@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 
@@ -43,6 +44,7 @@ public class PermissionClientService {
                 .onFailure().recoverWithUni(t -> cache.invalidate(key).map(x -> null));
     }
 
+    @ActivateRequestContext
     public Uni<PermissionResponse> getPermissionsLocal(HttpServerRequest request, PermissionRuntimeConfig config,
             String token) {
 

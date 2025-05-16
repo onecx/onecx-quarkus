@@ -21,7 +21,6 @@
         <module>parameters-tenant</module>
         <module>validator</module>
         <module>validator-parameters</module>
-        <module>operator</module>
     </modules>
 
     <properties>

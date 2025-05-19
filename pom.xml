@@ -81,7 +81,7 @@
         <git-commit-id-maven-plugin.version>9.0.1</git-commit-id-maven-plugin.version>
 
         <!-- Other -->
-        <kubernetes-client-api.version>7.1.0</kubernetes-client-api.version>
+        <kubernetes-client-api.version>7.3.0</kubernetes-client-api.version>
         <openapitools.openapi-generator-maven-plugin.version>7.13.0</openapitools.openapi-generator-maven-plugin.version>
         <download-maven-plugin.version>1.13.0</download-maven-plugin.version>
         <download-maven-plugin.skip-cache>false</download-maven-plugin.skip-cache>

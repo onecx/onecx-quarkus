@@ -31,11 +31,11 @@ class ParametersCustomTest extends AbstractTest {
     void testParamTest() {
 
         var data = new HashMap<>(Map.of(
-                "PARAM_TEXT_3", Map.of("a", "1"),
-                "PARAM_TEXT", "Text Information",
-                "PARAM_TEXT_2", "4321",
-                "PARAM_NUMBER", 123,
-                "PARAM_BOOL", true));
+                "C_PARAM_TEXT_3", Map.of("a", "1"),
+                "C_PARAM_TEXT", "Text Information",
+                "C_PARAM_TEXT_2", "4321",
+                "C_PARAM_NUMBER", 123,
+                "C_PARAM_BOOL", true));
 
         addExpectation(
                 mockServerClient
@@ -52,7 +52,7 @@ class ParametersCustomTest extends AbstractTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals("text", result.getA());
         Assertions.assertEquals(100, result.getB());
-        Assertions.assertEquals(true, result.isC());
+        Assertions.assertTrue(result.isC());
 
         await().atMost(10, SECONDS)
                 .until(() -> getHistory().stream().map(x -> x.getParameters().size()).reduce(0, Integer::sum) == 3);
@@ -61,7 +61,7 @@ class ParametersCustomTest extends AbstractTest {
         t.setA("A100");
         t.setB(-1);
         t.setC(false);
-        data.put("PARAM_TEXT_4", t);
+        data.put("C_PARAM_TEXT_4", t);
 
         addExpectation(
                 mockServerClient

@@ -21,7 +21,7 @@ public class TestInjectRestController {
     @Parameter(name = "I_PARAM_BOOL")
     Instance<Boolean> paramBoolean;
 
-    @Parameter(name = "I_PARAM_TEXT_4")
+    @Parameter(name = "D_PARAM_TEXT_4")
     Instance<TestParam> testParam;
 
     @Parameter(name = "I_DOES_NOT_EXISTS_1")

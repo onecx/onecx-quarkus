@@ -120,7 +120,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Update parameter scheduler configuration. The syntax used in CRON expressions.
+Update parameter scheduler configuration in milliseconds.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -130,8 +130,8 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_PARAMETERS_CACHE_UPDATE_SCHEDULE+++`
 endif::add-copy-button-to-env-var[]
 --
-|string
-|`0 0/15 * * * ?`
+|long
+|`900000`
 
 a| [[onecx-parameters_onecx-parameters-cache-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-at-start[`onecx.parameters.cache.update-at-start`]##
 ifdef::add-copy-button-to-config-props[]
@@ -267,7 +267,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Update history scheduler configuration. The syntax used in CRON expressions.
+Update history scheduler configuration in milliseconds.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -277,8 +277,8 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_PARAMETERS_HISTORY_UPDATE_SCHEDULE+++`
 endif::add-copy-button-to-env-var[]
 --
-|string
-|`0 0/15 * * * ?`
+|long
+|`900000`
 
 a| [[onecx-parameters_onecx-parameters-items-parameters]] [.property-path]##link:#onecx-parameters_onecx-parameters-items-parameters[`onecx.parameters.items."parameters"`]##
 ifdef::add-copy-button-to-config-props[]

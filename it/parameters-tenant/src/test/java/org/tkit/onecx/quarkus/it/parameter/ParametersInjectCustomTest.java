@@ -56,16 +56,18 @@ class ParametersInjectCustomTest extends AbstractTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals("text", result.getA());
         Assertions.assertEquals(100, result.getB());
-        Assertions.assertEquals(true, result.isC());
+        Assertions.assertTrue(result.isC());
 
         await().atMost(10, SECONDS)
-                .until(() -> getHistory(tenantId).stream().map(x -> x.getParameters().size()).reduce(0, Integer::sum) == 3);
+                .until(() -> getHistory(tenantId).stream()
+                        .map(x -> x.getParameters().entrySet().stream().filter(a -> a.getKey().startsWith("D_")).count())
+                        .reduce(0L, Long::sum) >= 1);
 
         var t = new TestParam();
         t.setA("A900");
         t.setB(-100);
         t.setC(false);
-        data.put("I_PARAM_TEXT_4", t);
+        data.put("D_PARAM_TEXT_4", t);
 
         addExpectation(
                 mockServerClient

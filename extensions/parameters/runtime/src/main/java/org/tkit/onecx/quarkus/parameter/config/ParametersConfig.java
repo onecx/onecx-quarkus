@@ -89,11 +89,11 @@ public interface ParametersConfig {
         boolean enabled();
 
         /**
-         * Update parameter scheduler configuration. The syntax used in CRON expressions.
+         * Update parameter scheduler configuration in milliseconds.
          */
         @WithName("update-schedule")
-        @WithDefault("0 0/15 * * * ?")
-        String updateSchedule();
+        @WithDefault("900000")
+        Long updateSchedule();
 
         /**
          * Pull parameters during start phase
@@ -124,11 +124,11 @@ public interface ParametersConfig {
         boolean enabled();
 
         /**
-         * Update history scheduler configuration. The syntax used in CRON expressions.
+         * Update history scheduler configuration in milliseconds.
          */
         @WithName("update-schedule")
-        @WithDefault("0 0/15 * * * ?")
-        String updateSchedule();
+        @WithDefault("900000")
+        Long updateSchedule();
 
     }
 

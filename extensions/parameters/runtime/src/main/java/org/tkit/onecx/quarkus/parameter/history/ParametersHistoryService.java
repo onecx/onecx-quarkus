@@ -1,5 +1,7 @@
 package org.tkit.onecx.quarkus.parameter.history;
 
+import java.util.concurrent.Callable;
+
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
@@ -17,18 +19,13 @@ import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
 import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
 import io.quarkus.arc.Arc;
-import io.quarkus.scheduler.Scheduled;
-import io.quarkus.scheduler.ScheduledExecution;
-import io.quarkus.scheduler.Scheduler;
 import io.quarkus.vertx.ConsumeEvent;
+import io.vertx.core.Vertx;
 
 @Singleton
 public class ParametersHistoryService {
 
     private static final Logger log = LoggerFactory.getLogger(ParametersHistoryService.class);
-
-    @Inject
-    Scheduler scheduler;
 
     @Inject
     @RestClient
@@ -40,6 +37,9 @@ public class ParametersHistoryService {
     @Inject
     TenantResolver resolver;
 
+    @Inject
+    Vertx vertx;
+
     MetricsRecorder metricsRecorder;
 
     // The history contains the current collected requests
@@ -50,24 +50,33 @@ public class ParametersHistoryService {
     private static boolean multiTenant;
 
     public void init(ParametersConfig parametersConfig) {
-        metricsRecorder = Arc.container().instance(MetricsRecorder.class).get();
-
-        // init rest client
         instanceId = parametersConfig.instanceId().orElse(null);
-        multiTenant = parametersConfig.tenant().enabled();
         history = new ParametersHistory(instanceId);
 
-        // update
-        if (parametersConfig.history().enabled()) {
-            scheduler.newJob("parameters-history")
-                    .setCron(parametersConfig.history().updateSchedule())
-                    .setConcurrentExecution(Scheduled.ConcurrentExecution.SKIP)
-                    .setTask(this::sendHistory)
-                    .schedule();
+        if (!parametersConfig.history().enabled()) {
+            return;
         }
+
+        multiTenant = parametersConfig.tenant().enabled();
+        metricsRecorder = Arc.container().instance(MetricsRecorder.class).get();
+
+        // update
+        timer();
     }
 
-    private void sendHistory(ScheduledExecution scheduledExecution) {
+    private void timer() {
+        vertx.setTimer(config.history().updateSchedule(), id -> {
+            vertx.executeBlocking((Callable<Void>) () -> {
+                sendHistory();
+                timer();
+                log.info("Update history: {}", id);
+                vertx.cancelTimer(id);
+                return null;
+            });
+        });
+    }
+
+    private void sendHistory() {
         ParametersHistory tmp = this.history;
         this.history = new ParametersHistory(instanceId);
         tmp.end();

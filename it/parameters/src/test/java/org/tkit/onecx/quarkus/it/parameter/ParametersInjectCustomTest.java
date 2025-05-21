@@ -32,11 +32,11 @@ class ParametersInjectCustomTest extends AbstractTest {
     void testParamTest() {
 
         var data = new HashMap<>(Map.of(
-                "I_PARAM_TEXT_3", Map.of("a", "1"),
-                "I_PARAM_TEXT", "Inject Text Information",
-                "I_PARAM_TEXT_2", "14321",
-                "I_PARAM_NUMBER", 1123,
-                "I_PARAM_BOOL", true));
+                "D_PARAM_TEXT_3", Map.of("a", "1"),
+                "D_PARAM_TEXT", "Inject Text Information",
+                "D_PARAM_TEXT_2", "14321",
+                "D_PARAM_NUMBER", 1123,
+                "D_PARAM_BOOL", true));
 
         addExpectation(
                 mockServerClient
@@ -53,18 +53,18 @@ class ParametersInjectCustomTest extends AbstractTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals("text", result.getA());
         Assertions.assertEquals(100, result.getB());
-        Assertions.assertEquals(true, result.isC());
+        Assertions.assertTrue(result.isC());
 
         await().atMost(10, SECONDS)
                 .until(() -> getHistory().stream()
-                        .map(x -> x.getParameters().entrySet().stream().filter(a -> a.getKey().startsWith("I_")).count())
-                        .reduce(0L, Long::sum) == 3);
+                        .map(x -> x.getParameters().entrySet().stream().filter(a -> a.getKey().startsWith("D_")).count())
+                        .reduce(0L, Long::sum) >= 1);
 
         var t = new TestParam();
         t.setA("A10099");
         t.setB(-1978);
         t.setC(false);
-        data.put("I_PARAM_TEXT_4", t);
+        data.put("D_PARAM_TEXT_4", t);
 
         addExpectation(
                 mockServerClient

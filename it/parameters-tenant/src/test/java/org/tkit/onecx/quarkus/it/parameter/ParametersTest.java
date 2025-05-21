@@ -32,11 +32,11 @@ class ParametersTest extends AbstractTest {
         var token = createToken(tenantId);
 
         var data = Map.of(
-                "PARAM_TEXT_3", Map.of("a", "1"),
-                "PARAM_TEXT", "Text Information",
-                "PARAM_TEXT_2", "4321",
-                "PARAM_NUMBER", 123,
-                "PARAM_BOOL", true);
+                "A_PARAM_TEXT_3", Map.of("a", "1"),
+                "A_PARAM_TEXT", "Text Information",
+                "A_PARAM_TEXT_2", "4321",
+                "A_PARAM_NUMBER", 123,
+                "A_PARAM_BOOL", true);
 
         addExpectation(
                 mockServerClient
@@ -49,10 +49,10 @@ class ParametersTest extends AbstractTest {
                                 .withBody(JsonBody.json(data))));
 
         call(token, Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE");
-        call(token, Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information");
-        call(token, Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321");
-        call(token, Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123");
-        call(token, Map.of("name", "PARAM_BOOL", "type", "Boolean"), "true");
+        call(token, Map.of("name", "A_PARAM_TEXT", "type", STRING_TYPE), "Text Information");
+        call(token, Map.of("name", "A_PARAM_TEXT_2", "type", STRING_TYPE), "4321");
+        call(token, Map.of("name", "A_PARAM_NUMBER", "type", "Integer"), "123");
+        call(token, Map.of("name", "A_PARAM_BOOL", "type", "Boolean"), "true");
 
         await().atMost(15, SECONDS)
                 .until(() -> getHistory(tenantId).stream().map(x -> x.getParameters().size()).reduce(0, Integer::sum) == 5);

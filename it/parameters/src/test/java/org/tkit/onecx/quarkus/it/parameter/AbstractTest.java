@@ -54,6 +54,12 @@ public abstract class AbstractTest {
                 .respond(httpRequest -> {
                     var data = mapper.readValue(httpRequest.getBodyAsJsonOrXmlString(), ParametersBucket.class);
                     histories.computeIfAbsent(NO_TENANT, x -> new ArrayList<>()).add(data);
+                    histories.forEach((x, d) -> {
+                        d.forEach(b -> {
+                            System.out.println("#### " + x + " KEYS: " + b.getParameters().keySet());
+                        });
+                    });
+
                     return response().withStatusCode(Response.Status.OK.getStatusCode())
                             .withContentType(MediaType.APPLICATION_JSON);
                 });

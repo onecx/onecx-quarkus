@@ -28,11 +28,11 @@ class ParametersTest extends AbstractTest {
     @Test
     void loadParametersTest() {
         var data = Map.of(
-                "PARAM_TEXT_3", Map.of("a", "1"),
-                "PARAM_TEXT", "Text Information",
-                "PARAM_TEXT_2", "4321",
-                "PARAM_NUMBER", 123,
-                "PARAM_BOOL", true);
+                "A_PARAM_TEXT_3", Map.of("a", "1"),
+                "A_PARAM_TEXT", "Text Information",
+                "A_PARAM_TEXT_2", "4321",
+                "A_PARAM_NUMBER", 123,
+                "A_PARAM_BOOL", true);
 
         addExpectation(
                 mockServerClient
@@ -46,19 +46,19 @@ class ParametersTest extends AbstractTest {
 
         await().atMost(10, SECONDS)
                 .until(() -> {
-                    var r = callTest(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE));
+                    var r = callTest(Map.of("name", "A_PARAM_TEXT", "type", STRING_TYPE));
                     return "Text Information".equals(r);
                 });
 
         call(Map.of("name", "test", "type", STRING_TYPE), "NO_STRING_VALUE");
-        call(Map.of("name", "PARAM_TEXT", "type", STRING_TYPE), "Text Information");
-        call(Map.of("name", "PARAM_TEXT_2", "type", STRING_TYPE), "4321");
-        call(Map.of("name", "PARAM_NUMBER", "type", "Integer"), "123");
-        call(Map.of("name", "PARAM_BOOL", "type", "Boolean"), "true");
+        call(Map.of("name", "A_PARAM_TEXT", "type", STRING_TYPE), "Text Information");
+        call(Map.of("name", "A_PARAM_TEXT_2", "type", STRING_TYPE), "4321");
+        call(Map.of("name", "A_PARAM_NUMBER", "type", "Integer"), "123");
+        call(Map.of("name", "A_PARAM_BOOL", "type", "Boolean"), "true");
 
         await().atMost(15, SECONDS)
                 .until(() -> getHistory().stream().map(x -> x.getParameters().entrySet()
-                        .stream().filter(a -> !a.getKey().startsWith("I_")).count()).reduce(0L, Long::sum) >= 6);
+                        .stream().filter(a -> a.getKey().startsWith("A_")).count()).reduce(0L, Long::sum) >= 5);
     }
 
     private void call(Map<String, String> params, String expected) {

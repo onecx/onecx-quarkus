@@ -15,6 +15,8 @@ import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.mock.Expectation;
 import org.mockserver.model.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -46,6 +48,8 @@ public abstract class AbstractTest {
 
     private static final String NO_TENANT = "none";
 
+    private static final Logger log = LoggerFactory.getLogger(AbstractTest.class);
+
     @BeforeAll
     void beforeAll() {
         historyIds.clear();
@@ -56,7 +60,7 @@ public abstract class AbstractTest {
                     histories.computeIfAbsent(NO_TENANT, x -> new ArrayList<>()).add(data);
                     histories.forEach((x, d) -> {
                         d.forEach(b -> {
-                            System.out.println("#### " + x + " KEYS: " + b.getParameters().keySet());
+                            log.info("#TEST ### {} KEYS: {}", x, b.getParameters().keySet());
                         });
                     });
 

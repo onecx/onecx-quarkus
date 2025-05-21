@@ -90,8 +90,12 @@ public abstract class AbstractTest {
 
     @AfterAll
     void afterAll() {
-        for (var m : historyIds) {
-            mockServerClient.clear(m);
+        try {
+            for (var m : historyIds) {
+                mockServerClient.clear(m);
+            }
+        } catch (Exception ex) {
+            // ignore
         }
         historyIds.clear();
     }

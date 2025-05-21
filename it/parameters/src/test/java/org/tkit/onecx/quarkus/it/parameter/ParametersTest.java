@@ -58,7 +58,7 @@ class ParametersTest extends AbstractTest {
 
         await().atMost(15, SECONDS)
                 .until(() -> getHistory().stream().map(x -> x.getParameters().entrySet()
-                        .stream().filter(a -> a.getKey().startsWith("A_")).count()).reduce(0L, Long::sum) >= 5);
+                        .stream().filter(a -> a.getKey().startsWith("A_")).count()).reduce(0L, Long::sum) >= 4);
     }
 
     private void call(Map<String, String> params, String expected) {

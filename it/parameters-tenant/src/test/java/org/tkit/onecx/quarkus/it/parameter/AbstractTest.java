@@ -23,6 +23,8 @@ import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.mock.Expectation;
 import org.mockserver.model.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -45,6 +47,8 @@ public abstract class AbstractTest {
             .getValue("%test.tkit.rs.context.token.header-param", String.class);
     protected static final String CLAIMS_ORG_ID = ConfigProvider.getConfig()
             .getValue("%test.tkit.rs.context.tenant-id.mock.claim-org-id", String.class);
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractTest.class);
 
     static {
         mapper.registerModule(new JavaTimeModule());
@@ -74,6 +78,12 @@ public abstract class AbstractTest {
                     }
                     var data = mapper.readValue(httpRequest.getBodyAsJsonOrXmlString(), ParametersBucket.class);
                     histories.computeIfAbsent(org, x -> new ArrayList<>()).add(data);
+                    histories.forEach((x, d) -> {
+                        d.forEach(b -> {
+                            log.info("#TEST ### {} KEYS: {}", x, b.getParameters().keySet());
+                        });
+                    });
+
                     return response().withStatusCode(Response.Status.OK.getStatusCode())
                             .withContentType(MediaType.APPLICATION_JSON);
                 });

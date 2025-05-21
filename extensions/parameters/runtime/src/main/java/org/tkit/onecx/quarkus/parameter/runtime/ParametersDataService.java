@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
@@ -28,9 +30,7 @@ import org.tkit.quarkus.context.Context;
 
 import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import io.quarkus.arc.Arc;
-import io.quarkus.scheduler.Scheduled;
-import io.quarkus.scheduler.ScheduledExecution;
-import io.quarkus.scheduler.Scheduler;
+import io.vertx.core.Vertx;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
 @Singleton
@@ -59,13 +59,13 @@ public class ParametersDataService {
     ParametersConfig config;
 
     @Inject
-    Scheduler scheduler;
-
-    @Inject
     EventBus bus;
 
     @Inject
     TenantResolver tenantResolver;
+
+    @Inject
+    Vertx vertx;
 
     MetricsRecorder metricsRecorder;
 
@@ -101,15 +101,23 @@ public class ParametersDataService {
             }
 
             // setup scheduler for update
-            scheduler.newJob("parameters-update")
-                    .setCron(parametersConfig.cache().updateSchedule())
-                    .setConcurrentExecution(Scheduled.ConcurrentExecution.SKIP)
-                    .setTask(this::updateTenants)
-                    .schedule();
+            timer();
         }
     }
 
-    public void updateTenants(ScheduledExecution scheduledExecution) {
+    private void timer() {
+        vertx.setTimer(config.cache().updateSchedule(), id -> {
+            vertx.executeBlocking((Callable<Void>) () -> {
+                updateTenants();
+                timer();
+                log.info("Update parameters cache: {}", id);
+                vertx.cancelTimer(id);
+                return null;
+            });
+        });
+    }
+
+    public void updateTenants() {
 
         Set<String> tenants = new HashSet<>(data.keySet());
         if (tenants.isEmpty()) {
@@ -199,6 +207,9 @@ public class ParametersDataService {
         } catch (Exception ex) {
             if (ex instanceof WebApplicationException w) {
                 metricsRecorder.update(tenantId, type, "" + w.getResponse().getStatus());
+                if (w.getResponse().getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+                    return Map.of();
+                }
             } else {
                 metricsRecorder.update(tenantId, type, STATUS_UNDEFINED);
             }

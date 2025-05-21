@@ -139,7 +139,7 @@ public class ParametersDataService {
         try {
             var params = getParameters(tenantId, TYPE_SCHEDULER);
             data.get(tenantId).updateParameters(params);
-        } catch (Exception ex) {
+        } catch (UpdateException ex) {
             log.warn("Update parameters for tenant: {} failed. Error: {}", tenantId, ex.getMessage());
         }
     }

@@ -21,6 +21,16 @@ public interface ParametersConfig {
     String clientUrl();
 
     /**
+     * Parameters client version V1. Client v1 is deprecated and
+     * will be removed at some point in the future.
+     *
+     * @deprecated will be removed at some point in the future.
+     */
+    @WithName("service.client.v1")
+    @WithDefault("false")
+    boolean clientV1();
+
+    /**
      * If set to true, the application will attempt to look up the configuration from Parameter service
      */
     @WithName("enabled")

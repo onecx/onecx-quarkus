@@ -37,7 +37,7 @@ class ParametersTest extends AbstractTest {
         addExpectation(
                 mockServerClient
                         .when(request()
-                                .withPath("/v2/parameters/test1/app1")
+                                .withPath("/v1/test1/app1/parameters")
                                 .withMethod(HttpMethod.GET))
                         .withPriority(100)
                         .respond(httpRequest -> response().withStatusCode(Response.Status.OK.getStatusCode())

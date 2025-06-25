@@ -7,17 +7,14 @@ import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tkit.onecx.quarkus.parameter.client.ClientService;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
 import org.tkit.onecx.quarkus.parameter.metrics.MetricsRecorder;
 import org.tkit.onecx.quarkus.parameter.tenant.TenantResolver;
 import org.tkit.quarkus.context.ApplicationContext;
 
-import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
-import gen.org.tkit.onecx.parameters.v1.model.ParameterInfo;
-import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
 import io.quarkus.arc.Arc;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.core.Vertx;
@@ -28,8 +25,7 @@ public class ParametersHistoryService {
     private static final Logger log = LoggerFactory.getLogger(ParametersHistoryService.class);
 
     @Inject
-    @RestClient
-    ParameterV1Api client;
+    ClientService client;
 
     @Inject
     ParametersConfig config;
@@ -106,19 +102,7 @@ public class ParametersHistoryService {
 
     private void sendMetrics(String tenantId, ParametersHistory history, ParametersHistory.TenantParameters parameters) {
 
-        ParametersBucket pb = new ParametersBucket()
-                .start(history.getStart())
-                .end(history.getEnd())
-                .instanceId(history.getInstanceId());
-
-        parameters.getParameters().forEach((k, v) -> {
-            pb.putParametersItem(k, new ParameterInfo()
-                    .count(v.getCount().get())
-                    .currentValue(v.getCurrentValue())
-                    .defaultValue(v.getDefaultValue()));
-        });
-
-        try (var response = client.bucketRequest(config.productName(), config.applicationId(), pb)) {
+        try (var response = client.bucketRequest(config.productName(), config.applicationId(), history, parameters)) {
             if (response.getStatus() != Response.Status.OK.getStatusCode()) {
                 log.error("Error send metrics to the parameters management. Code: {}", response.getStatus());
             }

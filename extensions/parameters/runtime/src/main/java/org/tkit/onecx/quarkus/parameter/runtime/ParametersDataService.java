@@ -16,11 +16,11 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.parameter.TenantException;
 import org.tkit.onecx.quarkus.parameter.UpdateException;
+import org.tkit.onecx.quarkus.parameter.client.ClientService;
 import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
 import org.tkit.onecx.quarkus.parameter.history.ParametersHistoryEvent;
 import org.tkit.onecx.quarkus.parameter.mapper.ParametersValueMapper;
@@ -29,7 +29,6 @@ import org.tkit.onecx.quarkus.parameter.tenant.TenantResolver;
 import org.tkit.quarkus.context.ApplicationContext;
 import org.tkit.quarkus.context.Context;
 
-import gen.org.tkit.onecx.parameters.v1.api.ParameterV1Api;
 import io.vertx.core.Vertx;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
@@ -52,8 +51,7 @@ public class ParametersDataService {
     ParametersValueMapper mapper;
 
     @Inject
-    @RestClient
-    ParameterV1Api client;
+    ClientService client;
 
     @Inject
     ParametersConfig config;

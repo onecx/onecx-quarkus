@@ -3,7 +3,7 @@
     "id": "0",
     "httpRequest": {
       "method": "GET",
-      "path": "/v1/test1/app1/parameters"
+      "path": "/v2/parameters/test1/app1"
     },
     "httpResponse": {
       "body": {

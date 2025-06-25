@@ -49,6 +49,27 @@ endif::add-copy-button-to-env-var[]
 |string
 |`http://onecx-parameter-svc:8080`
 
+a| [[onecx-parameters_onecx-parameters-service-client-v1]] [.property-path]##link:#onecx-parameters_onecx-parameters-service-client-v1[`onecx.parameters.service.client.v1`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.service.client.v1+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Parameters client version V1. Client v1 is deprecated.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_SERVICE_CLIENT_V1+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_SERVICE_CLIENT_V1+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
 a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-enabled[`onecx.parameters.enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.parameters.enabled+++[]

@@ -3,7 +3,7 @@
     "id": "0",
     "httpRequest": {
       "method": "GET",
-      "path": "/v1/validator-extension/onecx-quarkus-it-validator-parameters/parameters"
+      "path": "/v2/parameters/validator-extension/onecx-quarkus-it-validator-parameters"
     },
     "httpResponse": {
       "body": {

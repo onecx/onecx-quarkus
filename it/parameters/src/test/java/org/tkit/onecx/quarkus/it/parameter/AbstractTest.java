@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import gen.org.tkit.onecx.parameters.v1.model.ParametersBucket;
+import gen.org.tkit.onecx.parameters.v2.model.ParametersBucket;
 import io.quarkiverse.mockserver.test.InjectMockServerClient;
 import io.quarkiverse.mockserver.test.MockServerTestResource;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -54,7 +54,7 @@ public abstract class AbstractTest {
     void beforeAll() {
         historyIds.clear();
         var e = mockServerClient
-                .when(request().withPath("/v1/test1/app1/history").withMethod(HttpMethod.POST))
+                .when(request().withPath("/v2/parameters/test1/app1").withMethod(HttpMethod.POST))
                 .respond(httpRequest -> {
                     var data = mapper.readValue(httpRequest.getBodyAsJsonOrXmlString(), ParametersBucket.class);
                     histories.computeIfAbsent(NO_TENANT, x -> new ArrayList<>()).add(data);

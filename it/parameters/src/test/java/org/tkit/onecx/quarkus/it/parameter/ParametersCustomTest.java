@@ -40,7 +40,7 @@ class ParametersCustomTest extends AbstractTest {
         addExpectation(
                 mockServerClient
                         .when(request()
-                                .withPath("/v1/test1/app1/parameters")
+                                .withPath("/v2/parameters/test1/app1")
                                 .withMethod(HttpMethod.GET))
                         .withPriority(100)
                         .respond(httpRequest -> response().withStatusCode(Response.Status.OK.getStatusCode())
@@ -66,7 +66,7 @@ class ParametersCustomTest extends AbstractTest {
         addExpectation(
                 mockServerClient
                         .when(request()
-                                .withPath("/v1/test1/app1/parameters")
+                                .withPath("/v2/parameters/test1/app1")
                                 .withMethod(HttpMethod.GET))
                         .withPriority(102)
                         .respond(httpRequest -> response().withStatusCode(Response.Status.OK.getStatusCode())

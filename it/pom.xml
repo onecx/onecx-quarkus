@@ -18,6 +18,7 @@
         <module>tenant</module>
         <module>security</module>
         <module>parameters</module>
+        <module>parameters-v1</module>
         <module>parameters-tenant</module>
         <module>validator</module>
         <module>validator-parameters</module>

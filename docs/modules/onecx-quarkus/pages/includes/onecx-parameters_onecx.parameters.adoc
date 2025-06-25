@@ -57,7 +57,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Parameters client version V1. Client v1 is deprecated.
+Parameters client version V1. Client v1 is deprecated and will be removed at some point in the future.
 
 
 ifdef::add-copy-button-to-env-var[]

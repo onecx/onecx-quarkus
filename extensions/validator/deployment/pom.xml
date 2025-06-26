@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-validator-deployment</artifactId>
+    <name>onecx-validator-deployment</name>
     <packaging>jar</packaging>
 
     <dependencies>

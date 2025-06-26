@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-permissions-deployment</artifactId>
+    <name>onecx-permissions-deployment</name>
 
     <dependencies>
         <dependency>

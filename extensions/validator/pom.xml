@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-validator-parent</artifactId>
+    <name>onecx-validator-parent</name>
     <packaging>pom</packaging>
 
     <modules>

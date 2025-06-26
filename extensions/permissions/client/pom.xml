@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-permissions-client</artifactId>
+    <name>onecx-permissions-client</name>
 
     <dependencies>
         <dependency>

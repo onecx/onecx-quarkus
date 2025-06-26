@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-core</artifactId>
+    <name>onecx-core</name>
     <packaging>jar</packaging>
 
     <dependencies>

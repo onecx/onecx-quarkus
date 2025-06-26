@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-tenant</artifactId>
+    <name>onecx-tenant</name>
 
     <dependencies>
         <dependency>

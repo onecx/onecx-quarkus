@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-quarkus-it-permissions</artifactId>
+    <name>onecx-quarkus-it-permissions</name>
     <packaging>jar</packaging>
 
     <dependencies>

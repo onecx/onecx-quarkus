@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-parameters-client</artifactId>
+    <name>onecx-parameters-client</name>
 
     <dependencies>
         <dependency>

@@ -10,5 +10,6 @@
     </parent>
 
     <artifactId>onecx-openapi-generator</artifactId>
+    <name>onecx-openapi-generator</name>
 
 </project>

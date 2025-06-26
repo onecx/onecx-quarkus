@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-quarkus-it-validator-parameters</artifactId>
+    <name>onecx-quarkus-it-validator-parameters</name>
     <packaging>jar</packaging>
 
     <dependencies>

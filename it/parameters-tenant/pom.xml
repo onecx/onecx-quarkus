@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-quarkus-it-parameters-tenant</artifactId>
+    <name>onecx-quarkus-it-parameters-tenant</name>
     <packaging>jar</packaging>
 
     <dependencies>

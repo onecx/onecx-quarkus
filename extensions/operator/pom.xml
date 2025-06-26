@@ -10,6 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>onecx-operator</artifactId>
+    <name>onecx-operator</name>
 
     <dependencies>
         <dependency>

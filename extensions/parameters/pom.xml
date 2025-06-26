@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>onecx-parameters-parent</artifactId>
+    <name>onecx-parameters-parent</name>
     <packaging>pom</packaging>
 
     <modules>

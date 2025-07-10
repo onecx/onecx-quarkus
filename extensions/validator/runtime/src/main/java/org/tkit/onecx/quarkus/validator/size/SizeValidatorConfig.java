@@ -9,16 +9,16 @@ import io.smallrye.config.WithName;
 public interface SizeValidatorConfig {
     /**
      * Template for the constraint violations error message
-     * 4 parameters required: %1$s, %2$s, %3$s, %4$d, %5$d
-     * %1$s = provider
-     * %2$s = key
-     * %3$s = parameter
-     * %4$s = message
-     * %5$d = min-size value
+     * 6 parameters required: %1$s, %2$s, %3$s, %4$s, %5$d, %6$d <br>
+     * %1$s = provider <br>
+     * %2$s = key <br>
+     * %3$s = parameter <br>
+     * %4$s = message <br>
+     * %5$d = min-size value <br>
      * %6$d = max-size value
      */
     @WithName("template")
-    @WithDefault("OneCX Size constraint. Provider: %1$s Key: %2$s Parameter: %3$s Message: %4$s (%5$d Bytes - %6$d Bytes)")
+    @WithDefault("Parameter: %3$s  Boundaries: %5$d Bytes - %6$d Bytes")
     String template();
 
 }

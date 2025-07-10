@@ -41,7 +41,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: openapi Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
+                "uploadImageCustomValidation.contentLength: Parameter: notDefined  Boundaries: 100 Bytes - 1100000 Bytes");
     }
 
     @Test
@@ -68,7 +68,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageCustomValidation.contentLength: OneCX Size constraint. Provider: openapi Key: notDefined Parameter: notDefined Message: error-message from openapi definition (100 Bytes - 1100000 Bytes)");
+                "uploadImageCustomValidation.contentLength: Parameter: notDefined  Boundaries: 100 Bytes - 1100000 Bytes");
     }
 
     @Test
@@ -96,7 +96,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: openapi Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
+                "uploadImageDefaultValidation.contentLength: Parameter: paramNull  Boundaries: 1 Bytes - 1000000 Bytes");
     }
 
     @Test
@@ -123,7 +123,7 @@ class ImageRestControllerTest {
                 .statusCode(BAD_REQUEST.getStatusCode())
                 .extract().as(ProblemDetailResponseDTO.class);
         assertThat(exception.getDetail()).isEqualTo(
-                "uploadImageDefaultValidation.contentLength: OneCX Size constraint. Provider: openapi Key: paramNull Parameter: paramNull Message: Size Constraint Violation (1 Bytes - 1000000 Bytes)");
+                "uploadImageDefaultValidation.contentLength: Parameter: paramNull  Boundaries: 1 Bytes - 1000000 Bytes");
     }
 
 }

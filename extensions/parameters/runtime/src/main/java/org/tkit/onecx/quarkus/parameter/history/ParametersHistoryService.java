@@ -103,7 +103,8 @@ public class ParametersHistoryService {
     private void sendMetrics(String tenantId, ParametersHistory history, ParametersHistory.TenantParameters parameters) {
 
         try (var response = client.bucketRequest(config.productName(), config.applicationId(), history, parameters)) {
-            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            if (response.getStatus() != Response.Status.OK.getStatusCode()
+                    && response.getStatus() != Response.Status.NO_CONTENT.getStatusCode()) {
                 log.error("Error send metrics to the parameters management. Code: {}", response.getStatus());
             }
             log.debug("Send metrics. Code: {}", response.getStatus());

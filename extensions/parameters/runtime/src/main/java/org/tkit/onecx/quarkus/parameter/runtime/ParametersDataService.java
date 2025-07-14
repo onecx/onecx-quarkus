@@ -193,7 +193,7 @@ public class ParametersDataService {
         if (!config.history().enabled()) {
             return;
         }
-        bus.send(ParametersHistoryEvent.NAME, ParametersHistoryEvent.of(ctx, name, type, defaultValue, value));
+        bus.send(ParametersHistoryEvent.NAME, ParametersHistoryEvent.of(ctx, name, type, value, defaultValue));
     }
 
     public Map<String, Object> getParameters(String tenantId, String type) throws UpdateException {

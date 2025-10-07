@@ -26,7 +26,7 @@ Environment variable: `+++ONECX_VALIDATOR_VALUES_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-validator_onecx-validator-values-mapping-mapping]] [.property-path]##link:#onecx-validator_onecx-validator-values-mapping-mapping[`onecx.validator.values.mapping."mapping"`]##
 ifdef::add-copy-button-to-config-props[]
@@ -74,7 +74,7 @@ Environment variable: `+++ONECX_VALIDATOR_SIZE_TEMPLATE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`Parameter: %3$s  Boundaries: %5$d Bytes - %6$d Bytes`
+|`+++Parameter: %3$s  Boundaries: %5$d Bytes - %6$d Bytes+++`
 
 |===
 

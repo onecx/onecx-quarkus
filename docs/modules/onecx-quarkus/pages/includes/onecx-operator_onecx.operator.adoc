@@ -26,7 +26,7 @@ Environment variable: `+++ONECX_OPERATOR_TOUCHED_ANNOTATION_AT+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`org.tkit.onecx.touchedAt`
+|`+++org.tkit.onecx.touchedAt+++`
 
 a| [[onecx-operator_onecx-operator-touched-annotation-by]] [.property-path]##link:#onecx-operator_onecx-operator-touched-annotation-by[`onecx.operator.touched.annotation-by`]##
 ifdef::add-copy-button-to-config-props[]
@@ -47,7 +47,7 @@ Environment variable: `+++ONECX_OPERATOR_TOUCHED_ANNOTATION_BY+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`org.tkit.onecx.touchedBy`
+|`+++org.tkit.onecx.touchedBy+++`
 
 |===
 

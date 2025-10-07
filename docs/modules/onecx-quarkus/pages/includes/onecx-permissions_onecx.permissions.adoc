@@ -26,7 +26,7 @@ Environment variable: `+++ONECX_PERMISSIONS_SERVICE_CLIENT_URL+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`http://onecx-permission-svc:8080`
+|`+++http://onecx-permission-svc:8080+++`
 
 a| [[onecx-permissions_onecx-permissions-enabled]] [.property-path]##link:#onecx-permissions_onecx-permissions-enabled[`onecx.permissions.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -47,7 +47,7 @@ Environment variable: `+++ONECX_PERMISSIONS_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-permissions_onecx-permissions-cache-enabled]] [.property-path]##link:#onecx-permissions_onecx-permissions-cache-enabled[`onecx.permissions.cache-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -68,7 +68,7 @@ Environment variable: `+++ONECX_PERMISSIONS_CACHE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-permissions_onecx-permissions-allow-all]] [.property-path]##link:#onecx-permissions_onecx-permissions-allow-all[`onecx.permissions.allow-all`]##
 ifdef::add-copy-button-to-config-props[]
@@ -89,7 +89,7 @@ Environment variable: `+++ONECX_PERMISSIONS_ALLOW_ALL+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-permissions_onecx-permissions-product-name]] [.property-path]##link:#onecx-permissions_onecx-permissions-product-name[`onecx.permissions.product-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -131,7 +131,7 @@ Environment variable: `+++ONECX_PERMISSIONS_APPLICATION_ID+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`${quarkus.application.name}`
+|`+++${quarkus.application.name}+++`
 
 a| [[onecx-permissions_onecx-permissions-name]] [.property-path]##link:#onecx-permissions_onecx-permissions-name[`onecx.permissions.name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -152,7 +152,7 @@ Environment variable: `+++ONECX_PERMISSIONS_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`onecx`
+|`+++onecx+++`
 
 a| [[onecx-permissions_onecx-permissions-request-token-from-header-param]] [.property-path]##link:#onecx-permissions_onecx-permissions-request-token-from-header-param[`onecx.permissions.request-token-from-header-param`]##
 ifdef::add-copy-button-to-config-props[]
@@ -173,7 +173,7 @@ Environment variable: `+++ONECX_PERMISSIONS_REQUEST_TOKEN_FROM_HEADER_PARAM+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`Authorization`
+|`+++Authorization+++`
 
 a| [[onecx-permissions_onecx-permissions-token-header-param]] [.property-path]##link:#onecx-permissions_onecx-permissions-token-header-param[`onecx.permissions.token-header-param`]##
 ifdef::add-copy-button-to-config-props[]
@@ -194,7 +194,7 @@ Environment variable: `+++ONECX_PERMISSIONS_TOKEN_HEADER_PARAM+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`${tkit.rs.context.token.header-param:apm-principal-token}`
+|`+++${tkit.rs.context.token.header-param:apm-principal-token}+++`
 
 a| [[onecx-permissions_onecx-permissions-key-separator]] [.property-path]##link:#onecx-permissions_onecx-permissions-key-separator[`onecx.permissions.key-separator`]##
 ifdef::add-copy-button-to-config-props[]
@@ -215,7 +215,7 @@ Environment variable: `+++ONECX_PERMISSIONS_KEY_SEPARATOR+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`#`
+|`+++#+++`
 
 a| [[onecx-permissions_onecx-permissions-mock-enabled]] [.property-path]##link:#onecx-permissions_onecx-permissions-mock-enabled[`onecx.permissions.mock.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -236,7 +236,7 @@ Environment variable: `+++ONECX_PERMISSIONS_MOCK_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-permissions_onecx-permissions-mock-roles-roles]] [.property-path]##link:#onecx-permissions_onecx-permissions-mock-roles-roles[`onecx.permissions.mock.roles."roles"`]##
 ifdef::add-copy-button-to-config-props[]

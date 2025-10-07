@@ -26,7 +26,7 @@ Environment variable: `+++ONECX_PARAMETERS_BUILD_METRICS_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-parameters_onecx-parameters-service-client-url]] [.property-path]##link:#onecx-parameters_onecx-parameters-service-client-url[`onecx.parameters.service.client.url`]##
 ifdef::add-copy-button-to-config-props[]
@@ -47,7 +47,7 @@ Environment variable: `+++ONECX_PARAMETERS_SERVICE_CLIENT_URL+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`http://onecx-parameter-svc:8080`
+|`+++http://onecx-parameter-svc:8080+++`
 
 a| [[onecx-parameters_onecx-parameters-service-client-v1]] [.property-path]##link:#onecx-parameters_onecx-parameters-service-client-v1[`onecx.parameters.service.client.v1`]##
 ifdef::add-copy-button-to-config-props[]
@@ -68,7 +68,7 @@ Environment variable: `+++ONECX_PARAMETERS_SERVICE_CLIENT_V1+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-parameters_onecx-parameters-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-enabled[`onecx.parameters.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -89,7 +89,7 @@ Environment variable: `+++ONECX_PARAMETERS_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-parameters_onecx-parameters-throw-update-exception]] [.property-path]##link:#onecx-parameters_onecx-parameters-throw-update-exception[`onecx.parameters.throw-update-exception`]##
 ifdef::add-copy-button-to-config-props[]
@@ -110,7 +110,7 @@ Environment variable: `+++ONECX_PARAMETERS_THROW_UPDATE_EXCEPTION+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-parameters_onecx-parameters-cache-enabled]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-enabled[`onecx.parameters.cache.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -131,7 +131,7 @@ Environment variable: `+++ONECX_PARAMETERS_CACHE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-parameters_onecx-parameters-cache-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-schedule[`onecx.parameters.cache.update-schedule`]##
 ifdef::add-copy-button-to-config-props[]
@@ -152,7 +152,7 @@ Environment variable: `+++ONECX_PARAMETERS_CACHE_UPDATE_SCHEDULE+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`900000`
+|`+++900000+++`
 
 a| [[onecx-parameters_onecx-parameters-cache-update-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-update-at-start[`onecx.parameters.cache.update-at-start`]##
 ifdef::add-copy-button-to-config-props[]
@@ -173,7 +173,7 @@ Environment variable: `+++ONECX_PARAMETERS_CACHE_UPDATE_AT_START+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-parameters_onecx-parameters-cache-failed-at-start]] [.property-path]##link:#onecx-parameters_onecx-parameters-cache-failed-at-start[`onecx.parameters.cache.failed-at-start`]##
 ifdef::add-copy-button-to-config-props[]
@@ -194,7 +194,7 @@ Environment variable: `+++ONECX_PARAMETERS_CACHE_FAILED_AT_START+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[onecx-parameters_onecx-parameters-product-name]] [.property-path]##link:#onecx-parameters_onecx-parameters-product-name[`onecx.parameters.product-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -236,7 +236,7 @@ Environment variable: `+++ONECX_PARAMETERS_APPLICATION_ID+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`${quarkus.application.name}`
+|`+++${quarkus.application.name}+++`
 
 a| [[onecx-parameters_onecx-parameters-instance-id]] [.property-path]##link:#onecx-parameters_onecx-parameters-instance-id[`onecx.parameters.instance-id`]##
 ifdef::add-copy-button-to-config-props[]
@@ -278,7 +278,7 @@ Environment variable: `+++ONECX_PARAMETERS_HISTORY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[onecx-parameters_onecx-parameters-history-update-schedule]] [.property-path]##link:#onecx-parameters_onecx-parameters-history-update-schedule[`onecx.parameters.history.update-schedule`]##
 ifdef::add-copy-button-to-config-props[]
@@ -299,7 +299,7 @@ Environment variable: `+++ONECX_PARAMETERS_HISTORY_UPDATE_SCHEDULE+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`900000`
+|`+++900000+++`
 
 a| [[onecx-parameters_onecx-parameters-items-parameters]] [.property-path]##link:#onecx-parameters_onecx-parameters-items-parameters[`onecx.parameters.items."parameters"`]##
 ifdef::add-copy-button-to-config-props[]
@@ -341,7 +341,7 @@ Environment variable: `+++ONECX_PARAMETERS_TENANT_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 |===
 

@@ -16,5 +16,6 @@ Please, see the latest released [documentation page](https://onecx.github.io/doc
 
 Branches:
 * `main` - Quarkus latest version
+* `2.x` - Quarkus 3.27 LTS
 * `1.x` - Quarkus 3.20 LTS
 * `0.x` - Quarkus 3.15 LTS (deprecated)

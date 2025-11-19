@@ -18,6 +18,7 @@ class CacheMetricsTest {
                 .get("/q/metrics")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
+                .log().all()
                 .extract().asString();
 
         // check extended agroal metrics

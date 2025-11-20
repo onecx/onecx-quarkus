@@ -48,13 +48,13 @@
         <enforce-test-deps-scope.skip>${enforcer.skip}</enforce-test-deps-scope.skip>
 
         <!-- Quarkus configuration -->
-        <quarkus.version>3.28.2</quarkus.version>
-        <quarkus.hibernate-orm.version>7.0.9.Final</quarkus.hibernate-orm.version>
-        <quarkiverse.quarkus-openapi-generator.version>2.12.1-lts</quarkiverse.quarkus-openapi-generator.version>
+        <quarkus.version>3.30.0</quarkus.version>
+        <quarkus.hibernate-orm.version>7.1.6.Final</quarkus.hibernate-orm.version>
+        <quarkiverse.quarkus-openapi-generator.version>2.13.0-lts</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.15.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->
-        <tkit.quarkus.version>4.1.0</tkit.quarkus.version>
+        <tkit.quarkus.version>4.3.0</tkit.quarkus.version>
 
         <!-- Maven configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,10 +70,10 @@
         <maven.deploy-plugin.version>3.1.4</maven.deploy-plugin.version>
 
         <!-- Maven central release configuration -->
-        <nexus.staging-plugin.version>1.7.0</nexus.staging-plugin.version>
         <source-plugin.version>3.3.1</source-plugin.version>
         <javadoc-plugin.version>3.12.0</javadoc-plugin.version>
         <gpg-plugin.version>3.2.8</gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
 
         <!-- Documentation -->
         <asciidoctorj.version>3.0.1</asciidoctorj.version>
@@ -81,7 +81,7 @@
         <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
 
         <!-- Other -->
-        <kubernetes-client-api.version>7.3.1</kubernetes-client-api.version>
+        <kubernetes-client-api.version>7.4.0</kubernetes-client-api.version>
         <openapitools.openapi-generator-maven-plugin.version>7.16.0</openapitools.openapi-generator-maven-plugin.version>
         <download-maven-plugin.version>1.13.0</download-maven-plugin.version>
         <download-maven-plugin.skip-cache>false</download-maven-plugin.skip-cache>
@@ -313,6 +313,7 @@
                         <arg>-Amapstruct.defaultComponentModel=jakarta-cdi</arg>
                         <arg>-Amapstruct.defaultInjectionStrategy=constructor</arg>
                     </compilerArgs>
+                    <showWarnings>true</showWarnings>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
                             <groupId>org.hibernate.orm</groupId>
@@ -736,7 +737,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.8.0</version>
+                        <version>${central-publishing-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
@@ -807,7 +808,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.8.0</version>
+                        <version>${central-publishing-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>

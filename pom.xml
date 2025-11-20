@@ -54,7 +54,7 @@
         <quarkiverse.mockserver.version>1.15.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->
-        <tkit.quarkus.version>4.1.0</tkit.quarkus.version>
+        <tkit.quarkus.version>4.2.0</tkit.quarkus.version>
 
         <!-- Maven configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

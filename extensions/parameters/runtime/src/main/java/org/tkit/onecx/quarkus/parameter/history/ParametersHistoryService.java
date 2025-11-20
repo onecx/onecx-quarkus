@@ -90,12 +90,12 @@ public class ParametersHistoryService {
                 var ctx = resolver.getTenantContext(value.getCtx());
                 ApplicationContext.start(ctx);
                 try {
-                    sendMetrics(tenantId, history, value);
+                    sendMetrics(tenantId, tmp, value);
                 } finally {
                     ApplicationContext.close();
                 }
             } else {
-                sendMetrics(value.getCtx().getTenantId(), history, value);
+                sendMetrics(value.getCtx().getTenantId(), tmp, value);
             }
         });
     }

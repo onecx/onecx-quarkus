@@ -12,7 +12,6 @@ import org.jboss.jandex.Type;
 import org.tkit.onecx.quarkus.parameter.Parameter;
 import org.tkit.onecx.quarkus.parameter.ParametersService;
 import org.tkit.onecx.quarkus.parameter.config.ParametersBuildTimeConfig;
-import org.tkit.onecx.quarkus.parameter.config.ParametersConfig;
 import org.tkit.onecx.quarkus.parameter.metrics.MicrometerMetricsRecorder;
 import org.tkit.onecx.quarkus.parameter.metrics.NoopMetricsRecorder;
 import org.tkit.onecx.quarkus.parameter.runtime.AbstractParameterProducer;
@@ -49,9 +48,9 @@ public class ParametersProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder, ParametersConfig config) {
+    public void configure(BeanContainerBuildItem beanContainer, ParametersRecorder recorder) {
         BeanContainer container = beanContainer.getValue();
-        recorder.configSources(container, config);
+        recorder.configSources(container);
     }
 
     @BuildStep

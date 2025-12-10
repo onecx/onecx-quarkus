@@ -1,6 +1,4 @@
-name: onecx-quarkus
-title: Onecx Quarkus
+# Define the same name space as used for the parent documentation project https://github.com/onecx/docs
+name: documentation
 version: latest
-start_page: onecx-quarkus:index.adoc
-nav:
-  - modules/onecx-quarkus/nav.adoc
+# Do not add any further properties here. This will affect the parent documentation project.

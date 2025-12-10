@@ -1,0 +1,8 @@
+** xref:documentation:onecx-quarkus:index.adoc[OneCX Quarkus Extensions]
+*** xref:documentation:onecx-quarkus:onecx-core.adoc[OneCX Core]
+*** xref:documentation:onecx-quarkus:onecx-permissions.adoc[OneCX Permissions]
+*** xref:documentation:onecx-quarkus:onecx-tenant.adoc[OneCX Tenant]
+*** xref:documentation:onecx-quarkus:onecx-parameters.adoc[OneCX Parameters]
+*** xref:documentation:onecx-quarkus:onecx-openapi-generator.adoc[OneCX OpenApi Generator]
+*** xref:documentation:onecx-quarkus:onecx-validator.adoc[OneCX Validator]
+*** xref:documentation:onecx-quarkus:onecx-operator.adoc[OneCX Operator]

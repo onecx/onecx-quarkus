@@ -1,8 +1,0 @@
-* xref:index.adoc[Onecx Quarkus]
-* xref:onecx-core.adoc[Onecx Core]
-* xref:onecx-permissions.adoc[Onecx Permissions]
-* xref:onecx-tenant.adoc[Onecx Tenant]
-* xref:onecx-parameters.adoc[Onecx Parameters]
-* xref:onecx-openapi-generator.adoc[Onecx OpenApi Generator]
-* xref:onecx-validator.adoc[Onecx Validator]
-* xref:onecx-operator.adoc[Onecx Operator]

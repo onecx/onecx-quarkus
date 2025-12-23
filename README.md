@@ -1,6 +1,6 @@
 # onecx-quarkus
 
-OneCx Quarkus Extensions. Set of Quarkus extensions and libraries to speed up OneCx development of backend microservices.
+OneCX Quarkus Extensions. Set of Quarkus extensions and libraries to speed up OneCX development of backend microservices.
 
 [![License](https://img.shields.io/github/license/onecx/onecx-quarkus?style=for-the-badge&logo=apache)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Release version](https://img.shields.io/maven-central/v/org.tkit.onecx.quarkus/onecx-quarkus-bom?logo=apache-maven&style=for-the-badge&label=Release)](https://search.maven.org/artifact/org.tkit.onecx.quarkus/onecx-quarkus-bom)

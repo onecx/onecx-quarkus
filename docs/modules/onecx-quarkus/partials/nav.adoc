@@ -1,8 +1,0 @@
-** xref:documentation:onecx-quarkus:index.adoc[Quarkus Extensions]
-*** xref:documentation:onecx-quarkus:onecx-core.adoc[Core]
-*** xref:documentation:onecx-quarkus:onecx-permissions.adoc[Permissions]
-*** xref:documentation:onecx-quarkus:onecx-tenant.adoc[Tenant]
-*** xref:documentation:onecx-quarkus:onecx-parameters.adoc[Parameters]
-*** xref:documentation:onecx-quarkus:onecx-openapi-generator.adoc[OpenApi Generator]
-*** xref:documentation:onecx-quarkus:onecx-validator.adoc[Validator]
-*** xref:documentation:onecx-quarkus:onecx-operator.adoc[Operator]

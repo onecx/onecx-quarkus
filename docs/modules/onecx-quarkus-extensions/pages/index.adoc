@@ -1,7 +1,6 @@
-= One-CX Quarkus Extensions
+= OneCX Quarkus Extensions
 
 include::./includes/attributes.adoc[]
-
 
 == Installation
 

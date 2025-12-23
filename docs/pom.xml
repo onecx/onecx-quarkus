@@ -60,7 +60,7 @@
                 <artifactId>quarkus-config-doc-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <targetDirectory>${project.basedir}/modules/onecx-quarkus/pages/includes/</targetDirectory>
+                    <targetDirectory>${project.basedir}/modules/onecx-quarkus-extensions/pages/includes/</targetDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -73,7 +73,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>modules/onecx-quarkus/pages/includes/</outputDirectory>
+                            <outputDirectory>modules/onecx-quarkus-extensions/pages/includes/</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/templates/includes</directory>

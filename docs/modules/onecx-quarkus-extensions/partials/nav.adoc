@@ -1,4 +1,4 @@
-*** xref:documentation:onecx-quarkus-extensions:index.adoc[Quarkus Extensions]
+*** xref:documentation:onecx-quarkus-extensions:index.adoc[Extensions]
 **** xref:documentation:onecx-quarkus-extensions:onecx-core.adoc[Core]
 **** xref:documentation:onecx-quarkus-extensions:onecx-permissions.adoc[Permissions]
 **** xref:documentation:onecx-quarkus-extensions:onecx-tenant.adoc[Tenant]

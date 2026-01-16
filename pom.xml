@@ -50,7 +50,7 @@
         <!-- Quarkus configuration -->
         <quarkus.version>3.30.5</quarkus.version>
         <quarkus.hibernate-orm.version>7.1.6.Final</quarkus.hibernate-orm.version>
-        <quarkiverse.quarkus-openapi-generator.version>2.13.0-lts</quarkiverse.quarkus-openapi-generator.version>
+        <quarkiverse.quarkus-openapi-generator.version>2.14.0-lts</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.15.0</quarkiverse.mockserver.version>
 
         <!-- tkit -->

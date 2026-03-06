@@ -49,6 +49,7 @@
 
         <!-- Quarkus configuration -->
         <quarkus.version>3.27.1</quarkus.version>
+        <quarkus.operator.version>7.2.3</quarkus.operator.version>
         <quarkus.hibernate-orm.version>7.1.4.Final</quarkus.hibernate-orm.version>
         <quarkiverse.quarkus-openapi-generator.version>2.13.0-lts</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.15.0</quarkiverse.mockserver.version>
@@ -113,6 +114,12 @@
                 <version>${tkit.quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- k8s operators -->
+            <dependency>
+                <groupId>io.quarkiverse.operatorsdk</groupId>
+                <artifactId>quarkus-operator-sdk</artifactId>
+                <version>${quarkus.operator.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.tkit.quarkus.lib</groupId>

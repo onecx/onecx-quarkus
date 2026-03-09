@@ -26,6 +26,7 @@ public interface ParametersConfig {
      *
      * @deprecated will be removed at some point in the future.
      */
+    @Deprecated
     @WithName("service.client.v1")
     @WithDefault("false")
     boolean clientV1();

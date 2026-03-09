@@ -69,6 +69,7 @@
         <maven.impsort-plugin.version>1.12.0</maven.impsort-plugin.version>
         <maven.enforcer-plugin.version>3.6.2</maven.enforcer-plugin.version>
         <maven.deploy-plugin.version>3.1.4</maven.deploy-plugin.version>
+        <maven.resources-plugin.version>3.5.0</maven.resources-plugin.version>
 
         <!-- Maven central release configuration -->
         <source-plugin.version>3.3.1</source-plugin.version>
@@ -205,6 +206,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources-plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-config-doc-maven-plugin</artifactId>

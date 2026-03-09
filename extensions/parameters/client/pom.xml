@@ -75,22 +75,6 @@
                             <cacheDirectory>target/.cache</cacheDirectory>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>parameters-v1</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>
-                                https://raw.githubusercontent.com/onecx/onecx-parameter/main/openapi/onecx-parameter-v1.yaml
-                            </url>
-                            <outputDirectory>target/onecx/quarkus/parameters/openapi</outputDirectory>
-                            <outputFileName>onecx-parameter-v1.yaml</outputFileName>
-                            <skipCache>${download-maven-plugin.skip-cache}</skipCache>
-                            <cacheDirectory>target/.cache</cacheDirectory>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>

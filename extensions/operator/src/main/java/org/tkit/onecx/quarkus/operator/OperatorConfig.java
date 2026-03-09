@@ -22,6 +22,12 @@ public interface OperatorConfig {
     TouchedConfig touched();
 
     /**
+     * Sdk metrics configuration
+     */
+    @WithName(value = "sdk.metrics")
+    SdkMetrics sdkMetrics();
+
+    /**
      * Operator touch configuration
      */
     interface TouchedConfig {
@@ -40,5 +46,19 @@ public interface OperatorConfig {
         @WithDefault(value = "org.tkit.onecx.touchedBy")
         String annotationBy();
 
+    }
+
+    /**
+     * SDK Metrics configuration
+     */
+    interface SdkMetrics {
+
+        /**
+         * Flag to enable or disable SDK metrics
+         * default: metrics are disabled (false)
+         */
+        @WithName(value = "enabled")
+        @WithDefault(value = "false")
+        boolean enabled();
     }
 }

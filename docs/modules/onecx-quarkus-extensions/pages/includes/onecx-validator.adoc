@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[onecx-validator_onecx-validator-values-enabled]] [.property-path]##link:#onecx-validator_onecx-validator-values-enabled[`onecx.validator.values.enabled`]##
+a| [[onecx-validator_onecx-validator-values-enabled]] [.property-path]##link:#onecx-validator_onecx-validator-values-enabled[`+++onecx.validator.values.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.validator.values.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -28,7 +28,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[onecx-validator_onecx-validator-values-mapping-mapping]] [.property-path]##link:#onecx-validator_onecx-validator-values-mapping-mapping[`onecx.validator.values.mapping."mapping"`]##
+a| [[onecx-validator_onecx-validator-values-mapping-mapping]] [.property-path]##link:#onecx-validator_onecx-validator-values-mapping-mapping[`+++onecx.validator.values.mapping."mapping"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.validator.values.mapping."mapping"+++[]
 endif::add-copy-button-to-config-props[]
@@ -49,7 +49,7 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
-a| [[onecx-validator_onecx-validator-size-template]] [.property-path]##link:#onecx-validator_onecx-validator-size-template[`onecx.validator.size.template`]##
+a| [[onecx-validator_onecx-validator-size-template]] [.property-path]##link:#onecx-validator_onecx-validator-size-template[`+++onecx.validator.size.template+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.validator.size.template+++[]
 endif::add-copy-button-to-config-props[]

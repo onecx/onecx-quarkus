@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[onecx-tenant_onecx-tenant-cache-enabled]] [.property-path]##link:#onecx-tenant_onecx-tenant-cache-enabled[`onecx.tenant.cache-enabled`]##
+a| [[onecx-tenant_onecx-tenant-cache-enabled]] [.property-path]##link:#onecx-tenant_onecx-tenant-cache-enabled[`+++onecx.tenant.cache-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.tenant.cache-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -28,7 +28,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[onecx-tenant_onecx-tenant-service-client-url]] [.property-path]##link:#onecx-tenant_onecx-tenant-service-client-url[`onecx.tenant.service.client.url`]##
+a| [[onecx-tenant_onecx-tenant-service-client-url]] [.property-path]##link:#onecx-tenant_onecx-tenant-service-client-url[`+++onecx.tenant.service.client.url+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.tenant.service.client.url+++[]
 endif::add-copy-button-to-config-props[]

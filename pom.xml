@@ -52,7 +52,7 @@
         <quarkus.hibernate-orm.version>7.2.6.Final</quarkus.hibernate-orm.version>
         <quarkiverse.quarkus-openapi-generator.version>2.16.0-lts</quarkiverse.quarkus-openapi-generator.version>
         <quarkiverse.mockserver.version>1.17.0</quarkiverse.mockserver.version>
-        <quarkiverse.quarkus-operator-sdk.version>7.7.3</quarkiverse.quarkus-operator-sdk.version>
+        <quarkiverse.quarkus-operator-sdk.version>7.7.4</quarkiverse.quarkus-operator-sdk.version>
 
         <!-- tkit -->
         <tkit.quarkus.version>5.1.0</tkit.quarkus.version>

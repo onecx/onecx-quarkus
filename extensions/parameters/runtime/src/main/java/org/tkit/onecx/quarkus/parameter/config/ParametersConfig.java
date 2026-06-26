@@ -28,6 +28,13 @@ public interface ParametersConfig {
     boolean enabled();
 
     /**
+     * Parameters principal token header parameter.
+     */
+    @WithName("token-header-param")
+    @WithDefault("${tkit.rs.context.token.header-param:apm-principal-token}")
+    String principalTokenHeaderParam();
+
+    /**
      * Throw update exception when parameters are loaded from backend.
      */
     @WithName("throw-update-exception")

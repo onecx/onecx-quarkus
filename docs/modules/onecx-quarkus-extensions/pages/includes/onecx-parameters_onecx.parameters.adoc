@@ -70,6 +70,27 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
+a| [[onecx-parameters_onecx-parameters-token-header-param]] [.property-path]##link:#onecx-parameters_onecx-parameters-token-header-param[`+++onecx.parameters.token-header-param+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.parameters.token-header-param+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Parameters principal token header parameter.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_PARAMETERS_TOKEN_HEADER_PARAM+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_PARAMETERS_TOKEN_HEADER_PARAM+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++${tkit.rs.context.token.header-param:apm-principal-token}+++`
+
 a| [[onecx-parameters_onecx-parameters-throw-update-exception]] [.property-path]##link:#onecx-parameters_onecx-parameters-throw-update-exception[`+++onecx.parameters.throw-update-exception+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.parameters.throw-update-exception+++[]

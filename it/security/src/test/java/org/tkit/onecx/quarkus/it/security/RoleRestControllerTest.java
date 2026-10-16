@@ -31,7 +31,7 @@ class RoleRestControllerTest {
                 .when()
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
-                .get("0")
+                .get("/internal/roles/0")
                 .then()
                 .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
 
@@ -40,7 +40,7 @@ class RoleRestControllerTest {
                 .auth().oauth2(bob)
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
-                .get("1")
+                .get("/internal/roles/1")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
 
@@ -49,7 +49,7 @@ class RoleRestControllerTest {
                 .auth().oauth2(token)
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
-                .delete("2")
+                .delete("/internal/roles/2")
                 .then()
                 .statusCode(Response.Status.FORBIDDEN.getStatusCode());
 
@@ -58,7 +58,7 @@ class RoleRestControllerTest {
                 .auth().oauth2(token)
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-2")
                 .contentType(APPLICATION_JSON)
-                .get("2")
+                .get("/internal/roles/2")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
     }
@@ -69,7 +69,7 @@ class RoleRestControllerTest {
                 .when()
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
                 .contentType(APPLICATION_JSON)
-                .get("3")
+                .get("/internal/roles/3")
                 .then()
                 .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
 
@@ -78,7 +78,7 @@ class RoleRestControllerTest {
                 .auth().oauth2(keycloakClient.getAccessToken(USER))
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
                 .contentType(APPLICATION_JSON)
-                .get("2")
+                .get("/internal/roles/2")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
 
@@ -87,7 +87,7 @@ class RoleRestControllerTest {
                 .auth().oauth2(keycloakClient.getAccessToken(USER))
                 .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-x-1")
                 .contentType(APPLICATION_JSON)
-                .get("1")
+                .get("/internal/roles/1")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
     }
@@ -100,7 +100,7 @@ class RoleRestControllerTest {
                 .when()
                 .contentType(APPLICATION_JSON)
                 .body(dto)
-                .post("search")
+                .post("/internal/roles/search")
                 .then()
                 .statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }

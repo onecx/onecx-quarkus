@@ -14,7 +14,8 @@ See the latest released documentation on [OneCX Platform Documentation Site](htt
 ## Versions
 Branches:
 * `main` - Quarkus latest version
-* `3.x` - Quarkus 3.33 LTS 
-* `2.x` - Quarkus 3.27 LTS
-* `1.x` - Quarkus 3.20 LTS
-* `0.x` - Quarkus 3.15 LTS (deprecated)
+* `4.x` - Quarkus 3.40 LTS
+* `3.x` - Quarkus 3.33 LTS (deprecated)
+* `2.x` - Quarkus 3.27 LTS (archived)
+* `1.x` - Quarkus 3.20 LTS (archived)
+* `0.x` - Quarkus 3.15 LTS (archived)

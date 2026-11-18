@@ -9,6 +9,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.permission.PermissionRuntimeConfig;
 import org.tkit.onecx.quarkus.permission.client.RequestHeaderContainer;
 
@@ -23,6 +25,8 @@ import io.vertx.core.http.HttpServerRequest;
 @Unremovable
 @ApplicationScoped
 public class PermissionClientService {
+
+    private static final Logger log = LoggerFactory.getLogger(PermissionClientService.class);
 
     @Inject
     @RestClient
@@ -72,11 +76,23 @@ public class PermissionClientService {
                 })
                 .onFailure().invoke(t -> {
                     ctx.removeLocal(RequestHeaderContainer.class.getName());
+                    if (log.isWarnEnabled()) {
+                        log.warn("Failed to load permissions from onecx-permission-svc, product {}, application {}, error {}",
+                                config.productName(), config.applicationId(), describe(t));
+                    }
+                    log.debug("Permission service error", t);
                     if (t instanceof WebApplicationException e) {
                         e.getResponse().close();
                     }
                 });
 
+    }
+
+    private static String describe(Throwable t) {
+        if (t instanceof WebApplicationException e && e.getResponse() != null) {
+            return "HTTP " + e.getResponse().getStatus();
+        }
+        return t.getClass().getName() + ": " + t.getMessage();
     }
 
 }

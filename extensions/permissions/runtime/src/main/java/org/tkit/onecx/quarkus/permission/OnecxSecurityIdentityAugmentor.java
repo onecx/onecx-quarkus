@@ -5,10 +5,11 @@ import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.permission.service.PermissionClientService;
 
 import io.quarkus.arc.Unremovable;
-import io.quarkus.security.StringPermission;
 import io.quarkus.security.identity.AuthenticationRequestContext;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.security.identity.SecurityIdentityAugmentor;
@@ -20,6 +21,8 @@ import io.vertx.ext.web.RoutingContext;
 @Unremovable
 @ApplicationScoped
 public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor {
+
+    private static final Logger log = LoggerFactory.getLogger(OnecxSecurityIdentityAugmentor.class);
 
     @Inject
     PermissionRuntimeConfig config;
@@ -62,21 +65,16 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
 
         return service
                 .getPermissions(routingContext.request(), config)
-                .onItem().transformToUni(response -> {
-                    if (response == null) {
-                        return Uni.createFrom().item(identity);
+                .onItem().transform(response -> {
+                    if (response == null || response.getActions() == null) {
+                        return OnecxPermissionChecker.notLoaded().augment(identity);
                     }
-                    var actions = response.getActions();
-                    if (actions == null) {
-                        return Uni.createFrom().item(identity);
-                    }
-                    StringPermission possessedPermission = new StringPermission(config.name(), actions.toArray(new String[0]));
-                    return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
-                            .addPermissionChecker(requiredPermission -> {
-                                boolean accessGranted = possessedPermission.implies(requiredPermission);
-                                return Uni.createFrom().item(accessGranted);
-                            })
-                            .build());
-                }).onFailure().recoverWithItem(identity);
+                    return OnecxPermissionChecker
+                            .of(config.name(), response.getActions())
+                            .augment(identity);
+                }).onFailure().recoverWithItem(t -> {
+                    log.debug("Permission resolution failed, all permission checks will be denied", t);
+                    return OnecxPermissionChecker.notLoaded().augment(identity);
+                });
     }
 }

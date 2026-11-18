@@ -1,5 +1,17 @@
 [
   {
+    "id": "permission-svc-error",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-error" ]
+      },
+      "path": "/v1/permissions/user/test1/app-id"
+    },
+    "httpResponse": {
+      "statusCode": 500
+    }
+  },
+  {
     "id": "1",
     "httpRequest": {
       "headers": {

@@ -32,6 +32,33 @@ For instance, with Maven, add the following dependency to your POM file:
     }
 ----
 
+=== Troubleshooting 403
+
+When a request is rejected because the user is missing a OneCX permission, the extension logs a warning with the required permissions:
+
+[source,text]
+----
+WARN [org.tkit.onecx.quarkus.permission.PermissionDeniedLogger] OneCX permission denied, request GET /test/write, required [onecx:resource1#admin-write], granted 2 permission(s)
+----
+
+If the permissions could not be loaded from the `onecx-permission-svc`, the error is logged first and the warning ends with `permissions could not be loaded from onecx-permission-svc`:
+
+[source,text]
+----
+WARN [org.tkit.onecx.quarkus.permission.service.PermissionClientService] Failed to load permissions from onecx-permission-svc, product test1, application app-id, error HTTP 500
+----
+
+To see the list of permissions granted to the user, enable `DEBUG` level for the permission logger:
+
+[source,properties]
+----
+quarkus.log.category."org.tkit.onecx.quarkus.permission".level=DEBUG
+----
+
+The access token is never logged.
+
+NOTE: `@PermissionsAllowed` values must use the `onecx:resource#action` format; the prefix is configured by `onecx.permissions.name`.
+
 === Configuration
 
 include::includes/onecx-permissions.adoc[leveloffset=+1, opts=optional]

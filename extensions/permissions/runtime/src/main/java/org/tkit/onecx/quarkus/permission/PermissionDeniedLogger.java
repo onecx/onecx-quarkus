@@ -9,10 +9,9 @@ import org.slf4j.LoggerFactory;
 import io.quarkus.arc.Unremovable;
 import io.quarkus.security.ForbiddenException;
 import io.quarkus.security.spi.runtime.AuthorizationFailureEvent;
-import io.vertx.ext.web.RoutingContext;
 
 /**
- * Logs why a request was rejected with 403 by the OneCX permission check.
+ * Logs which permissions were missing when a request was rejected with 403 by the permission check.
  */
 @Unremovable
 @ApplicationScoped
@@ -33,22 +32,7 @@ public class PermissionDeniedLogger {
         if (denied.isEmpty()) {
             return;
         }
-
-        var sb = new StringBuilder("OneCX permission denied");
-        if (event.getEventProperties() != null
-                && event.getEventProperties().get(RoutingContext.class.getName()) instanceof RoutingContext rc) {
-            sb.append(", request ").append(rc.request().method().name()).append(' ').append(rc.request().path());
-        }
-        sb.append(", required ").append(denied);
-        if (checker.isLoaded()) {
-            sb.append(", granted ").append(checker.getGranted().size()).append(" permission(s)");
-        } else {
-            sb.append(", permissions could not be loaded from onecx-permission-svc");
-        }
-        log.warn(sb.toString());
-
-        if (checker.isLoaded()) {
-            log.debug("OneCX permissions granted: {}", checker.getGranted());
-        }
+        log.warn("Permission denied, missing {}", denied);
+        log.debug("Granted permissions {}", checker.getGranted());
     }
 }

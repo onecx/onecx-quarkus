@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 
 import jakarta.ws.rs.core.Response;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.jboss.logmanager.ExtLogRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,8 +41,11 @@ class PermissionDeniedLogTest {
     final Handler handler = new Handler() {
         @Override
         public void publish(LogRecord logRecord) {
-            if (logRecord.getLevel().intValue() >= Level.WARNING.intValue()) {
-                messages.add(logRecord.getMessage());
+            var level = logRecord.getLevel().intValue();
+            if (level >= Level.WARNING.intValue()) {
+                messages.add("WARN " + format(logRecord));
+            } else if (level >= Level.FINE.intValue()) {
+                messages.add("DEBUG " + format(logRecord));
             }
         }
 
@@ -55,6 +60,15 @@ class PermissionDeniedLogTest {
         }
     };
 
+    static String format(LogRecord logRecord) {
+        return logRecord instanceof ExtLogRecord ext ? ext.getFormattedMessage() : logRecord.getMessage();
+    }
+
+    static String permissionServiceUrl() {
+        return ConfigProvider.getConfig().getValue("quarkus.rest-client.onecx_permission.url", String.class)
+                + "/v1/permissions/user/test1/app-id";
+    }
+
     @BeforeEach
     void addHandler() {
         Logger.getLogger(LOGGER).addHandler(handler);
@@ -65,54 +79,99 @@ class PermissionDeniedLogTest {
         Logger.getLogger(LOGGER).removeHandler(handler);
     }
 
+    private void get(String path, String user, String principalToken, Response.Status status) {
+        var request = given().when().contentType(APPLICATION_JSON);
+        if (user != null) {
+            request.auth().oauth2(keycloakClient.getAccessToken(user));
+        }
+        if (principalToken != null) {
+            request.header(APM_PRINCIPAL_TOKEN_HEADER, principalToken);
+        }
+        request.get(path).then().statusCode(status.getStatusCode());
+    }
+
     @Test
     void missingPermissionTest() {
-        given()
-                .when()
-                .auth().oauth2(keycloakClient.getAccessToken("bob"))
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-2")
-                .contentType(APPLICATION_JSON)
-                .get("write")
-                .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+        get("write", "bob", "token-data-2", Response.Status.FORBIDDEN);
+
+        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages).containsSubsequence(
+                "WARN Permission denied, missing [onecx:resource1#admin-write]",
+                "DEBUG Granted permissions [resource2#admin-write, resource2#admin-read]"));
+    }
+
+    @Test
+    void missingPermissionWithoutGrantedPermissionsTest() {
+        get("write", "bob", null, Response.Status.FORBIDDEN);
+
+        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages).containsSubsequence(
+                "WARN Permission denied, missing [onecx:resource1#admin-write]",
+                "DEBUG Granted permissions []"));
+    }
+
+    @Test
+    void missingPermissionWithoutActionTest() {
+        get("no-action", "bob", "token-data-1", Response.Status.FORBIDDEN);
+
+        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages)
+                .contains("WARN Permission denied, missing [other]"));
+    }
+
+    @Test
+    void allPermissionsMissingTest() {
+        get("write-or-read", "bob", "token-data-x-1", Response.Status.FORBIDDEN);
 
         await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages)
                 .anySatisfy(m -> assertThat(m)
-                        .isEqualTo("OneCX permission denied, request GET /test/write, required [onecx:resource1#admin-write], "
-                                + "granted 2 permission(s)")));
+                        .isIn("WARN Permission denied, missing [onecx:resource1#admin-write,resource2#admin-read]",
+                                "WARN Permission denied, missing [onecx:resource2#admin-read,resource1#admin-write]")));
+    }
+
+    @Test
+    void onePermissionGrantedNoWarningTest() {
+        get("write-or-read", "bob", "token-data-2", Response.Status.OK);
+
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
+    }
+
+    @Test
+    void roleDeniedNoPermissionWarningTest() {
+        get("admin", "bob", "token-data-1", Response.Status.FORBIDDEN);
+
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
+    }
+
+    @Test
+    void unauthorizedNoPermissionWarningTest() {
+        get("write", null, "token-data-1", Response.Status.UNAUTHORIZED);
+
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
+    }
+
+    @Test
+    void permissionServiceConnectionErrorTest() {
+        get("write", "bob", "token-drop-connection", Response.Status.FORBIDDEN);
+
+        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages).anySatisfy(m -> assertThat(m)
+                .startsWith("WARN Failed to load permissions from permission service, status null, url "
+                        + permissionServiceUrl() + ", error ")));
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
     }
 
     @Test
     void permissionServiceErrorTest() {
-        given()
-                .when()
-                .auth().oauth2(keycloakClient.getAccessToken("bob"))
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-error")
-                .contentType(APPLICATION_JSON)
-                .get("write")
-                .then()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+        get("write", "bob", "token-error", Response.Status.FORBIDDEN);
 
-        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> {
-            assertThat(messages).anySatisfy(m -> assertThat(m)
-                    .startsWith("Failed to load permissions from onecx-permission-svc"));
-            assertThat(messages).anySatisfy(m -> assertThat(m)
-                    .isEqualTo("OneCX permission denied, request GET /test/write, required [onecx:resource1#admin-write], "
-                            + "permissions could not be loaded from onecx-permission-svc"));
-        });
+        await().atMost(Duration.ofSeconds(5)).untilAsserted(() -> assertThat(messages).anySatisfy(m -> assertThat(m)
+                .startsWith("WARN Failed to load permissions from permission service, status 500, url "
+                        + permissionServiceUrl() + ", error ")
+                .contains("status code 500")));
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
     }
 
     @Test
     void grantedNoWarningTest() {
-        given()
-                .when()
-                .auth().oauth2(keycloakClient.getAccessToken("bob"))
-                .header(APM_PRINCIPAL_TOKEN_HEADER, "token-data-1")
-                .contentType(APPLICATION_JSON)
-                .get("write")
-                .then()
-                .statusCode(Response.Status.OK.getStatusCode());
+        get("write", "bob", "token-data-1", Response.Status.OK);
 
-        assertThat(messages).noneMatch(m -> m.startsWith("OneCX permission denied"));
+        assertThat(messages).noneMatch(m -> m.contains("Permission denied"));
     }
 }

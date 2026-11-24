@@ -12,6 +12,18 @@
     }
   },
   {
+    "id": "permission-svc-drop-connection",
+    "httpRequest": {
+      "headers": {
+        "apm-principal-token": [ "token-drop-connection" ]
+      },
+      "path": "/v1/permissions/user/test1/app-id"
+    },
+    "httpError": {
+      "dropConnection": true
+    }
+  },
+  {
     "id": "1",
     "httpRequest": {
       "headers": {

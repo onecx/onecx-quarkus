@@ -5,8 +5,6 @@ import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.permission.service.PermissionClientService;
 
 import io.quarkus.arc.Unremovable;
@@ -21,8 +19,6 @@ import io.vertx.ext.web.RoutingContext;
 @Unremovable
 @ApplicationScoped
 public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor {
-
-    private static final Logger log = LoggerFactory.getLogger(OnecxSecurityIdentityAugmentor.class);
 
     @Inject
     PermissionRuntimeConfig config;
@@ -65,16 +61,15 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
 
         return service
                 .getPermissions(routingContext.request(), config)
-                .onItem().transform(response -> {
-                    if (response == null || response.getActions() == null) {
-                        return OnecxPermissionChecker.notLoaded().augment(identity);
+                .onItem().transformToUni(response -> {
+                    if (response == null) {
+                        return Uni.createFrom().item(identity);
                     }
-                    return OnecxPermissionChecker
-                            .of(config.name(), response.getActions())
-                            .augment(identity);
-                }).onFailure().recoverWithItem(t -> {
-                    log.debug("Permission resolution failed, all permission checks will be denied", t);
-                    return OnecxPermissionChecker.notLoaded().augment(identity);
-                });
+                    var actions = response.getActions();
+                    if (actions == null) {
+                        return Uni.createFrom().item(identity);
+                    }
+                    return Uni.createFrom().item(OnecxPermissionChecker.of(config.name(), actions).augment(identity));
+                }).onFailure().recoverWithItem(identity);
     }
 }

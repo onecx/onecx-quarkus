@@ -1,9 +1,9 @@
 package org.tkit.onecx.quarkus.permission;
 
 import java.security.Permission;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import io.quarkus.security.StringPermission;
@@ -12,8 +12,8 @@ import io.quarkus.security.runtime.QuarkusSecurityIdentity;
 import io.smallrye.mutiny.Uni;
 
 /**
- * Request scoped OneCX permission checker. It remembers denied permissions so that
- * {@link PermissionDeniedLogger} can explain a 403 response.
+ * Request scoped permission checker. It remembers denied permissions so that
+ * {@link PermissionDeniedLogger} can log them for a 403 response.
  */
 public class OnecxPermissionChecker implements Function<Permission, Uni<Boolean>> {
 
@@ -23,28 +23,32 @@ public class OnecxPermissionChecker implements Function<Permission, Uni<Boolean>
 
     private final StringPermission possessed;
 
-    private final Set<String> denied = ConcurrentHashMap.newKeySet();
+    // created on first deny only, so granted requests do not pay for it
+    private Set<String> denied;
 
     private OnecxPermissionChecker(String name, List<String> granted) {
-        this.granted = granted == null ? List.of() : List.copyOf(granted);
-        this.possessed = name == null ? null : new StringPermission(name, this.granted.toArray(new String[0]));
+        this.granted = granted;
+        this.possessed = new StringPermission(name, granted.toArray(new String[0]));
     }
 
     public static OnecxPermissionChecker of(String name, List<String> granted) {
         return new OnecxPermissionChecker(name, granted);
     }
 
-    public static OnecxPermissionChecker notLoaded() {
-        return new OnecxPermissionChecker(null, null);
-    }
-
     @Override
     public Uni<Boolean> apply(Permission requiredPermission) {
-        boolean accessGranted = possessed != null && possessed.implies(requiredPermission);
+        boolean accessGranted = possessed.implies(requiredPermission);
         if (!accessGranted) {
-            denied.add(format(requiredPermission));
+            addDenied(format(requiredPermission));
         }
         return Uni.createFrom().item(accessGranted);
+    }
+
+    private synchronized void addDenied(String permission) {
+        if (denied == null) {
+            denied = new LinkedHashSet<>();
+        }
+        denied.add(permission);
     }
 
     public SecurityIdentity augment(SecurityIdentity identity) {
@@ -54,16 +58,12 @@ public class OnecxPermissionChecker implements Function<Permission, Uni<Boolean>
                 .build();
     }
 
-    public boolean isLoaded() {
-        return possessed != null;
-    }
-
     public List<String> getGranted() {
         return granted;
     }
 
-    public Set<String> getDenied() {
-        return Set.copyOf(denied);
+    public synchronized Set<String> getDenied() {
+        return denied == null ? Set.of() : new LinkedHashSet<>(denied);
     }
 
     static String format(Permission permission) {

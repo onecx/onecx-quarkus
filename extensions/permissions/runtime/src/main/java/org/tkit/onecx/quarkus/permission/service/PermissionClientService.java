@@ -6,9 +6,15 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.UriBuilder;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tkit.onecx.quarkus.permission.PermissionRuntimeConfig;
 import org.tkit.onecx.quarkus.permission.client.RequestHeaderContainer;
 
@@ -23,6 +29,8 @@ import io.vertx.core.http.HttpServerRequest;
 @Unremovable
 @ApplicationScoped
 public class PermissionClientService {
+
+    private static final Logger log = LoggerFactory.getLogger(PermissionClientService.class);
 
     @Inject
     @RestClient
@@ -72,11 +80,32 @@ public class PermissionClientService {
                 })
                 .onFailure().invoke(t -> {
                     ctx.removeLocal(RequestHeaderContainer.class.getName());
+                    if (log.isWarnEnabled()) {
+                        log.warn("Failed to load permissions from permission service, status {}, url {}, error {}",
+                                status(t), url(config), t.getClass().getName() + ": " + t.getMessage());
+                    }
+                    log.debug("Permission service error", t);
                     if (t instanceof WebApplicationException e) {
                         e.getResponse().close();
                     }
                 });
 
+    }
+
+    private static Integer status(Throwable t) {
+        if (t instanceof WebApplicationException e && e.getResponse() != null) {
+            return e.getResponse().getStatus();
+        }
+        return null;
+    }
+
+    private static String url(PermissionRuntimeConfig config) {
+        var restClient = PermissionApi.class.getAnnotation(RegisterRestClient.class);
+        var baseUrl = ConfigProvider.getConfig()
+                .getOptionalValue("quarkus.rest-client." + restClient.configKey() + ".url", String.class)
+                .orElse(restClient.baseUri());
+        return UriBuilder.fromUri(baseUrl).path(PermissionApi.class.getAnnotation(Path.class).value())
+                .build(config.productName(), config.applicationId()).toString();
     }
 
 }

@@ -6,9 +6,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import io.quarkus.security.StringPermission;
 import io.quarkus.security.identity.SecurityIdentity;
-import io.quarkus.security.runtime.QuarkusSecurityIdentity;
 import io.smallrye.mutiny.Uni;
 
 @ApplicationScoped
@@ -36,13 +34,9 @@ public class MockPermissionService {
             }
         });
 
-        StringPermission mockPermissions = new StringPermission(config.name(), mockData.toArray(new String[0]));
-        return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
-                .addPermissionChecker(requiredPermission -> {
-                    boolean accessGranted = mockPermissions.implies(requiredPermission);
-                    return Uni.createFrom().item(accessGranted);
-                })
-                .build());
+        return Uni.createFrom().item(OnecxPermissionChecker
+                .of(config.name(), mockData)
+                .augment(identity));
 
     }
 }

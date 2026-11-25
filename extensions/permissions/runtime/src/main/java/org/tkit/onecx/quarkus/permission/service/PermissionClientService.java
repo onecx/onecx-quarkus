@@ -6,9 +6,12 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +31,6 @@ import io.vertx.core.http.HttpServerRequest;
 public class PermissionClientService {
 
     private static final Logger log = LoggerFactory.getLogger(PermissionClientService.class);
-
-    private static final String CLIENT_URL_PROPERTY = "quarkus.rest-client.onecx_permission.url";
 
     @Inject
     @RestClient
@@ -99,10 +100,12 @@ public class PermissionClientService {
     }
 
     private static String url(PermissionRuntimeConfig config) {
-        return ConfigProvider.getConfig().getOptionalValue(CLIENT_URL_PROPERTY, String.class)
-                .map(baseUrl -> baseUrl.replaceAll("/+$", "") + "/v1/permissions/user/" + config.productName() + "/"
-                        + config.applicationId())
-                .orElse(null);
+        var restClient = PermissionApi.class.getAnnotation(RegisterRestClient.class);
+        var baseUrl = ConfigProvider.getConfig()
+                .getOptionalValue("quarkus.rest-client." + restClient.configKey() + ".url", String.class)
+                .orElse(restClient.baseUri());
+        return UriBuilder.fromUri(baseUrl).path(PermissionApi.class.getAnnotation(Path.class).value())
+                .build(config.productName(), config.applicationId()).toString();
     }
 
 }

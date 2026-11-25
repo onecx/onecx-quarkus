@@ -43,4 +43,18 @@ public class TestRestController {
         log.info("## @PermissionsAllowed(value=onecx:resource1#admin-write) # {}", httpHeaders.getRequestHeaders());
         return Response.ok("OK").build();
     }
+
+    @GET
+    @Path("write-or-read")
+    @PermissionsAllowed({ "onecx:resource1#admin-write", "onecx:resource2#admin-read" })
+    public Response writeOrRead() {
+        return Response.ok("OK").build();
+    }
+
+    @GET
+    @Path("no-action")
+    @PermissionsAllowed("other")
+    public Response noAction() {
+        return Response.ok("OK").build();
+    }
 }

@@ -8,7 +8,6 @@ import jakarta.inject.Inject;
 import org.tkit.onecx.quarkus.permission.service.PermissionClientService;
 
 import io.quarkus.arc.Unremovable;
-import io.quarkus.security.StringPermission;
 import io.quarkus.security.identity.AuthenticationRequestContext;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.security.identity.SecurityIdentityAugmentor;
@@ -70,13 +69,7 @@ public class OnecxSecurityIdentityAugmentor implements SecurityIdentityAugmentor
                     if (actions == null) {
                         return Uni.createFrom().item(identity);
                     }
-                    StringPermission possessedPermission = new StringPermission(config.name(), actions.toArray(new String[0]));
-                    return Uni.createFrom().item(QuarkusSecurityIdentity.builder(identity)
-                            .addPermissionChecker(requiredPermission -> {
-                                boolean accessGranted = possessedPermission.implies(requiredPermission);
-                                return Uni.createFrom().item(accessGranted);
-                            })
-                            .build());
+                    return Uni.createFrom().item(OnecxPermissionChecker.of(config.name(), actions).augment(identity));
                 }).onFailure().recoverWithItem(identity);
     }
 }
